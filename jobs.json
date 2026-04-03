@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "title": "طبيب أسنان",
+    "description": "مطلوب طبيب أسنان للعمل في مستشفى خاص.",
+    "sector": "health",
+    "email": "apply@hospital.com",
+    "date": "2026-04-03"
+  },
+  {
+    "id": 2,
+    "title": "مهندس مدني",
+    "description": "مطلوب مهندس مدني لشركة إنشاءات.",
+    "sector": "engineering",
+    "email": "apply@construction.com",
+    "date": "2026-04-03"
+  }
+]
