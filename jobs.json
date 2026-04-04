@@ -4,27 +4,27 @@
     "title": "مطور ويب",
     "description": "شركة XYZ تبحث عن مطور ويب خبرة 3 سنوات",
     "email": "apply@xyz.com",
+    "applyLink": "https://xyz.com/apply",
     "sector": "management"
   },
   {
     "id": 2,
-    "title": "مطور ويب",
-    "description": "شركة XYZ تبحث عن مطور ويب خبرة 3 سنوات",
-    "email": "apply@xyz.com",
+    "title": "معلم لغة إنجليزية",
+    "description": "مدرسة ABC بحاجة إلى معلم لغة إنجليزية مبتدئ",
+    "email": "jobs@abcschool.com",
     "sector": "education"
   },
   {
     "id": 3,
-    "title": "مطور ويب",
-    "description": "شركة XYZ تبحث عن مطور ويب خبرة 3 سنوات",
-    "email": "apply@xyz.com",
+    "title": "ممرض/ة",
+    "description": "مستشفى DEF تبحث عن ممرض/ة ذو خبرة",
+    "applyLink": "https://defhospital.com/jobs/nurse",
     "sector": "health"
   },
   {
     "id": 4,
-    "title": "مطور ويب",
-    "description": "شركة XYZ تبحث عن مطور ويب خبرة 3 سنوات",
-    "email": "apply@xyz.com",
+    "title": "مهندس مدني",
+    "description": "شركة GHI للمقاولات بحاجة لمهندس مدني",
     "sector": "engineering"
   }
 ]
