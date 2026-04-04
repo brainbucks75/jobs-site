@@ -179,7 +179,6 @@ app.get('/jobs/:sector/page/:page', (req, res) => {
 
   res.send(html);
 });
-
 // صفحة تفاصيل وظيفة بتصميم احترافي
 app.get('/jobs/:sector/job/:id', (req, res) => {
   const sector = req.params.sector;
@@ -188,6 +187,19 @@ app.get('/jobs/:sector/job/:id', (req, res) => {
   const job = jobs.find(j => j.id === id);
 
   if (!job) return res.send('وظيفة غير موجودة');
+
+  // إنشاء قسم التقديم حسب المتوفر
+  let applyHtml = '';
+  if (job.applyLink && job.email) {
+    applyHtml = `<p>للتقديم عبر الرابط: <a href="${job.applyLink}" target="_blank">اضغط هنا</a></p>
+                 <p>أو عبر الإيميل: <a href="mailto:${job.email}">${job.email}</a></p>`;
+  } else if (job.applyLink) {
+    applyHtml = `<p>للتقديم عبر الرابط: <a href="${job.applyLink}" target="_blank">اضغط هنا</a></p>`;
+  } else if (job.email) {
+    applyHtml = `<p>للتقديم عبر الإيميل: <a href="mailto:${job.email}">${job.email}</a></p>`;
+  } else {
+    applyHtml = `<p>لا يوجد طريقة مباشرة للتقديم</p>`;
+  }
 
   res.send(`
   <html>
@@ -243,13 +255,12 @@ app.get('/jobs/:sector/job/:id', (req, res) => {
     <div class="job-details">
       <h2>${job.title}</h2>
       <p>${job.description}</p>
-      <p>للتقديم مباشرة: <a href="mailto:${job.email}">${job.email}</a></p>
+      ${applyHtml}
     </div>
   </body>
   </html>
   `);
 });
-
 app.listen(PORT, () => {
  console.log("Server running on http://localhost:" + PORT);
 });
