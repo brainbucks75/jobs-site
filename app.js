@@ -58,13 +58,36 @@ app.get('/', (req, res) => {
         transform: translateY(-3px);
         box-shadow: 0 6px 8px rgba(0,0,0,0.3);
       }
+.top-buttons {
+  width:100%;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin:15px 0;
+}
+
+.top-buttons a {
+  background:black;
+  color:white;
+  padding:10px 15px;
+  text-decoration:none;
+  border-radius:8px;
+  font-size:14px;
+  transition:0.3s;
+}
+
+.top-buttons a:hover {
+  background:#333;
+}
     </style>
   </head>
   <body>
     <div class="header">وظائف الوطن العربي</div>
-<a href="/about" class="icon-button">من نحن</a>
-<a href="/privacy" class="icon-button">سياسة الخصوصية</a>
-<a href="/contact" class="icon-button">اتصل بنا</a>
+<div class="top-buttons">
+  <a href="/about">من نحن</a>
+  <a href="/privacy">سياسة الخصوصية</a>
+  <a href="/contact">اتصل بنا</a>
+</div>
     <a href="/jobs/health/page/1" class="icon-button">وظائف قطاع الصحة</a>
     <a href="/jobs/engineering/page/1" class="icon-button">وظائف قطاع الهندسة</a>
     <a href="/jobs/education/page/1" class="icon-button">وظائف قطاع التعليم</a>
