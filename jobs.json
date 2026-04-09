@@ -70,5 +70,132 @@
     "description": " وظيفة تسويقية متقدمة تهدف الى تطوير العلامة التجارية و زيادة انتشارها بالسوق  ",
  "applyLink": "https://careers.kasihfood.com/apps/job/jobs",
     "sector": "engineering"
+  },
+  {
+    "id": 11,
+    "title": "تسويق و منسقين ",
+    "description": " شركة بيت الكرم للإستيراد و التصدير ترغب في استقطاب كفاءات للعمل في الشركة بنظام الورديات و ذلك حسب الوظائف الاتية:\nموظف سوق\nمنسق بضائع\nموظف خدمات عامة\nموظف تسعير\nأمين صندوق\nعلى أن يكون أردني الجنسية ,متفرغ للعمل,يحمل بكالوريوس كحد أدنى ",
+    "email": "Hawayej.baytalkaram@gmail.com",
+    "sector": "management"
+  },
+ {
+    "id":12,
+    "title": "مساعد خباز,مساعد حلواني ",
+    "description": "  تعلن Katrina Bakery عن توفر شواغر مساعد خباز و مساعد حلواني للإنضمام إلى فريق العمل يرجى إرسال السيرة الذاتية الى البريد الالكتروني المرفق ",
+    "email": "careers_KB@katrina.com", 
+    "sector": "management"
+  },
+  {
+    "id":13,
+    "title": "أطباء و ممرضين و فنيين دول الخليج",
+    "description": " مطلوب أطباء جميع التخصصات و ممرضين و فنيين لمختلف دول الخليج العربي حسب الرابط التالي",
+    "applyLink": "https://alfadheljobs.com/ar/jobs?fbclid=IwY2xjawREqXRleHRuA2FlbQIxMABicmlkETFtTmZlekhEenlSZDRnMmFqc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHuVmZCDl-ST5Ikdm_MXmA78_UbOT8RnOiPJffRwFmGYCReg32hylR_8hTomJ_aem_1vSBjvrRZBeptYSx0QobMA",
+    "sector": "health"
+  },
+  {
+    "id": 14,
+    "title": ",رياضيات ,كيمياء,لغة عربية,معلم لغة إنجليزية",
+    "description": " تعلن مدارس أهلية في وسط جدة عن حاجتها الى تعيين معلميين رياضيات و كيمياء و لغة عربية و لغة انجليزية و صفوف أولية للتقديم يرجرى إرسال السيرة الذاتية على الرابط ",
+   "applyLink":   "https://www.egyonlinetoday.com/2025/05/blog-post.html?m=1&fbclid=IwY2xjawREqh5leHRuA2FlbQIxMABicmlkETFtTmZlekhEenlSZDRnMmFqc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHtygkwRm3k0IuvGkVJHSwP2XeLG8NIBef0_4lsNSKhwCcMA7B7-KKoH5rL51_aem_tkdQE5hvJSouMbCtcDHPsw",
+    "sector": "education"
+  },
+  {
+    "id": 15,
+    "title": "مهندس Electronic system ",
+    "description": "مطلوب مهندسين للعمل خبرة صيانة و تشغيل و السن لا يزيد عن 35عام ",
+    "email": "Hr@royal-hr.com",
+    "sector": "engineering"
+  },
+ {
+    "id": 16,
+    "title": "مهندسTelephone system ",
+    "description": "مطلوب مهندسين للعمل خبرة صيانة و تشغيل و السن لا يزيد عن 35عام ",
+    "email": "Hr@royal-hr.com",
+    "sector": "engineering"
+  },
+ {
+    "id": 17,
+    "title": "مهندس Internal Broadcasting system ",
+    "description": "مطلوب مهندسين للعمل خبرة صيانة و تشغيل و السن لا يزيد عن 35عام ",
+    "email": "Hr@royal-hr.com",
+    "sector": "engineering"
+  },
+{
+    "id": 18,
+    "title": "Electrical Engineer ",
+    "description": "مطلوب مهندسين للعمل خبرة 3-7 سنوات ",
+    "email": "ziad.mousa@adss.com.sa",
+    "sector": "engineering"
+  },
+{
+    "id": 19,
+    "title": "Civil Engineer",
+    "description": "مطلوب مهندسين للعمل في المملكة العربية السعودية, خبرة 3-7 سنوات,يرجى إرسال السيرة الذاتية الى الايميل ",
+    "email": "ziad.mousa@adss.com.sa",
+    "sector": "engineering"
+  },
+{
+    "id": 20,
+    "title": "Architectural Engineer",
+    "description": "مطلوب مهندسين للعمل في المملكة العربية السعودية, خبرة 3-7 سنوات,يرجى إرسال السيرة الذاتية الى الايميل ",
+    "email": "ziad.mousa@adss.com.sa",
+    "sector": "engineering"
+  },
+{
+    "id": 21,
+    "title": "Mechanical Engineer",
+    "description": "مطلوب مهندسين للعمل في المملكة العربية السعودية, خبرة 3-7 سنوات,يرجى ارسال السيرة الذاتية إلى الايميل التالي ",
+    "email": "ziad.mousa@adss.com.sa",
+    "sector": "engineering"
+  },
+{
+    "id": 22,
+    "title": "مهندسين لدولة الإمارات",
+    "description": "مطلوب مهندسين للعمل في الامارات العربية المتحدة لكافة تخصصات الهندسة يرجى ارسال السيرة الذاتية الى الايميل التالي ",
+    "email": "hr@ppbcontracting.com",
+    "sector": "engineering"
+  },
+{
+    "id": 23,
+    "title": "مهندس مبيعات",
+    "description": "مطلوب مهندسين(مبيعات) للعمل في المملكة العربية السعودية(خبرة في مواد العزل) يرجى التقدم عبر الرابط التالي  ",
+       "applyLink": "www.darelmaaly.net",
+    "sector": "engineering"
+  },
+{
+    "id": 24,
+    "title": "مهندس كهرباء تيار خفيف",
+    "description": "مطلوب مهندسين(خبرة) للعمل في المملكة العربية السعودية(خبرة) يرجى التقدم عبر الرابط التالي  ",
+       "applyLink": "www.darelmaaly.net",
+    "sector": "engineering"
+  },
+{
+    "id": 25,
+    "title": "مهندس كهرباء لوحات عامة",
+    "description": "مطلوب مهندسين(خبرة) للعمل في المملكة العربية السعودية(خبرة) يرجى التقدم عبر الرابط التالي  ",
+       "applyLink": "www.darelmaaly.net",
+    "sector": "engineering"
+  },
+{
+    "id": 26,
+    "title": "مهندس ميكانيكا تكييف و تبريد",
+    "description": "مطلوب مهندسين(خبرة) للعمل في المملكة العربية السعودية(خبرة) يرجى التقدم عبر الرابط التالي  ",
+       "applyLink": "www.darelmaaly.net",
+    "sector": "engineering"
+  },
+{
+    "id": 27,
+    "title": "مهندس ميكانيكا Firefighting",
+    "description": "مطلوب مهندسين(خبرة) للعمل في المملكة العربية السعودية(خبرة) يرجى التقدم عبر الرابط التالي  ",
+       "applyLink": "www.darelmaaly.net",
+    "sector": "engineering"
+  },
+{
+    "id":28,
+    "title": "Sales Engineer",
+    "description": "Experience in the field of low voltage panels ,send us your resume to E-mail ",
+           "email": "Hr@power-pro.tech",
+    "sector": "engineering"
   }
+
 ]
