@@ -62,6 +62,9 @@ app.get('/', (req, res) => {
   </head>
   <body>
     <div class="header">وظائف الوطن العربي</div>
+<a href="/about" class="icon-button">من نحن</a>
+<a href="/privacy" class="icon-button">سياسة الخصوصية</a>
+<a href="/contact" class="icon-button">اتصل بنا</a>
     <a href="/jobs/health/page/1" class="icon-button">وظائف قطاع الصحة</a>
     <a href="/jobs/engineering/page/1" class="icon-button">وظائف قطاع الهندسة</a>
     <a href="/jobs/education/page/1" class="icon-button">وظائف قطاع التعليم</a>
@@ -263,4 +266,61 @@ app.get('/jobs/:sector/job/:id', (req, res) => {
 });
 app.listen(PORT, () => {
  console.log("Server running on http://localhost:" + PORT);
+});
+app.get('/about', (req, res) => {
+  res.send(`
+  <html>
+  <head>
+    <style>
+      body { font-family:Arial; text-align:center; padding:40px; background:#f0f0f0; }
+      .box { background:white; padding:30px; border-radius:10px; max-width:500px; margin:auto; }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <h2>من نحن</h2>
+      <p>نحن موقع إلكتروني مختص بعرض الوظائف في بلدان الوطن العربي، نهدف إلى تسهيل وصول الباحثين عن العمل إلى فرص موثوقة ومحدثة يوميًا.</p>
+    </div>
+  </body>
+  </html>
+  `);
+});
+app.get('/privacy', (req, res) => {
+  res.send(`
+  <html>
+  <head>
+    <style>
+      body { font-family:Arial; text-align:center; padding:40px; background:#f0f0f0; }
+      .box { background:white; padding:30px; border-radius:10px; max-width:500px; margin:auto; }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <h2>سياسة الخصوصية</h2>
+      <p>يُمنع نقل أو نسخ أي وظائف معروضة داخل الموقع.</p>
+      <p>كافة إعلانات الوظائف مرفقة بروابط موثوقة لضمان صحة المعلومات.</p>
+    </div>
+  </body>
+  </html>
+  `);
+});
+app.get('/contact', (req, res) => {
+  res.send(`
+  <html>
+  <head>
+    <style>
+      body { font-family:Arial; text-align:center; padding:40px; background:#f0f0f0; }
+      .box { background:white; padding:30px; border-radius:10px; max-width:500px; margin:auto; }
+      a { color:black; font-weight:bold; text-decoration:none; }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <h2>اتصل بنا</h2>
+      <p>للتواصل معنا:</p>
+      <a href="mailto:brainbucks75@gmail.com">brainbucks75@gmail.com</a>
+    </div>
+  </body>
+  </html>
+  `);
 });
