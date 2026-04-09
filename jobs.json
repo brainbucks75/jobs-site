@@ -30,9 +30,36 @@
     "sector": "health"
   },
   {
+    "id": 6,
+    "title": "مصمم جرافيك",
+    "description": "هذه الوظيفة للأشخاص الذين يمتلكون مهارات في التصميم و الإبداع البصري حيث سيكون المسؤول عن إعداد المواد الإعلانية و التصاميم الخاصة بالمنتجات و العلامة التجارية ",
+    "applyLink": "https://careers.kasihfood.com/apps/job/jobs",
+    "sector": "engineering"
+  },
+  {
     "id": 4,
-    "title": "مهندس مدني",
-    "description": "شركة GHI للمقاولات بحاجة لمهندس مدني",
+    "title": "مهندس إنتاج مبتدىء",
+    "description": "يعمل مهندس الإنتاج على متابعة خطوط الإنتاج و تحسين الكفاءة التشغيلية داخل المصنع    ",
+ "applyLink": "https://careers.kasihfood.com/apps/job/jobs",
+    "sector": "engineering"
+  },
+ "id": 7,
+    "title": "محاسب أول",
+    "description": " وظيفة تشمل إدارة العمليات المالية و التعامل مع البنوك و الإشراف على التدفقات المالية النقدية داخل الشركة ",
+ "applyLink": "https://careers.kasihfood.com/apps/job/jobs",
+    "sector": "engineering"
+  },
+"id": 8,
+    "title": " فني سلامة و صحة مهنية",
+    "description": "  مسؤول عن ضمان سلامة بيئة العمل داخل المصنع و التأكد من تطبيق معايير الصحة و السلامة المهنية ",
+ "applyLink": "https://careers.kasihfood.com/apps/job/jobs",
+    "sector": "engineering"
+  },
+"id":9,
+    "title": " أخصائي علامة تجارية أول",
+    "description": " وظيفة تسويقية متقدمة تهدف الى تطوير العلامة التجارية و زيادة انتشارها بالسوق  ",
+ "applyLink": "https://careers.kasihfood.com/apps/job/jobs",
     "sector": "engineering"
   }
+
 ]
