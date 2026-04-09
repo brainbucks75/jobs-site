@@ -254,7 +254,7 @@ app.get('/jobs/:sector/job/:id', (req, res) => {
     <div class="header">وظائف الوطن العربي</div>
     <div class="job-details">
       <h2>${job.title}</h2>
-      <p>${job.description}</p>
+     <p>${job.description.replace(/\n/g, '<br>')}</p>
       ${applyHtml}
     </div>
   </body>
