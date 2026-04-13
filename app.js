@@ -16,6 +16,8 @@ app.get('/', (req, res) => {
   res.send(`
   <html>
   <head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
+     crossorigin="anonymous"></script>
     <style>
       body {
         margin:0;
@@ -79,8 +81,6 @@ app.get('/', (req, res) => {
 .top-buttons a:hover {
   background:#333;
 }
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
-     crossorigin="anonymous"></script>
     </style>
   </head>
   <body>
@@ -121,6 +121,8 @@ app.get('/jobs/:sector/page/:page', (req, res) => {
   let html = `
   <html>
   <head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
+     crossorigin="anonymous"></script>
     <style>
       body {
         margin:0;
@@ -184,8 +186,6 @@ app.get('/jobs/:sector/page/:page', (req, res) => {
       .pagination a:hover {
         background:#333;
       }
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
-     crossorigin="anonymous"></script>
     </style>
   </head>
   <body>
@@ -234,6 +234,8 @@ app.get('/jobs/:sector/job/:id', (req, res) => {
   res.send(`
   <html>
   <head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
+     crossorigin="anonymous"></script>
     <style>
       body {
         font-family:Arial;
@@ -278,9 +280,7 @@ app.get('/jobs/:sector/job/:id', (req, res) => {
         font-weight:bold;
         text-decoration:none;
       }
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
-     crossorigin="anonymous"></script>
-    </style>
+</style>
   </head>
   <body>
     <div class="header">وظائف الوطن العربي</div>
@@ -300,11 +300,11 @@ app.get('/about', (req, res) => {
   res.send(`
   <html>
   <head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
+     crossorigin="anonymous"></script>
     <style>
       body { font-family:Arial; text-align:center; padding:40px; background:#f0f0f0; }
       .box { background:white; padding:30px; border-radius:10px; max-width:500px; margin:auto; }
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
-     crossorigin="anonymous"></script>
     </style>
   </head>
   <body>
@@ -320,11 +320,11 @@ app.get('/privacy', (req, res) => {
   res.send(`
   <html>
   <head>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
+     crossorigin="anonymous"></script>
     <style>
       body { font-family:Arial; text-align:center; padding:40px; background:#f0f0f0; }
       .box { background:white; padding:30px; border-radius:10px; max-width:500px; margin:auto; }
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
-     crossorigin="anonymous"></script>
     </style>
   </head>
   <body>
@@ -345,8 +345,6 @@ app.get('/contact', (req, res) => {
       body { font-family:Arial; text-align:center; padding:40px; background:#f0f0f0; }
       .box { background:white; padding:30px; border-radius:10px; max-width:500px; margin:auto; }
       a { color:black; font-weight:bold; text-decoration:none; }
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
-     crossorigin="anonymous"></script>
     </style>
   </head>
   <body>
