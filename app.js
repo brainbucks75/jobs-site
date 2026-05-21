@@ -4,356 +4,291 @@ const app = express();
 
 const PORT = 3000;
 
-// قراءة الوظائف من ملف JSON
+// قراءة الوظائف
 function getJobs(sector) {
   const data = fs.readFileSync('jobs.json');
   const jobs = JSON.parse(data);
   return jobs.filter(job => job.sector === sector);
 }
 
-// الصفحة الرئيسية بالأيقونات بتصميم جذاب
+// قراءة المقالات
+function getArticles() {
+  if (!fs.existsSync('articles.json')) return [];
+  return JSON.parse(fs.readFileSync('articles.json'));
+}
+
+// قراءة القصص
+function getStories() {
+  if (!fs.existsSync('stories.json')) return [];
+  return JSON.parse(fs.readFileSync('stories.json'));
+}
+
+/* ===================== */
+/*        HOME PAGE      */
+/* ===================== */
 app.get('/', (req, res) => {
+
   res.send(`
   <html>
   <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
-     crossorigin="anonymous"></script>
-    <style>
-      body {
-        margin:0;
-        font-family: Arial, sans-serif;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        justify-content:flex-start;
-        background-color:#f0f0f0;
-      }
-      .header {
-        width:100%;
-        background-color:black;
-        color:white;
-        padding:20px 0;
-        text-align:center;
-        font-size:28px;
-        font-weight:bold;
-        position:sticky;
-        top:0;
-        z-index:1000;
-      }
-      .icon-button {
-        background:black;
-        color:white;
-        width:90%;
-        max-width:400px;
-        padding:30px;
-        font-size:24px;
-        text-align:center;
-        margin:15px 0;
-        border-radius:12px;
-        text-decoration:none;
-        display:block;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        transition: all 0.3s ease;
-      }
-      .icon-button:hover {
-        background: linear-gradient(90deg, #333, #555);
-        transform: translateY(-3px);
-        box-shadow: 0 6px 8px rgba(0,0,0,0.3);
-      }
-.top-buttons {
-  width:100%;
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin:15px 0;
-}
+  <style>
+    body{
+      margin:0;
+      font-family:Arial;
+      background:#f5f6fa;
+    }
 
-.top-buttons a {
-  background:black;
-  color:white;
-  padding:10px 15px;
-  text-decoration:none;
-  border-radius:8px;
-  font-size:14px;
-  transition:0.3s;
-}
+    /* NAVBAR */
+    .nav{
+      background:#0d0d0d;
+      color:white;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:15px 20px;
+      position:sticky;
+      top:0;
+    }
 
-.top-buttons a:hover {
-  background:#333;
-}
-    </style>
+    .nav a{
+      color:white;
+      margin:0 10px;
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    /* HERO */
+    .hero{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:40px;
+      background:linear-gradient(120deg,#111,#333);
+      color:white;
+    }
+
+    .hero h1{font-size:32px;}
+    .hero p{opacity:0.8;}
+
+    .hero img{
+      width:300px;
+      border-radius:10px;
+    }
+
+    /* SECTIONS */
+    .section-title{
+      text-align:center;
+      margin:30px 0;
+      font-size:22px;
+      font-weight:bold;
+    }
+
+    .grid{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:15px;
+      padding:20px;
+    }
+
+    .card{
+      background:white;
+      padding:20px;
+      width:220px;
+      text-align:center;
+      border-radius:12px;
+      box-shadow:0 3px 10px rgba(0,0,0,0.1);
+      text-decoration:none;
+      color:black;
+      transition:0.3s;
+    }
+
+    .card:hover{
+      transform:translateY(-5px);
+    }
+
+    /* FOOTER */
+    .footer{
+      background:#0d0d0d;
+      color:white;
+      text-align:center;
+      padding:30px;
+      margin-top:40px;
+    }
+
+    .social a{
+      color:white;
+      margin:0 10px;
+      text-decoration:none;
+    }
+  </style>
   </head>
+
   <body>
-    <div class="header">وظائف الوطن العربي</div>
-<div class="top-buttons">
-  <a href="/about">من نحن</a>
-  <a href="/privacy">سياسة الخصوصية</a>
-  <a href="/contact">اتصل بنا</a>
-</div>
-    <a href="/jobs/health/page/1" class="icon-button">وظائف قطاع الصحة</a>
-    <a href="/jobs/engineering/page/1" class="icon-button">وظائف قطاع الهندسة</a>
-    <a href="/jobs/education/page/1" class="icon-button">وظائف قطاع التعليم</a>
-    <a href="/jobs/management/page/1" class="icon-button">وظائف قطاع الإدارة والتكنولوجيا</a>
+
+  <div class="nav">
+    <div>وظائف الوطن العربي</div>
+    <div>
+      <a href="/">الرئيسية</a>
+      <a href="/articles">مقالات</a>
+      <a href="/stories">قصص</a>
+      <a href="/about">من نحن</a>
+      <a href="/contact">اتصل بنا</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div>
+      <h1>ابحث عن وظيفتك القادمة في الوطن العربي</h1>
+      <p>مئات الفرص الوظيفية في مختلف المجالات في انتظارك</p>
+    </div>
+    <img src="https://i.imgur.com/3ZQ3ZQz.png" />
+  </div>
+
+  <div class="section-title">تصفح الوظائف حسب القطاع</div>
+
+  <div class="grid">
+    <a class="card" href="/jobs/health/page/1">قطاع الصحة</a>
+    <a class="card" href="/jobs/engineering/page/1">قطاع الهندسة</a>
+    <a class="card" href="/jobs/education/page/1">قطاع التعليم</a>
+    <a class="card" href="/jobs/management/page/1">قطاع الإدارة والتكنولوجيا</a>
+  </div>
+
+  <div class="section-title">استكشف</div>
+
+  <div class="grid">
+    <a class="card" href="/articles">أحدث المقالات</a>
+    <a class="card" href="/stories">قصص ملهمة</a>
+    <a class="card" href="/contests">مسابقات واختبارات</a>
+  </div>
+
+  <div class="footer">
+    <p>روابط سريعة</p>
+
+    <div class="social">
+      <a href="https://instagram.com">Instagram</a>
+      <a href="mailto:test@gmail.com">Email</a>
+      <a href="https://facebook.com">Facebook</a>
+      <a href="https://x.com">X</a>
+    </div>
+
+    <p>© وظائف الوطن العربي</p>
+  </div>
+
   </body>
   </html>
   `);
 });
 
-// صفحة قطاع مع تصميم احترافي و Pagination
-app.get('/jobs/:sector/page/:page', (req, res) => {
-  const sector = req.params.sector;
-  const page = parseInt(req.params.page);
-  const jobs = getJobs(sector);
+/* ===================== */
+/*      ARTICLES PAGE    */
+/* ===================== */
+app.get('/articles', (req, res) => {
 
-  const perPage = 5;
-  const start = (page - 1) * perPage;
-  const end = start + perPage;
-  const paginatedJobs = jobs.slice(start, end);
+  const articles = getArticles();
 
-  const sectorNames = {
-    health: "وظائف قطاع الصحة",
-    engineering: "وظائف قطاع الهندسة",
-    education: "وظائف قطاع التعليم",
-    management: "وظائف قطاع الإدارة والتكنولوجيا"
-  };
-  const sectorTitle = sectorNames[sector] || "وظائف القطاع";
+  let html = `<html><body style="font-family:Arial;background:#f5f5f5;padding:20px;">`;
 
-  let html = `
-  <html>
-  <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
-     crossorigin="anonymous"></script>
-    <style>
-      body {
-        margin:0;
-        font-family:Arial;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        background-color:#f0f0f0;
-        padding:20px;
-      }
-      .header {
-        width:100%;
-        background-color:black;
-        color:white;
-        padding:20px 0;
-        text-align:center;
-        font-size:28px;
-        font-weight:bold;
-        position:sticky;
-        top:0;
-        z-index:1000;
-      }
-      h1 {
-        font-size:36px;
-        text-align:center;
-        margin-bottom:30px;
-      }
-      .job-card {
-        background:white;
-        width:90%;
-        max-width:500px;
-        padding:20px;
-        margin:15px 0;
-        border-radius:12px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        text-align:center;
-        transition: all 0.3s ease;
-      }
-      .job-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 8px rgba(0,0,0,0.3);
-      }
-      .job-card a {
-        text-decoration:none;
-        color:black;
-        font-size:20px;
-        font-weight:bold;
-      }
-      .pagination {
-        margin-top:20px;
-      }
-      .pagination a {
-        margin: 0 10px;
-        text-decoration:none;
-        color:white;
-        background:black;
-        padding:10px 20px;
-        border-radius:5px;
-        transition: all 0.3s ease;
-      }
-      .pagination a:hover {
-        background:#333;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="header">وظائف الوطن العربي</div>
-    <h1>${sectorTitle}</h1>
-  `;
+  html += `<h1>المقالات</h1>`;
 
-  paginatedJobs.forEach(job => {
-    html += `<div class="job-card">
-               <a href="/jobs/${sector}/job/${job.id}">${job.title}</a>
-             </div>`;
+  articles.forEach(a=>{
+    html += `
+      <div style="background:white;padding:20px;margin:10px;border-radius:10px;">
+        <h2>${a.title}</h2>
+        <p>${a.content}</p>
+      </div>
+    `;
   });
 
-  // أزرار السابق / التالي
-  html += `<div class="pagination">`;
-  if (page > 1) html += `<a href="/jobs/${sector}/page/${page-1}">السابق</a>`;
-  if (end < jobs.length) html += `<a href="/jobs/${sector}/page/${page+1}">التالي</a>`;
-  html += `</div>`;
+  html += `</body></html>`;
+  res.send(html);
+});
+
+/* ===================== */
+/*       STORIES         */
+/* ===================== */
+app.get('/stories', (req, res) => {
+
+  const stories = getStories();
+
+  let html = `<html><body style="font-family:Arial;background:#f5f5f5;padding:20px;">`;
+
+  html += `<h1>القصص</h1>`;
+
+  stories.forEach(s=>{
+    html += `
+      <div style="background:white;padding:20px;margin:10px;border-radius:10px;">
+        <h2>${s.title}</h2>
+        <p>${s.content}</p>
+      </div>
+    `;
+  });
 
   html += `</body></html>`;
+  res.send(html);
+});
+
+/* ===================== */
+/*      ABOUT PAGE       */
+/* ===================== */
+app.get('/about', (req, res) => {
+  res.send(`
+    <h1 style="font-family:Arial;text-align:center;">نحن موقع وظائف</h1>
+  `);
+});
+
+/* ===================== */
+/*     CONTACT PAGE      */
+/* ===================== */
+app.get('/contact', (req, res) => {
+  res.send(`
+  <div style="font-family:Arial;text-align:center;">
+    <h2>اتصل بنا</h2>
+
+    <div>
+      <a href="https://instagram.com">Instagram</a><br>
+      <a href="https://facebook.com">Facebook</a><br>
+      <a href="mailto:test@gmail.com">Email</a><br>
+      <a href="https://x.com">X</a>
+    </div>
+  </div>
+  `);
+});
+
+/* ===================== */
+/*     JOB ROUTES        */
+/* (نفس نظامك القديم)   */
+/* ===================== */
+
+app.get('/jobs/:sector/page/:page', (req,res)=>{
+  const sector = req.params.sector;
+  const page = parseInt(req.params.page);
+
+  const jobs = getJobs(sector);
+  const perPage = 5;
+
+  const start = (page-1)*perPage;
+  const end = start+perPage;
+
+  const list = jobs.slice(start,end);
+
+  let html = `<h1>${sector}</h1>`;
+
+  list.forEach(j=>{
+    html += `<div><a href="/jobs/${sector}/job/${j.id}">${j.title}</a></div>`;
+  });
 
   res.send(html);
 });
-// صفحة تفاصيل وظيفة بتصميم احترافي
-app.get('/jobs/:sector/job/:id', (req, res) => {
-  const sector = req.params.sector;
-  const id = parseInt(req.params.id);
-  const jobs = getJobs(sector);
-  const job = jobs.find(j => j.id === id);
 
-  if (!job) return res.send('وظيفة غير موجودة');
-
-  // إنشاء قسم التقديم حسب المتوفر
-  let applyHtml = '';
-  if (job.applyLink && job.email) {
-    applyHtml = `<p>للتقديم عبر الرابط: <a href="${job.applyLink}" target="_blank">اضغط هنا</a></p>
-                 <p>أو عبر الإيميل: <a href="mailto:${job.email}">${job.email}</a></p>`;
-  } else if (job.applyLink) {
-    applyHtml = `<p>للتقديم عبر الرابط: <a href="${job.applyLink}" target="_blank">اضغط هنا</a></p>`;
-  } else if (job.email) {
-    applyHtml = `<p>للتقديم عبر الإيميل: <a href="mailto:${job.email}">${job.email}</a></p>`;
-  } else {
-    applyHtml = `<p>لا يوجد طريقة مباشرة للتقديم</p>`;
-  }
+app.get('/jobs/:sector/job/:id', (req,res)=>{
+  const jobs = getJobs(req.params.sector);
+  const job = jobs.find(j=>j.id==req.params.id);
 
   res.send(`
-  <html>
-  <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
-     crossorigin="anonymous"></script>
-    <style>
-      body {
-        font-family:Arial;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        padding:20px;
-        background-color:#f0f0f0;
-      }
-      .header {
-        width:100%;
-        background-color:black;
-        color:white;
-        padding:20px 0;
-        text-align:center;
-        font-size:28px;
-        font-weight:bold;
-        position:sticky;
-        top:0;
-        z-index:1000;
-      }
-      .job-details {
-        background:white;
-        width:90%;
-        max-width:500px;
-        padding:20px;
-        margin:30px 0;
-        border-radius:12px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        text-align:center;
-      }
-      .job-details h2 {
-        font-size:28px;
-        margin-bottom:15px;
-      }
-      .job-details p {
-        font-size:18px;
-        margin:10px 0;
-      }
-      .job-details a {
-        color:black;
-        font-weight:bold;
-        text-decoration:none;
-      }
-</style>
-  </head>
-  <body>
-    <div class="header">وظائف الوطن العربي</div>
-    <div class="job-details">
-      <h2>${job.title}</h2>
-     <p>${job.description.replace(/\n/g, '<br>')}</p>
-      ${applyHtml}
-    </div>
-  </body>
-  </html>
+    <h1>${job.title}</h1>
+    <p>${job.description}</p>
   `);
 });
-app.listen(PORT, () => {
- console.log("Server running on http://localhost:" + PORT);
-});
-app.get('/about', (req, res) => {
-  res.send(`
-  <html>
-  <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
-     crossorigin="anonymous"></script>
-    <style>
-      body { font-family:Arial; text-align:center; padding:40px; background:#f0f0f0; }
-      .box { background:white; padding:30px; border-radius:10px; max-width:500px; margin:auto; }
-    </style>
-  </head>
-  <body>
-    <div class="box">
-      <h2>من نحن</h2>
-      <p>نحن موقع إلكتروني مختص بعرض الوظائف في بلدان الوطن العربي، نهدف إلى تسهيل وصول الباحثين عن العمل إلى فرص موثوقة ومحدثة يوميًا.</p>
-    </div>
-  </body>
-  </html>
-  `);
-});
-app.get('/privacy', (req, res) => {
-  res.send(`
-  <html>
-  <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
-     crossorigin="anonymous"></script>
-    <style>
-      body { font-family:Arial; text-align:center; padding:40px; background:#f0f0f0; }
-      .box { background:white; padding:30px; border-radius:10px; max-width:500px; margin:auto; }
-    </style>
-  </head>
-  <body>
-    <div class="box">
-      <h2>سياسة الخصوصية</h2>
-      <p>يُمنع نقل أو نسخ أي وظائف معروضة داخل الموقع.</p>
-      <p>كافة إعلانات الوظائف مرفقة بروابط موثوقة لضمان صحة المعلومات.</p>
-    </div>
-  </body>
-  </html>
-  `);
-});
-app.get('/contact', (req, res) => {
-  res.send(`
-  <html>
-  <head>
-    <style>
-      body { font-family:Arial; text-align:center; padding:40px; background:#f0f0f0; }
-      .box { background:white; padding:30px; border-radius:10px; max-width:500px; margin:auto; }
-      a { color:black; font-weight:bold; text-decoration:none; }
-    </style>
-  </head>
-  <body>
-    <div class="box">
-      <h2>اتصل بنا</h2>
-      <p>للتواصل معنا:</p>
-      <a href="mailto:brainbucks75@gmail.com">brainbucks75@gmail.com</a>
-    </div>
-  </body>
-  </html>
-  `);
-});
+
+app.listen(PORT, ()=>console.log("Running on "+PORT));
