@@ -28,7 +28,6 @@ function getStories() {
 /* =========================
    GLOBAL STYLE
 ========================= */
-
 function pageStyle() {
 return `
 <style>
@@ -43,7 +42,10 @@ body{
 font-family:Arial;
 background:#f5f9ff;
 direction:rtl;
-overflow-x:hidden;
+}
+
+</style>
+`;
 }
 
 /* NAVBAR */
