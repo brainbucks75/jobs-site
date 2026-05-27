@@ -198,6 +198,10 @@ return `
 </div>
 `;
 }
+function getContests() {
+  if (!fs.existsSync('contests.json')) return [];
+  return JSON.parse(fs.readFileSync('contests.json'));
+}
 
 function footer(){
 return `
@@ -503,16 +507,64 @@ app.get('/stories/:id', (req,res)=>{
 /* =========================
    CONTESTS PAGE
 ========================= */
-app.get('/contests',(req,res)=>{
-  const body = `
+app.get('/contests', (req,res)=>{
+  const contests = getContests();
+
+  let body = `
   <div class="page-container">
-    <h1 class="section-title">مسابقات واختبارات</h1>
-    <div class="post"><h2>مسابقة الثقافة العربية</h2><p>اختبر معلوماتك العامة واربح جوائز قيمة!</p></div>
-    <div class="post"><h2>اختبار الذكاء العام</h2><p>قريباً...</p></div>
-  </div>`;
-  res.send(layout('المسابقات - وظائف الوطن العربي', body));
+    <h1 class="section-title">المسابقات</h1>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+  `;
+
+  contests.forEach(c=>{
+    body += `
+      <a href="/contests/${c.id}" style="text-decoration:none;color:inherit">
+        <div class="post" style="padding:0;overflow:hidden;cursor:pointer">
+
+          <img src="${c.image}" 
+               style="width:100%;height:180px;object-fit:cover">
+
+          <div style="padding:12px;text-align:center">
+            <h2 style="font-size:18px;font-weight:800">
+              ${c.title}
+            </h2>
+          </div>
+
+        </div>
+      </a>
+    `;
+  });
+
+  body += `</div></div>`;
+
+  res.send(layout('المسابقات', body));
 });
 
+app.get('/contests/:id', (req,res)=>{
+  const contests = getContests();
+  const game = contests.find(c => c.id === req.params.id);
+
+  if(!game){
+    return res.send(layout('غير موجود','<div class="page-container"><div class="post">غير موجود</div></div>'));
+  }
+
+  const body = `
+  <div class="page-container">
+    <div class="post">
+      <h2 style="font-size:28px;font-weight:900">${game.title}</h2>
+
+      <img src="${game.image}" style="width:100%;margin:20px 0;border-radius:12px">
+
+      <p style="font-size:16px;line-height:2">
+        سيتم إضافة اللعبة هنا قريباً 🎮
+      </p>
+    </div>
+  </div>
+  `;
+
+  res.send(layout(game.title, body));
+});
 /* =========================
    ABOUT
 ========================= */

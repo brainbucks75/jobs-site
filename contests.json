@@ -1,0 +1,47 @@
+[
+  {
+    "id": "general",
+    "title": "ثقافة عامة",
+    "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644"
+  },
+  {
+    "id": "islamic",
+    "title": "إسلاميات",
+    "image": "https://images.unsplash.com/photo-1609599006353-e629aaabfeae"
+  },
+  {
+    "id": "truefalse",
+    "title": "صح × خطأ",
+    "image": "https://images.unsplash.com/photo-1456324504439-367cee3b3c32"
+  },
+  {
+    "id": "time",
+    "title": "تحدي الوقت",
+    "image": "https://images.unsplash.com/photo-1506784365847-bbad939e9335"
+  },
+  {
+    "id": "oddone",
+    "title": "حدد المختلف",
+    "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
+  },
+  {
+    "id": "whoami",
+    "title": "من أنا",
+    "image": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d"
+  },
+  {
+    "id": "world",
+    "title": "ثقافة دولية",
+    "image": "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1"
+  },
+  {
+    "id": "orderwords",
+    "title": "رتب الحروف",
+    "image": "https://images.unsplash.com/photo-1456324504439-367cee3b3c32"
+  },
+  {
+    "id": "wronginfo",
+    "title": "حدد المعلومة الخاطئة",
+    "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3"
+  }
+]
