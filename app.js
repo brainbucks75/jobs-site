@@ -58,6 +58,7 @@ position:sticky;
 top:0;
 z-index:1000;
 }
+
 .logo{
 color:white;
 font-size:24px;
@@ -324,7 +325,6 @@ padding:50px 20px;
 </style>
 `;
 }
-
 /* =========================
    HOME PAGE
 ========================= */
