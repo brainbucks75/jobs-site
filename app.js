@@ -398,20 +398,62 @@ app.get('/articles',(req,res)=>{
 /* =========================
    STORIES PAGE
 ========================= */
-app.get('/stories',(req,res)=>{
+app.get('/stories', (req,res)=>{
   const stories = getStories();
-  let body = `<div class="page-container"><h1 class="section-title">القصص الملهمة</h1>`;
-  if(stories.length===0){
-    body += `<div class="post"><p>لا توجد قصص حالياً.</p></div>`;
-  } else {
-    stories.forEach(s=>{
-      body += `<div class="post"><h2>${s.title}</h2><p>${s.content||''}</p></div>`;
-    });
-  }
-  body += `</div>`;
-  res.send(layout('القصص الملهمة - وظائف الوطن العربي', body));
-});
 
+  let body = `
+  <div class="page-container">
+    <h1 class="section-title">القصص الملهمة</h1>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+  `;
+
+  stories.forEach(s=>{
+    body += `
+      <a href="/stories/${s.id}" style="text-decoration:none;color:inherit">
+        <div class="post" style="padding:0;overflow:hidden">
+          <img src="${s.image}" style="width:100%;height:180px;object-fit:cover">
+          <div style="padding:12px">
+            <h2 style="font-size:18px;font-weight:800">
+              ${s.title}
+            </h2>
+          </div>
+        </div>
+      </a>
+    `;
+  });
+
+  body += `
+    </div>
+  </div>
+  `;
+
+  res.send(layout('القصص', body));
+});
+app.get('/stories/:id', (req,res)=>{
+  const stories = getStories();
+  const story = stories.find(s => s.id == req.params.id);
+
+  if(!story){
+    return res.send(layout('غير موجود','<div class="page-container"><div class="post">القصة غير موجودة</div></div>'));
+  }
+
+  const body = `
+  <div class="page-container">
+    <div class="post">
+      <h2 style="font-size:30px;font-weight:900">${story.title}</h2>
+
+      <img src="${story.image}" style="width:100%;margin:20px 0;border-radius:12px">
+
+      <p style="font-size:16px;line-height:2">
+        ${story.content}
+      </p>
+    </div>
+  </div>
+  `;
+
+  res.send(layout(story.title, body));
+});
 /* =========================
    CONTESTS PAGE
 ========================= */
