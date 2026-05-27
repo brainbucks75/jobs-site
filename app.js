@@ -28,7 +28,10 @@ function getStories() {
   if (!fs.existsSync('stories.json')) return [];
   return JSON.parse(fs.readFileSync('stories.json'));
 }
-
+function getPrivacy() {
+  if (!fs.existsSync('privacy.json')) return null;
+  return JSON.parse(fs.readFileSync('privacy.json'));
+}
 /* =========================
    GLOBAL STYLE (NEW DESIGN)
 ========================= */
@@ -211,7 +214,7 @@ return `
       <div>
         <h4>معلومات</h4>
         <a href="/about">من نحن</a>
-        <a href="#">سياسة الخصوصية</a>
+      <a href="/privacy">سياسة الخصوصية</a>
         <a href="#">شروط الاستخدام</a>
         <a href="/contact">اتصل بنا</a>
       </div>
@@ -618,6 +621,29 @@ app.get('/jobs/:sector/job/:id',(req,res)=>{
   res.send(layout(`${job.title} - وظائف الوطن العربي`, body));
 });
 
+app.get('/privacy', (req, res) => {
+  const privacy = getPrivacy();
+
+  if (!privacy) {
+    return res.send(layout('سياسة الخصوصية', '<div class="page-container"><div class="post">لا يوجد محتوى</div></div>'));
+  }
+
+  const body = `
+  <div class="page-container">
+    <div class="post">
+      <h2 style="font-size:28px;font-weight:900">${privacy.title}</h2>
+
+      ${privacy.content.map(p => `
+        <p style="font-size:16px;line-height:2;margin-top:12px">
+          ${p}
+        </p>
+      `).join('')}
+    </div>
+  </div>
+  `;
+
+  res.send(layout('سياسة الخصوصية', body));
+});
 /* ========================= */
 app.listen(PORT,()=>{
   console.log(`Server running on http://localhost:${PORT}`);
