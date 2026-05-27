@@ -1,4 +1,3 @@
-```javascript
 const express = require('express');
 const fs = require('fs');
 const app = express();
@@ -15,6 +14,11 @@ function getJobs(sector) {
   return jobs.filter(job => job.sector === sector);
 }
 
+function getAllJobs() {
+  if (!fs.existsSync('jobs.json')) return [];
+  return JSON.parse(fs.readFileSync('jobs.json'));
+}
+
 function getArticles() {
   if (!fs.existsSync('articles.json')) return [];
   return JSON.parse(fs.readFileSync('articles.json'));
@@ -26,812 +30,510 @@ function getStories() {
 }
 
 /* =========================
-   GLOBAL STYLE
+   GLOBAL STYLE (NEW DESIGN)
 ========================= */
 function pageStyle() {
 return `
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 <style>
+:root{
+  --navy:#15203a;
+  --navy-2:#1b2746;
+  --brand:#3b82f6;
+  --brand-2:#2563eb;
+  --bg:#f6f8fc;
+  --card:#ffffff;
+  --text:#0f172a;
+  --muted:#64748b;
+  --border:#e5e7eb;
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+  --health:#10b981;
+  --eng:#7c3aed;
+  --edu:#c026d3;
+  --tech:#f59e0b;
+
+  --shadow:0 10px 30px -12px rgba(15,23,42,.18);
+  --radius:18px;
 }
 
-body{
-font-family:Arial;
-background:#f5f9ff;
-direction:rtl;
-overflow-x:hidden;
-}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{font-family:'Cairo',Arial,sans-serif}
+body{background:var(--bg);color:var(--text);direction:rtl;overflow-x:hidden;line-height:1.7}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
 
-/* NAVBAR */
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
 
-.navbar{
-width:100%;
-background:#0b1220;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px 60px;
-position:sticky;
-top:0;
-z-index:1000;
-}
-
-.logo{
-color:white;
-font-size:24px;
-font-weight:bold;
-}
-
-.nav-links{
-display:flex;
-gap:25px;
-}
-
-.nav-links a{
-color:white;
-text-decoration:none;
-font-size:15px;
-transition:0.3s;
-}
-
-.nav-links a:hover{
-color:#4ea1ff;
-}
+/* HEADER */
+.navbar{background:var(--navy);color:#fff}
+.navbar .inner{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;max-width:1200px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
+.logo i{color:var(--brand)}
+.nav-links{display:flex;gap:26px}
+.nav-links a{font-size:14px;color:#e5e7eb;transition:.25s}
+.nav-links a:hover{color:var(--brand)}
 
 /* HERO */
+.hero{background:linear-gradient(135deg,#eaf1ff 0%,#f6f8fc 60%);padding:64px 0}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.hero h1{font-size:44px;font-weight:800;line-height:1.35;color:var(--text)}
+.hero h1 .accent{color:var(--brand-2)}
+.hero p{margin-top:18px;color:var(--muted);font-size:16px}
+.hero-image{border-radius:24px;overflow:hidden;box-shadow:var(--shadow)}
+.hero-image img{width:100%;height:auto;object-fit:cover}
 
-.hero{
-width:100%;
-padding:70px 60px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:linear-gradient(to left,#eef5ff,#ffffff);
-}
+/* SECTION TITLE */
+.section{padding:64px 0}
+.section-title{text-align:center;font-size:28px;font-weight:800;margin-bottom:36px}
 
-.hero-text{
-width:50%;
-}
+/* SECTOR CARDS */
+.sector-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.sector-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 20px;text-align:center;box-shadow:var(--shadow);transition:.3s;display:flex;flex-direction:column;align-items:center}
+.sector-card:hover{transform:translateY(-6px)}
+.sector-icon{width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:16px;color:#fff}
+.sector-card h3{font-size:16px;font-weight:700;margin-bottom:6px}
+.sector-card .count{color:var(--muted);font-size:13px;margin-bottom:18px}
+.sector-btn{display:inline-block;padding:9px 20px;border-radius:10px;color:#fff;font-size:13px;font-weight:600;transition:.25s}
+.sector-btn:hover{opacity:.9}
 
-.hero-text h1{
-font-size:48px;
-color:#111827;
-margin-bottom:20px;
-line-height:1.5;
-}
+.s-health .sector-icon,.s-health .sector-btn{background:var(--health)}
+.s-eng    .sector-icon,.s-eng    .sector-btn{background:var(--eng)}
+.s-edu    .sector-icon,.s-edu    .sector-btn{background:var(--edu)}
+.s-tech   .sector-icon,.s-tech   .sector-btn{background:var(--tech)}
 
-.hero-text p{
-font-size:20px;
-color:#6b7280;
-line-height:2;
-}
+.center{text-align:center;margin-top:36px}
+.btn-primary{display:inline-block;background:var(--brand-2);color:#fff;padding:12px 28px;border-radius:10px;font-weight:600;font-size:14px;transition:.25s}
+.btn-primary:hover{background:#1d4ed8}
 
-.hero-image{
-width:45%;
-display:flex;
-justify-content:center;
-}
+/* THREE COL */
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.content-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.cc-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.cc-head h3{font-size:16px;font-weight:700}
+.cc-head a{color:var(--brand-2);font-size:12px}
+.cc-thumb{height:170px;width:100%;object-fit:cover}
+.cc-feature{padding:18px 20px}
+.cc-feature h4{font-size:15px;font-weight:700;line-height:1.5}
+.cc-feature .date{color:var(--muted);font-size:12px;margin-top:8px}
+.cc-list{border-top:1px solid var(--border)}
+.cc-item{display:flex;gap:10px;padding:14px 20px;border-bottom:1px solid var(--border);transition:.2s}
+.cc-item:last-child{border-bottom:none}
+.cc-item:hover{background:#f8fafc}
+.cc-item i{color:var(--muted);font-size:13px;margin-top:5px}
+.cc-item .t{font-size:14px;font-weight:600}
+.cc-item .d{color:var(--muted);font-size:12px;margin-top:4px}
 
-.hero-image img{
-width:100%;
-max-width:500px;
-}
+/* FEATURES BAR */
+.features{background:#eaf1ff;border-radius:var(--radius);padding:34px;margin-bottom:64px}
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.feat{text-align:center}
+.feat-ic{width:56px;height:56px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;color:var(--brand-2);font-size:20px;box-shadow:var(--shadow)}
+.feat h4{font-size:14px;font-weight:700}
+.feat p{color:var(--muted);font-size:12px;margin-top:4px}
 
-/* SECTION */
-
-.section{
-padding:60px 50px;
-}
-
-.section-title{
-font-size:34px;
-font-weight:bold;
-text-align:center;
-margin-bottom:40px;
-color:#111827;
-}
-
-/* CARDS */
-
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-gap:25px;
-}
-
-.card{
-background:white;
-border-radius:20px;
-padding:35px 20px;
-text-align:center;
-text-decoration:none;
-color:black;
-transition:0.3s;
-box-shadow:0 5px 18px rgba(0,0,0,0.08);
-}
-
-.card:hover{
-transform:translateY(-8px);
-}
-
-.card-icon{
-font-size:55px;
-margin-bottom:20px;
-}
-
-.card h3{
-font-size:24px;
-margin-bottom:10px;
-}
-
-.card p{
-color:#6b7280;
-line-height:1.8;
-}
-
-/* COLORS */
-
-.health{
-background:linear-gradient(135deg,#dbeafe,#bfdbfe);
-}
-
-.engineering{
-background:linear-gradient(135deg,#ede9fe,#ddd6fe);
-}
-
-.education{
-background:linear-gradient(135deg,#dcfce7,#bbf7d0);
-}
-
-.management{
-background:linear-gradient(135deg,#fee2e2,#fecaca);
-}
-
-.article{
-background:linear-gradient(135deg,#fff7ed,#fed7aa);
-}
-
-.story{
-background:linear-gradient(135deg,#ecfeff,#a5f3fc);
-}
-
-.contest{
-background:linear-gradient(135deg,#fdf4ff,#f5d0fe);
-}
-
-/* ARTICLE PAGE */
-
-.page-container{
-width:90%;
-max-width:900px;
-margin:auto;
-padding:40px 0;
-}
-
-.post{
-background:white;
-padding:30px;
-border-radius:20px;
-margin-bottom:25px;
-box-shadow:0 5px 18px rgba(0,0,0,0.08);
-}
-
-.post h2{
-font-size:32px;
-margin-bottom:20px;
-color:#111827;
-}
-
-.post p{
-font-size:18px;
-line-height:2.2;
-color:#374151;
-}
+/* JOBS / POSTS */
+.page-container{max-width:900px;margin:0 auto;padding:48px 24px}
+.page-container .section-title{margin-bottom:28px}
+.post{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:26px;margin-bottom:18px;box-shadow:var(--shadow)}
+.post h2{font-size:22px;margin-bottom:14px;color:var(--text);font-weight:800}
+.post p{font-size:15px;line-height:2;color:#334155;white-space:pre-line}
+.post .apply{display:inline-block;margin-top:16px;background:var(--brand-2);color:#fff;padding:11px 24px;border-radius:10px;font-weight:600;font-size:14px;transition:.25s}
+.post .apply:hover{background:#1d4ed8}
 
 /* FOOTER */
-
-.footer{
-background:#0b1220;
-padding:50px 30px;
-margin-top:70px;
-color:white;
-}
-
-.footer-container{
-display:flex;
-justify-content:space-between;
-flex-wrap:wrap;
-gap:30px;
-}
-
-.footer-box h3{
-margin-bottom:20px;
-font-size:22px;
-}
-
-.footer-box a{
-display:block;
-margin-bottom:12px;
-color:#d1d5db;
-text-decoration:none;
-}
-
-.footer-box a:hover{
-color:white;
-}
-
-.socials{
-display:flex;
-gap:15px;
-margin-top:15px;
-}
-
-.socials a{
-width:45px;
-height:45px;
-background:#111827;
-border-radius:50%;
-display:flex;
-justify-content:center;
-align-items:center;
-text-decoration:none;
-color:white;
-font-size:20px;
-transition:0.3s;
-}
-
-.socials a:hover{
-background:#2563eb;
-}
+.footer{background:var(--navy);color:#fff;padding:48px 0 22px;margin-top:60px}
+.footer .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.footer h4{font-size:16px;font-weight:700;margin-bottom:16px}
+.footer a{display:block;color:#cbd5e1;font-size:14px;margin-bottom:10px;transition:.25s}
+.footer a:hover{color:#fff}
+.footer p{color:#cbd5e1;font-size:14px;line-height:1.9}
+.socials{display:flex;gap:10px;margin-top:16px}
+.socials a{width:36px;height:36px;background:rgba(255,255,255,.08);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0;transition:.25s}
+.socials a:hover{background:rgba(255,255,255,.18)}
+.copyright{border-top:1px solid rgba(255,255,255,.08);margin-top:30px;padding-top:18px;text-align:center;color:#94a3b8;font-size:12px}
 
 /* MOBILE */
-
 @media(max-width:900px){
-
-.navbar{
-padding:18px 20px;
-flex-direction:column;
-gap:20px;
+  .navbar .inner{flex-direction:column;gap:14px;padding:16px}
+  .nav-links{flex-wrap:wrap;justify-content:center;gap:16px}
+  .hero{padding:40px 0}
+  .hero-grid{grid-template-columns:1fr;text-align:center}
+  .hero h1{font-size:30px}
+  .sector-grid{grid-template-columns:repeat(2,1fr)}
+  .three-col{grid-template-columns:1fr}
+  .feat-grid{grid-template-columns:repeat(2,1fr)}
+  .footer .grid{grid-template-columns:1fr;text-align:center}
+  .socials{justify-content:center}
+  .section{padding:44px 0}
 }
-
-.hero{
-flex-direction:column;
-padding:50px 20px;
-text-align:center;
-}
-
-.hero-text{
-width:100%;
-margin-bottom:40px;
-}
-
-.hero-text h1{
-font-size:35px;
-}
-
-.hero-image{
-width:100%;
-}
-
-.section{
-padding:50px 20px;
-}
-
-}
-
 </style>
 `;
 }
+
+/* =========================
+   SHARED HEADER / FOOTER
+========================= */
+function header(){
+return `
+<div class="navbar">
+  <div class="inner">
+    <nav class="nav-links">
+      <a href="/contact">اتصل بنا</a>
+      <a href="/about">من نحن</a>
+      <a href="/stories">قصص</a>
+      <a href="/articles">مقالات</a>
+      <a href="/">الرئيسية</a>
+    </nav>
+    <div class="logo">
+      <span>وظائف الوطن العربي</span>
+      <i class="fas fa-briefcase"></i>
+    </div>
+  </div>
+</div>
+`;
+}
+
+function footer(){
+return `
+<div class="footer">
+  <div class="container">
+    <div class="grid">
+      <div>
+        <h4>روابط سريعة</h4>
+        <a href="/">الوظائف</a>
+        <a href="/articles">المقالات</a>
+        <a href="/stories">القصص</a>
+        <a href="/contests">المسابقات</a>
+      </div>
+      <div>
+        <h4>معلومات</h4>
+        <a href="/about">من نحن</a>
+        <a href="#">سياسة الخصوصية</a>
+        <a href="#">شروط الاستخدام</a>
+        <a href="/contact">اتصل بنا</a>
+      </div>
+      <div>
+        <h4>وظائف الوطن العربي</h4>
+        <p>منصة عربية تهدف إلى ربط الباحثين عن عمل بأفضل الفرص الوظيفية في الوطن العربي.</p>
+        <div class="socials">
+          <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
+          <a href="mailto:test@gmail.com"><i class="fas fa-envelope"></i></a>
+          <a href="https://facebook.com"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://x.com"><i class="fab fa-x-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="copyright">جميع الحقوق محفوظة © 2024 وظائف الوطن العربي</div>
+  </div>
+</div>
+`;
+}
+
+function layout(title, body){
+return `<!doctype html><html lang="ar" dir="rtl"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${title}</title>
+${pageStyle()}
+</head><body>
+${header()}
+${body}
+${footer()}
+</body></html>`;
+}
+
 /* =========================
    HOME PAGE
 ========================= */
-
 app.get('/', (req,res)=>{
 
-res.send(`
-<html>
+  const allJobs = getAllJobs();
+  const count = s => allJobs.filter(j=>j.sector===s).length;
 
-<head>
+  const articles = getArticles();
+  const stories  = getStories();
+  const featuredArticle = articles[0] || {title:'كيف تكتب سيرة ذاتية احترافية تجذب أصحاب العمل', date:'12 مايو 2024'};
+  const featuredStory   = stories[0]   || {title:'رحلة نجاح: من الصفر إلى القمة', date:'11 مايو 2024'};
+  const restArticles = articles.slice(1,3);
+  const restStories  = stories.slice(1,3);
 
-${pageStyle()}
+  const articleItems = restArticles.length ? restArticles.map(a=>`
+    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">${a.title}</div><div class="d">${a.date||''}</div></div></div>
+  `).join('') : `
+    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">أهم المهارات المطلوبة في سوق العمل 2024</div><div class="d">10 مايو 2024</div></div></div>
+    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">أخطاء شائعة في مقابلات العمل وكيف تجنبها</div><div class="d">8 مايو 2024</div></div></div>
+  `;
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  const storyItems = restStories.length ? restStories.map(s=>`
+    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">${s.title}</div><div class="d">${s.date||''}</div></div></div>
+  `).join('') : `
+    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">قصة شاب بدأ من لا شيء وأصبح رائد أعمال ناجح</div><div class="d">9 مايو 2024</div></div></div>
+    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">كيف غيّرت التعلم المستمر مجرى حياتي المهنية</div><div class="d">7 مايو 2024</div></div></div>
+  `;
 
-</head>
+  const body = `
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <h1>ابحث عن وظيفتك القادمة<br><span class="accent">في الوطن العربي</span></h1>
+      <p>مئات الفرص الوظيفية في مختلف المجالات في انتظارك</p>
+    </div>
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1531973576160-7125cd663d86?auto=format&fit=crop&w=1280&q=80" alt="وظائف">
+    </div>
+  </div>
+</section>
 
-<body>
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">تصفح الوظائف حسب القطاع</h2>
+    <div class="sector-grid">
+      <a href="/jobs/health/page/1" class="sector-card s-health">
+        <div class="sector-icon"><i class="fas fa-heart-pulse"></i></div>
+        <h3>قطاع الصحة</h3>
+        <div class="count">${count('health')} وظيفة متاحة</div>
+        <span class="sector-btn">عرض الوظائف</span>
+      </a>
+      <a href="/jobs/engineering/page/1" class="sector-card s-eng">
+        <div class="sector-icon"><i class="fas fa-helmet-safety"></i></div>
+        <h3>قطاع الهندسة</h3>
+        <div class="count">${count('engineering')} وظيفة متاحة</div>
+        <span class="sector-btn">عرض الوظائف</span>
+      </a>
+      <a href="/jobs/education/page/1" class="sector-card s-edu">
+        <div class="sector-icon"><i class="fas fa-graduation-cap"></i></div>
+        <h3>قطاع التعليم</h3>
+        <div class="count">${count('education')} وظيفة متاحة</div>
+        <span class="sector-btn">عرض الوظائف</span>
+      </a>
+      <a href="/jobs/management/page/1" class="sector-card s-tech">
+        <div class="sector-icon"><i class="fas fa-briefcase"></i></div>
+        <h3>قطاع الإدارة والتكنولوجيا</h3>
+        <div class="count">${count('management')} وظيفة متاحة</div>
+        <span class="sector-btn">عرض الوظائف</span>
+      </a>
+    </div>
+    <div class="center"><a href="/jobs/health/page/1" class="btn-primary">عرض جميع القطاعات</a></div>
+  </div>
+</section>
 
-<div class="navbar">
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="three-col">
 
-<div class="logo">
-وظائف الوطن العربي
-</div>
+      <div class="content-card">
+        <div class="cc-head"><a href="/articles">عرض الكل</a><h3>أحدث المقالات</h3></div>
+        <img class="cc-thumb" src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80" alt="">
+        <div class="cc-feature">
+          <h4>${featuredArticle.title}</h4>
+          <div class="date">${featuredArticle.date || '12 مايو 2024'}</div>
+        </div>
+        <div class="cc-list">${articleItems}</div>
+      </div>
 
-<div class="nav-links">
-<a href="/">الرئيسية</a>
-<a href="/articles">مقالات</a>
-<a href="/stories">قصص</a>
-<a href="/about">من نحن</a>
-<a href="/contact">اتصل بنا</a>
-</div>
+      <div class="content-card">
+        <div class="cc-head"><a href="/stories">عرض الكل</a><h3>قصص ملهمة</h3></div>
+        <img class="cc-thumb" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80" alt="">
+        <div class="cc-feature">
+          <h4>${featuredStory.title}</h4>
+          <div class="date">${featuredStory.date || '11 مايو 2024'}</div>
+        </div>
+        <div class="cc-list">${storyItems}</div>
+      </div>
 
-</div>
+      <div class="content-card">
+        <div class="cc-head"><a href="/contests">عرض الكل</a><h3>مسابقات واختبارات</h3></div>
+        <img class="cc-thumb" src="https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?auto=format&fit=crop&w=800&q=80" alt="">
+        <div class="cc-feature">
+          <h4>اختبر معلوماتك العامة واربح جوائز قيمة!</h4>
+          <a class="date" href="/contests" style="color:var(--brand-2)">شارك الآن في المسابقة الأسبوعية</a>
+        </div>
+        <div class="cc-list">
+          <div class="cc-item"><i class="fas fa-gift"></i><div class="t">مسابقة الثقافة العربية</div></div>
+          <div class="cc-item"><i class="fas fa-lightbulb"></i><div class="t">اختبار الذكاء العام</div></div>
+        </div>
+      </div>
 
-<div class="hero">
+    </div>
+  </div>
+</section>
 
-<div class="hero-text">
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="features">
+      <div class="feat-grid">
+        <div class="feat"><div class="feat-ic"><i class="fas fa-globe"></i></div><h4>في جميع الدول العربية</h4><p>وظائف من كل أنحاء الوطن العربي</p></div>
+        <div class="feat"><div class="feat-ic"><i class="fas fa-users"></i></div><h4>فرص للجميع</h4><p>آلاف الفرص في مختلف المجالات</p></div>
+        <div class="feat"><div class="feat-ic"><i class="fas fa-clock"></i></div><h4>محدث يومياً</h4><p>نضيف وظائف جديدة كل يوم</p></div>
+        <div class="feat"><div class="feat-ic"><i class="fas fa-shield-halved"></i></div><h4>موثوق وآمن</h4><p>نحرص على مصداقية جميع الوظائف</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+`;
 
-<h1>
-ابحث عن وظيفتك القادمة في الوطن العربي
-</h1>
-
-<p>
-مئات الفرص الوظيفية في مختلف المجالات في انتظارك
-</p>
-
-</div>
-
-<div class="hero-image">
-
-<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
-
-</div>
-
-</div>
-
-<div class="section">
-
-<div class="section-title">
-تصفح الوظائف حسب القطاع
-</div>
-
-<div class="cards">
-
-<a href="/jobs/health/page/1" class="card health">
-<div class="card-icon">🩺</div>
-<h3>قطاع الصحة</h3>
-<p>وظائف المستشفيات والتمريض والصيدلة</p>
-</a>
-
-<a href="/jobs/engineering/page/1" class="card engineering">
-<div class="card-icon">⚙️</div>
-<h3>قطاع الهندسة</h3>
-<p>وظائف الهندسة المدنية والمعمارية</p>
-</a>
-
-<a href="/jobs/education/page/1" class="card education">
-<div class="card-icon">🎓</div>
-<h3>قطاع التعليم</h3>
-<p>وظائف المدارس والجامعات والتعليم</p>
-</a>
-
-<a href="/jobs/management/page/1" class="card management">
-<div class="card-icon">💻</div>
-<h3>قطاع الإدارة والتكنولوجيا</h3>
-<p>وظائف الإدارة والبرمجة والتقنية</p>
-</a>
-
-</div>
-
-</div>
-
-<div class="section">
-
-<div class="section-title">
-استكشف المزيد
-</div>
-
-<div class="cards">
-
-<a href="/contests" class="card contest">
-<div class="card-icon">🏆</div>
-<h3>مسابقات واختبارات</h3>
-<p>اختبارات ومسابقات تفاعلية ممتعة</p>
-</a>
-
-<a href="/stories" class="card story">
-<div class="card-icon">✨</div>
-<h3>قصص ملهمة</h3>
-<p>قصص نجاح وتجارب ملهمة</p>
-</a>
-
-<a href="/articles" class="card article">
-<div class="card-icon">📰</div>
-<h3>أحدث المقالات</h3>
-<p>مقالات مفيدة ونصائح مهنية</p>
-</a>
-
-</div>
-
-</div>
-
-<div class="footer">
-
-<div class="footer-container">
-
-<div class="footer-box">
-
-<h3>روابط سريعة</h3>
-
-<a href="/">الرئيسية</a>
-<a href="/articles">مقالات</a>
-<a href="/stories">قصص</a>
-<a href="/about">من نحن</a>
-
-</div>
-
-<div class="footer-box">
-
-<h3>وظائف الوطن العربي</h3>
-
-<p>
-منصة عربية لعرض الوظائف والمقالات
-والقصص والمسابقات.
-</p>
-
-<div class="socials">
-
-<a href="https://instagram.com">
-<i class="fab fa-instagram"></i>
-</a>
-
-<a href="https://facebook.com">
-<i class="fab fa-facebook-f"></i>
-</a>
-
-<a href="mailto:test@gmail.com">
-<i class="fas fa-envelope"></i>
-</a>
-
-<a href="https://x.com">
-<i class="fab fa-x-twitter"></i>
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</body>
-</html>
-`);
-
+  res.send(layout('وظائف الوطن العربي - ابحث عن وظيفتك القادمة', body));
 });
 
 /* =========================
    ARTICLES PAGE
 ========================= */
-
 app.get('/articles',(req,res)=>{
-
-const articles = getArticles();
-
-let html = `
-<html>
-<head>
-${pageStyle()}
-</head>
-<body>
-
-<div class="page-container">
-
-<h1 class="section-title">
-المقالات
-</h1>
-`;
-
-articles.forEach(article=>{
-
-html += `
-<div class="post">
-
-<h2>
-${article.title}
-</h2>
-
-<p>
-${article.content}
-</p>
-
-</div>
-`;
-
-});
-
-html += `</div></body></html>`;
-
-res.send(html);
-
+  const articles = getArticles();
+  let body = `<div class="page-container"><h1 class="section-title">المقالات</h1>`;
+  if(articles.length===0){
+    body += `<div class="post"><p>لا توجد مقالات حالياً.</p></div>`;
+  } else {
+    articles.forEach(a=>{
+      body += `<div class="post"><h2>${a.title}</h2><p>${a.content||''}</p></div>`;
+    });
+  }
+  body += `</div>`;
+  res.send(layout('المقالات - وظائف الوطن العربي', body));
 });
 
 /* =========================
    STORIES PAGE
 ========================= */
-
 app.get('/stories',(req,res)=>{
-
-const stories = getStories();
-
-let html = `
-<html>
-<head>
-${pageStyle()}
-</head>
-<body>
-
-<div class="page-container">
-
-<h1 class="section-title">
-القصص الملهمة
-</h1>
-`;
-
-stories.forEach(story=>{
-
-html += `
-<div class="post">
-
-<h2>
-${story.title}
-</h2>
-
-<p>
-${story.content}
-</p>
-
-</div>
-`;
-
+  const stories = getStories();
+  let body = `<div class="page-container"><h1 class="section-title">القصص الملهمة</h1>`;
+  if(stories.length===0){
+    body += `<div class="post"><p>لا توجد قصص حالياً.</p></div>`;
+  } else {
+    stories.forEach(s=>{
+      body += `<div class="post"><h2>${s.title}</h2><p>${s.content||''}</p></div>`;
+    });
+  }
+  body += `</div>`;
+  res.send(layout('القصص الملهمة - وظائف الوطن العربي', body));
 });
 
-html += `</div></body></html>`;
-
-res.send(html);
-
+/* =========================
+   CONTESTS PAGE
+========================= */
+app.get('/contests',(req,res)=>{
+  const body = `
+  <div class="page-container">
+    <h1 class="section-title">مسابقات واختبارات</h1>
+    <div class="post"><h2>مسابقة الثقافة العربية</h2><p>اختبر معلوماتك العامة واربح جوائز قيمة!</p></div>
+    <div class="post"><h2>اختبار الذكاء العام</h2><p>قريباً...</p></div>
+  </div>`;
+  res.send(layout('المسابقات - وظائف الوطن العربي', body));
 });
 
 /* =========================
    ABOUT
 ========================= */
-
 app.get('/about',(req,res)=>{
-
-res.send(`
-<html>
-<head>
-${pageStyle()}
-</head>
-<body>
-
-<div class="page-container">
-
-<div class="post">
-
-<h2>
-من نحن
-</h2>
-
-<p>
-نحن موقع وظائف...
-</p>
-
-</div>
-
-</div>
-
-</body>
-</html>
-`);
-
+  const body = `
+  <div class="page-container">
+    <div class="post">
+      <h2>من نحن</h2>
+      <p>منصة عربية تهدف إلى ربط الباحثين عن عمل بأفضل الفرص الوظيفية في الوطن العربي، نوفر آلاف الفرص المحدثة يومياً في مختلف القطاعات.</p>
+    </div>
+  </div>`;
+  res.send(layout('من نحن - وظائف الوطن العربي', body));
 });
 
 /* =========================
    CONTACT
 ========================= */
-
 app.get('/contact',(req,res)=>{
-
-res.send(`
-<html>
-
-<head>
-
-${pageStyle()}
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-
-</head>
-
-<body>
-
-<div class="page-container">
-
-<div class="post" style="text-align:center;">
-
-<h2>
-اتصل بنا
-</h2>
-
-<div class="socials"
-style="justify-content:center;margin-top:30px;">
-
-<a href="https://instagram.com">
-<i class="fab fa-instagram"></i>
-</a>
-
-<a href="https://facebook.com">
-<i class="fab fa-facebook-f"></i>
-</a>
-
-<a href="mailto:test@gmail.com">
-<i class="fas fa-envelope"></i>
-</a>
-
-<a href="https://x.com">
-<i class="fab fa-x-twitter"></i>
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</body>
-</html>
-`);
-
+  const body = `
+  <div class="page-container">
+    <div class="post" style="text-align:center;">
+      <h2>اتصل بنا</h2>
+      <p>نحن سعداء بتواصلكم معنا عبر وسائل التواصل التالية:</p>
+      <div class="socials" style="justify-content:center;margin-top:24px;">
+        <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
+        <a href="https://facebook.com"><i class="fab fa-facebook-f"></i></a>
+        <a href="mailto:test@gmail.com"><i class="fas fa-envelope"></i></a>
+        <a href="https://x.com"><i class="fab fa-x-twitter"></i></a>
+      </div>
+    </div>
+  </div>`;
+  res.send(layout('اتصل بنا - وظائف الوطن العربي', body));
 });
 
 /* =========================
-   JOBS PAGE
+   JOBS LIST (paginated)
 ========================= */
-
 app.get('/jobs/:sector/page/:page',(req,res)=>{
+  const sector = req.params.sector;
+  const page   = parseInt(req.params.page) || 1;
+  const jobs   = getJobs(sector);
 
-const sector = req.params.sector;
-const page = parseInt(req.params.page);
+  const perPage = 5;
+  const start = (page-1)*perPage;
+  const end = start+perPage;
+  const paginatedJobs = jobs.slice(start,end);
+  const totalPages = Math.max(1, Math.ceil(jobs.length / perPage));
 
-const jobs = getJobs(sector);
+  const sectorNames = {health:'قطاع الصحة',engineering:'قطاع الهندسة',education:'قطاع التعليم',management:'قطاع الإدارة والتكنولوجيا'};
 
-const perPage = 5;
+  let body = `<div class="page-container"><h1 class="section-title">${sectorNames[sector]||'الوظائف'}</h1>`;
 
-const start = (page-1)*perPage;
-const end = start+perPage;
+  if(paginatedJobs.length===0){
+    body += `<div class="post"><p>لا توجد وظائف متاحة حالياً في هذا القطاع.</p></div>`;
+  } else {
+    paginatedJobs.forEach(job=>{
+      body += `
+        <div class="post">
+          <h2>${job.title}</h2>
+          <p>${(job.description||'').substring(0,180)}...</p>
+          <a href="/jobs/${sector}/job/${job.id}" class="apply">عرض الوظيفة</a>
+        </div>`;
+    });
 
-const paginatedJobs = jobs.slice(start,end);
+    // Pagination
+    body += `<div class="center" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:30px">`;
+    for(let p=1;p<=totalPages;p++){
+      const active = p===page ? 'background:var(--brand-2);color:#fff' : 'background:#fff;color:var(--text);border:1px solid var(--border)';
+      body += `<a href="/jobs/${sector}/page/${p}" style="${active};padding:9px 16px;border-radius:9px;font-weight:600;font-size:14px">${p}</a>`;
+    }
+    body += `</div>`;
+  }
 
-let html = `
-<html>
-
-<head>
-${pageStyle()}
-</head>
-
-<body>
-
-<div class="page-container">
-
-<h1 class="section-title">
-الوظائف
-</h1>
-`;
-
-paginatedJobs.forEach(job=>{
-
-html += `
-<div class="post">
-
-<h2>
-${job.title}
-</h2>
-
-<p>
-${job.description.substring(0,150)}...
-</p>
-
-<a href="/jobs/${sector}/job/${job.id}"
-style="
-display:inline-block;
-margin-top:15px;
-background:#2563eb;
-color:white;
-padding:12px 25px;
-border-radius:10px;
-text-decoration:none;
-">
-عرض الوظيفة
-</a>
-
-</div>
-`;
-
-});
-
-html += `</div></body></html>`;
-
-res.send(html);
-
+  body += `</div>`;
+  res.send(layout(`${sectorNames[sector]||'الوظائف'} - وظائف الوطن العربي`, body));
 });
 
 /* =========================
    JOB DETAILS
 ========================= */
-
 app.get('/jobs/:sector/job/:id',(req,res)=>{
+  const sector = req.params.sector;
+  const id = parseInt(req.params.id);
+  const jobs = getJobs(sector);
+  const job = jobs.find(j=>j.id===id);
 
-const sector = req.params.sector;
-const id = parseInt(req.params.id);
+  if(!job){
+    return res.send(layout('غير موجود', `<div class="page-container"><div class="post"><h2>الوظيفة غير موجودة</h2></div></div>`));
+  }
 
-const jobs = getJobs(sector);
+  const applyBtn = job.applyLink
+    ? `<a href="${job.applyLink}" target="_blank" class="apply">التقديم الآن</a>`
+    : (job.email ? `<a href="mailto:${job.email}" class="apply">إرسال السيرة الذاتية</a>` : '');
 
-const job = jobs.find(j=>j.id===id);
+  const body = `
+  <div class="page-container">
+    <div class="post">
+      <h2>${job.title}</h2>
+      <p>${job.description||''}</p>
+      ${job.email ? `<p style="margin-top:14px"><strong>البريد:</strong> ${job.email}</p>` : ''}
+      <div style="margin-top:8px">${applyBtn}</div>
+    </div>
+    <div class="center"><a href="/jobs/${sector}/page/1" class="btn-primary" style="background:#fff;color:var(--text);border:1px solid var(--border)">← العودة للقائمة</a></div>
+  </div>`;
 
-if(!job){
-return res.send("الوظيفة غير موجودة");
-}
-
-res.send(`
-<html>
-
-<head>
-${pageStyle()}
-</head>
-
-<body>
-
-<div class="page-container">
-
-<div class="post">
-
-<h2>
-${job.title}
-</h2>
-
-<p>
-${job.description}
-</p>
-
-<br>
-
-<a href="${job.applyLink || '#'}"
-target="_blank"
-style="
-display:inline-block;
-background:#2563eb;
-color:white;
-padding:14px 30px;
-border-radius:10px;
-text-decoration:none;
-">
-
-التقديم الآن
-
-</a>
-
-</div>
-
-</div>
-
-</body>
-</html>
-`);
-
+  res.send(layout(`${job.title} - وظائف الوطن العربي`, body));
 });
 
 /* ========================= */
-
 app.listen(PORT,()=>{
-
-console.log("Server Running");
-
+  console.log(`Server running on http://localhost:${PORT}`);
 });
-```
