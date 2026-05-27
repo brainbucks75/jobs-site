@@ -381,20 +381,63 @@ app.get('/', (req,res)=>{
 /* =========================
    ARTICLES PAGE
 ========================= */
-app.get('/articles',(req,res)=>{
+app.get('/articles', (req,res)=>{
   const articles = getArticles();
-  let body = `<div class="page-container"><h1 class="section-title">المقالات</h1>`;
-  if(articles.length===0){
-    body += `<div class="post"><p>لا توجد مقالات حالياً.</p></div>`;
-  } else {
-    articles.forEach(a=>{
-      body += `<div class="post"><h2>${a.title}</h2><p>${a.content||''}</p></div>`;
-    });
-  }
-  body += `</div>`;
-  res.send(layout('المقالات - وظائف الوطن العربي', body));
-});
 
+  let body = `
+  <div class="page-container">
+    <h1 class="section-title">المقالات</h1>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+  `;
+
+  articles.forEach(a=>{
+    body += `
+      <a href="/articles/${a.id}" style="text-decoration:none;color:inherit">
+        <div class="post" style="padding:0;overflow:hidden">
+          <img src="${a.image}" style="width:100%;height:180px;object-fit:cover">
+
+          <div style="padding:12px">
+            <h2 style="font-size:18px;font-weight:800">
+              ${a.title}
+            </h2>
+          </div>
+        </div>
+      </a>
+    `;
+  });
+
+  body += `
+    </div>
+  </div>
+  `;
+
+  res.send(layout('المقالات', body));
+});
+app.get('/articles/:id', (req,res)=>{
+  const articles = getArticles();
+  const article = articles.find(a => a.id == req.params.id);
+
+  if(!article){
+    return res.send(layout('غير موجود','<div class="page-container"><div class="post">المقال غير موجود</div></div>'));
+  }
+
+  const body = `
+  <div class="page-container">
+    <div class="post">
+      <h2 style="font-size:30px;font-weight:900">${article.title}</h2>
+
+      <img src="${article.image}" style="width:100%;margin:20px 0;border-radius:12px">
+
+      <p style="font-size:16px;line-height:2">
+        ${article.content}
+      </p>
+    </div>
+  </div>
+  `;
+
+  res.send(layout(article.title, body));
+});
 /* =========================
    STORIES PAGE
 ========================= */
