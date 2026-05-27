@@ -42,10 +42,7 @@ body{
 font-family:Arial;
 background:#f5f9ff;
 direction:rtl;
-}
-
-</style>
-`;
+overflow-x:hidden;
 }
 
 /* NAVBAR */
@@ -61,7 +58,6 @@ position:sticky;
 top:0;
 z-index:1000;
 }
-
 .logo{
 color:white;
 font-size:24px;
