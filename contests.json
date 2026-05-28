@@ -20,7 +20,7 @@
     "image": "https://images.unsplash.com/photo-1506784365847-bbad939e9335"
   },
   {
-    "id": "oddone",
+    "id":"oddoneout" ,
     "title": "حدد المختلف",
     "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
   },
@@ -30,7 +30,7 @@
     "image": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d"
   },
   {
-    "id": "world",
+    "id": "international",
     "title": "ثقافة دولية",
     "image": "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1"
   },
