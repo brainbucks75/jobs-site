@@ -32,6 +32,9 @@ function getPrivacy() {
   if (!fs.existsSync('privacy.json')) return null;
   return JSON.parse(fs.readFileSync('privacy.json'));
 }
+function getGeneralQuestions() {
+  return JSON.parse(fs.readFileSync('generalQuestions.json', 'utf8'));
+}
 /* =========================
    GLOBAL STYLE (NEW DESIGN)
 ========================= */
@@ -237,6 +240,10 @@ return `
   </div>
 </div>
 `;
+}
+
+function getGeneralQuestions(){
+  return JSON.parse(fs.readFileSync('generalQuestions.json'));
 }
 
 function layout(title, body){
@@ -540,7 +547,6 @@ app.get('/contests', (req,res)=>{
 
   res.send(layout('المسابقات', body));
 });
-
 app.get('/contests/:id', (req,res)=>{
   const contests = getContests();
   const game = contests.find(c => c.id === req.params.id);
@@ -549,6 +555,109 @@ app.get('/contests/:id', (req,res)=>{
     return res.send(layout('غير موجود','<div class="page-container"><div class="post">غير موجود</div></div>'));
   }
 
+  // ⭐ لعبة الثقافة العامة
+  if(game.id === "general"){
+
+    const body = `
+    <div class="page-container">
+      <div class="post">
+
+        <h2 style="text-align:center;font-size:26px;font-weight:900">
+          ${game.title}
+        </h2>
+
+        <div id="quizBox"></div>
+
+      </div>
+    </div>
+
+<script>
+const questions = ${JSON.stringify(getGeneralQuestions())};
+
+let index = 0;
+let lock = false;
+
+function showQ(){
+  const q = questions[index];
+
+  let html = \`
+    <div style="
+      background:linear-gradient(135deg,#d4af37,#f5d76e);
+      padding:15px;
+      border-radius:15px;
+      color:white;
+      font-weight:800;
+      text-align:center;
+      margin-bottom:15px;
+    ">
+      \${q.q}
+    </div>
+  \`;
+
+  q.a.forEach((opt,i)=>{
+    html += \`
+      <div onclick="answer(\${i})"
+        id="opt\${i}"
+        style="
+          background:linear-gradient(135deg,#d4af37,#b8860b);
+          color:white;
+          padding:14px;
+          margin:10px 0;
+          border-radius:12px;
+          cursor:pointer;
+          font-weight:700;
+          text-align:center;
+        ">
+        \${opt}
+      </div>
+    \`;
+  });
+
+  document.getElementById("quizBox").innerHTML = html;
+}
+
+window.answer = function(i){
+  if(lock) return;
+  lock = true;
+
+  const q = questions[index];
+  const correct = q.correct;
+
+  for(let j=0;j<q.a.length;j++){
+    const el = document.getElementById("opt"+j);
+
+    if(j === correct){
+      el.style.background = "#22c55e";
+    }
+  }
+
+  const selected = document.getElementById("opt"+i);
+
+  if(i !== correct){
+    selected.style.background = "#ef4444";
+  }
+
+  setTimeout(()=>{
+    index++;
+    lock = false;
+
+    if(index < questions.length){
+      showQ();
+    } else {
+      document.getElementById("quizBox").innerHTML =
+      "<div style='text-align:center;font-size:22px;font-weight:900'>انتهت اللعبة 🎉</div>";
+    }
+  },1500);
+}
+
+showQ();
+</script>
+`;
+
+    return res.send(layout(game.title, body));
+  }
+
+  // ⭐ باقي الألعاب (لاحقاً)
   const body = `
   <div class="page-container">
     <div class="post">
@@ -557,7 +666,7 @@ app.get('/contests/:id', (req,res)=>{
       <img src="${game.image}" style="width:100%;margin:20px 0;border-radius:12px">
 
       <p style="font-size:16px;line-height:2">
-        سيتم إضافة اللعبة هنا قريباً 🎮
+        سيتم إضافة اللعبة قريباً 🎮
       </p>
     </div>
   </div>
@@ -565,7 +674,7 @@ app.get('/contests/:id', (req,res)=>{
 
   res.send(layout(game.title, body));
 });
-/* =========================
+  /* =========================
    ABOUT
 ========================= */
 app.get('/about',(req,res)=>{
