@@ -38,6 +38,15 @@ function getGeneralQuestions() {
 function getTrueFalseQuestions(){
   return JSON.parse(fs.readFileSync('trueFalseQuestions.json', 'utf8'));
 }
+function getWhoAmIQuestions(){
+  return JSON.parse(fs.readFileSync('whoAmIQuestions.json', 'utf8'));
+}
+function getOddOneOutQuestions(){
+  return JSON.parse(fs.readFileSync('oddOneOutQuestions.json', 'utf8'));
+}
+function getInternationalQuestions(){
+  return JSON.parse(fs.readFileSync('internationalQuestions.json', 'utf8'));
+}
 /* =========================
    GLOBAL STYLE (NEW DESIGN)
 ========================= */
@@ -720,6 +729,310 @@ function showQ(){
 }
 
 window.answer = function(i){
+  if(lock) return;
+  lock = true;
+
+  const q = questions[index];
+  const correct = q.correct;
+
+  for(let j=0;j<q.a.length;j++){
+    const el = document.getElementById("opt"+j);
+    if(j === correct){
+      el.style.background = "#22c55e";
+    }
+  }
+
+  const selected = document.getElementById("opt"+i);
+
+  if(i !== correct){
+    selected.style.background = "#ef4444";
+  }
+
+  setTimeout(()=>{
+    index++;
+    lock = false;
+
+    if(index < questions.length){
+      showQ();
+    } else {
+      document.getElementById("quizBox").innerHTML =
+      "<div style='text-align:center;font-size:22px;font-weight:900'>انتهت اللعبة 🎉</div>";
+    }
+  },1500);
+}
+
+showQ();
+</script>
+`;
+
+  return res.send(layout(game.title, body));
+}
+if(game.id === "whoami"){
+
+  const body = `
+  <div class="page-container">
+    <div class="post">
+
+      <h2 style="text-align:center;font-size:26px;font-weight:900">
+        ${game.title}
+      </h2>
+
+      <div id="quizBox"></div>
+
+    </div>
+  </div>
+
+<script>
+const questions = ${JSON.stringify(getWhoAmIQuestions())};
+
+let index = 0;
+
+function showQ(){
+  const q = questions[index];
+
+  document.getElementById("quizBox").innerHTML = \`
+  
+    <div style="
+      background:linear-gradient(135deg,#d4af37,#f5d76e);
+      padding:15px;
+      border-radius:15px;
+      color:white;
+      font-weight:800;
+      text-align:center;
+      margin-bottom:15px;
+      font-size:18px;
+    ">
+      \${q.q}
+    </div>
+
+    <input id="answerInput" placeholder="اكتب جوابك هنا"
+      style="
+        width:100%;
+        padding:12px;
+        border-radius:10px;
+        border:1px solid #ccc;
+        font-size:16px;
+      "
+    />
+
+    <button onclick="checkAnswer()"
+      style="
+        margin-top:10px;
+        width:100%;
+        padding:12px;
+        background:#3b82f6;
+        color:white;
+        border:none;
+        border-radius:10px;
+        font-weight:700;
+        cursor:pointer;
+      ">
+      تأكيد
+    </button>
+
+    <div id="result" style="margin-top:15px;font-weight:700;text-align:center;"></div>
+  
+  \`;
+}
+
+window.checkAnswer = function(){
+
+  const q = questions[index];
+  const user = document.getElementById("answerInput").value.trim();
+
+  const resultBox = document.getElementById("result");
+
+  if(user === q.a[0]){
+    resultBox.innerHTML = "✔ إجابة صحيحة";
+    resultBox.style.color = "green";
+  } else {
+    resultBox.innerHTML = "✖ إجابة خاطئة. الصحيح: " + q.a[0];
+    resultBox.style.color = "red";
+  }
+
+  setTimeout(()=>{
+    index++;
+
+    if(index < questions.length){
+      showQ();
+    } else {
+      document.getElementById("quizBox").innerHTML =
+      "<div style='text-align:center;font-size:22px;font-weight:900'>انتهت اللعبة 🎉</div>";
+    }
+  },1500);
+}
+
+showQ();
+</script>
+`;
+
+  return res.send(layout(game.title, body));
+}
+if(game.id === "oddoneout"){
+
+  const body = `
+  <div class="page-container">
+    <div class="post">
+
+      <h2 style="text-align:center;font-size:26px;font-weight:900">
+        ${game.title}
+      </h2>
+
+      <div id="quizBox"></div>
+
+    </div>
+  </div>
+
+<script>
+const questions = ${JSON.stringify(getOddOneOutQuestions())};
+
+let index = 0;
+let lock = false;
+
+function showQ(){
+  const q = questions[index];
+
+  let html = \`
+    <div style="
+      background:linear-gradient(135deg,#d4af37,#f5d76e);
+      padding:15px;
+      border-radius:15px;
+      color:white;
+      font-weight:800;
+      text-align:center;
+      margin-bottom:15px;
+      font-size:18px;
+    ">
+      \${q.q}
+    </div>
+  \`;
+
+  q.a.forEach((opt,i)=>{
+    html += \`
+      <div onclick="answer(\${i})"
+        id="opt\${i}"
+        style="
+          background:linear-gradient(135deg,#d4af37,#b8860b);
+          color:white;
+          padding:14px;
+          margin:10px 0;
+          border-radius:12px;
+          cursor:pointer;
+          font-weight:700;
+          text-align:center;
+          transition:0.3s;
+        ">
+        \${opt}
+      </div>
+    \`;
+  });
+
+  document.getElementById("quizBox").innerHTML = html;
+}
+
+window.answer = function(i){
+
+  if(lock) return;
+  lock = true;
+
+  const q = questions[index];
+  const correct = q.correct;
+
+  for(let j=0;j<q.a.length;j++){
+    const el = document.getElementById("opt"+j);
+    if(j === correct){
+      el.style.background = "#22c55e";
+    }
+  }
+
+  const selected = document.getElementById("opt"+i);
+
+  if(i !== correct){
+    selected.style.background = "#ef4444";
+  }
+
+  setTimeout(()=>{
+    index++;
+    lock = false;
+
+    if(index < questions.length){
+      showQ();
+    } else {
+      document.getElementById("quizBox").innerHTML =
+      "<div style='text-align:center;font-size:22px;font-weight:900'>انتهت اللعبة 🎉</div>";
+    }
+  },1500);
+}
+
+showQ();
+</script>
+`;
+
+  return res.send(layout(game.title, body));
+}
+if(game.id === "international"){
+
+  const body = `
+  <div class="page-container">
+    <div class="post">
+
+      <h2 style="text-align:center;font-size:26px;font-weight:900">
+        ${game.title}
+      </h2>
+
+      <div id="quizBox"></div>
+
+    </div>
+  </div>
+
+<script>
+const questions = ${JSON.stringify(getInternationalQuestions())};
+
+let index = 0;
+let lock = false;
+
+function showQ(){
+  const q = questions[index];
+
+  let html = \`
+    <div style="
+      background:linear-gradient(135deg,#d4af37,#f5d76e);
+      padding:15px;
+      border-radius:15px;
+      color:white;
+      font-weight:800;
+      text-align:center;
+      margin-bottom:15px;
+      font-size:18px;
+    ">
+      \${q.q}
+    </div>
+  \`;
+
+  q.a.forEach((opt,i)=>{
+    html += \`
+      <div onclick="answer(\${i})"
+        id="opt\${i}"
+        style="
+          background:linear-gradient(135deg,#d4af37,#b8860b);
+          color:white;
+          padding:14px;
+          margin:10px 0;
+          border-radius:12px;
+          cursor:pointer;
+          font-weight:700;
+          text-align:center;
+        ">
+        \${opt}
+      </div>
+    \`;
+  });
+
+  document.getElementById("quizBox").innerHTML = html;
+}
+
+window.answer = function(i){
+
   if(lock) return;
   lock = true;
 
