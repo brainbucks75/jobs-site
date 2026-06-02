@@ -265,7 +265,7 @@ return `
         </div>
       </div>
     </div>
-    <div class="copyright">جميع الحقوق محفوظة © 2024 وظائف الوطن العربي</div>
+    <div class="copyright">جميع الحقوق محفوظة © 2026 وظائف الوطن العربي</div>
   </div>
 </div>
 `;
@@ -1464,7 +1464,7 @@ app.get('/contact',(req,res)=>{
   <div class="page-container">
     <div class="post" style="text-align:center;">
       <h2>اتصل بنا</h2>
-      <p>نحن سعداء بتواصلكم معنا عبر وسائل التواصل التالية:</p>
+      <p>نحن سعداء بتواصلكم معنا عبر وسائل التواصل التالية لتقديم المقترحات او للإعلانات أو لطلب الحصول على الوظائف عبر الايميل الشخصي:</p>
       <div class="socials" style="justify-content:center;margin-top:24px;">
         <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
         <a href="https://facebook.com"><i class="fab fa-facebook-f"></i></a>
