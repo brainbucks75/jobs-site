@@ -56,6 +56,14 @@ function getWrongInfoQuestions(){
 function getTimeQuestions(){
   return JSON.parse(fs.readFileSync('timeQuestions.json', 'utf8'));
 }
+function shuffle(array) {
+  const arr = [...array]; // مهم حتى لا نغيّر الأصل
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
 /* =========================
    GLOBAL STYLE (NEW DESIGN)
 ========================= */
@@ -593,8 +601,7 @@ app.get('/contests/:id', (req,res)=>{
     </div>
 
 <script>
-const questions = ${JSON.stringify(getGeneralQuestions())};
-
+const questions = ${JSON.stringify(shuffle(getGeneralQuestions()))};
 let index = 0;
 let lock = false;
 
@@ -693,8 +700,7 @@ if(game.id === "truefalse"){
   </div>
 
 <script>
-const questions = ${JSON.stringify(getTrueFalseQuestions())};
-
+const questions = ${JSON.stringify(shuffle(getTrueFalseQuestions()))};
 let index = 0;
 let lock = false;
 
@@ -794,7 +800,7 @@ if(game.id === "whoami"){
   </div>
 
 <script>
-const questions = ${JSON.stringify(getWhoAmIQuestions())};
+const questions = ${JSON.stringify(shuffle(getWhoAmIQuestions()))};
 
 let index = 0;
 
@@ -895,8 +901,8 @@ if(game.id === "oddoneout"){
   </div>
 
 <script>
-const questions = ${JSON.stringify(getOddOneOutQuestions())};
 
+const questions = ${JSON.stringify(shuffle(getOddOneOutQuestions()))};
 let index = 0;
 let lock = false;
 
@@ -998,8 +1004,7 @@ if(game.id === "international"){
   </div>
 
 <script>
-const questions = ${JSON.stringify(getInternationalQuestions())};
-
+const questions = ${JSON.stringify(shuffle(getInternationalQuestions()))};
 let index = 0;
 let lock = false;
 
@@ -1100,8 +1105,7 @@ if(game.id === "islamic"){
   </div>
 
 <script>
-const questions = ${JSON.stringify(getIslamicQuestions())};
-
+const questions = ${JSON.stringify(shuffle(getIslamicQuestions()))};
 let index = 0;
 let lock = false;
 
@@ -1198,8 +1202,7 @@ if(game.id === "wronginfo"){
   </div>
 
 <script>
-const questions = ${JSON.stringify(getWrongInfoQuestions())};
-
+const questions = ${JSON.stringify(shuffle(getWrongInfoQuestions()))};
 let index = 0;
 let lock = false;
 
@@ -1307,8 +1310,7 @@ if(game.id === "time"){
   </div>
 
 <script>
-const questions = ${JSON.stringify(getTimeQuestions())};
-
+const questions = ${JSON.stringify(shuffle(getTimeQuestions()))};
 let index = 0;
 let lock = false;
 let timeLeft = 10;
