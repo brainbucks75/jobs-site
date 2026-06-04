@@ -259,7 +259,7 @@ return `
         <p>منصة عربية تهدف إلى ربط الباحثين عن عمل بأفضل الفرص الوظيفية في الوطن العربي.</p>
         <div class="socials">
           <a href="https://www.instagram.com/brain_bucks_75/"><i class="fab fa-instagram"></i></a>
-          <a href="brainbucks75@gmail.com"><i class="fas fa-envelope"></i></a>
+          <a href="mailto:brainbucks75@gmail.com"><i class="fas fa-envelope"></i></a>
           <a href="https://www.facebook.com/share/1BM7rk968P/"><i class="fab fa-facebook-f"></i></a>
           <a href="https://x.com/BrainBucks7"><i class="fab fa-x-twitter"></i></a>
         </div>
