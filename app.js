@@ -7,13 +7,19 @@ const PORT = 3000;
 /* =========================
    READ JSON FILES
 ========================= */
-
-function getJobs(sector) {
-  const data = fs.readFileSync('jobs.json');
-  const jobs = JSON.parse(data);
-  return jobs.filter(job => job.sector === sector);
+function safeRead(file, fallback = []) {
+  try {
+    return JSON.parse(fs.readFileSync(file, 'utf8'));
+  } catch (err) {
+    console.log("Error reading:", file);
+    return fallback;
+  }
 }
 
+function getJobs(sector) {
+  const jobs = safeRead('jobs.json');
+  return jobs.filter(job => job.sector === sector);
+}
 function getAllJobs() {
   if (!fs.existsSync('jobs.json')) return [];
   return JSON.parse(fs.readFileSync('jobs.json'));
@@ -279,6 +285,8 @@ function layout(title, body){
 return `<!doctype html><html lang="ar" dir="rtl"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="موقع وظائف الوطن العربي - أحدث الوظائف والمقالات والقصص">
+<meta name="keywords" content="وظائف, عمل, توظيف, وظائف عربية">
 <title>${title}</title>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
      crossorigin="anonymous"></script>
