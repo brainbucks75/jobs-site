@@ -280,6 +280,8 @@ return `<!doctype html><html lang="ar" dir="rtl"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${title}</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
+     crossorigin="anonymous"></script>
 ${pageStyle()}
 </head><body>
 ${header()}
