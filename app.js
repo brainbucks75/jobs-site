@@ -257,7 +257,7 @@ return `
         <h4>معلومات</h4>
         <a href="/about">من نحن</a>
       <a href="/privacy">سياسة الخصوصية</a>
-        <a href="#">شروط الاستخدام</a>
+        <a href="/terms">شروط الاستخدام</a>
         <a href="/contact">اتصل بنا</a>
       </div>
       <div>
