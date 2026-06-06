@@ -15,10 +15,12 @@ function safeRead(file, fallback = []) {
     return fallback;
   }
 }
-
 function getJobs(sector) {
   const jobs = safeRead('jobs.json');
-  return jobs.filter(job => job.sector === sector);
+
+  return jobs
+    .filter(job => job.sector === sector)
+    .sort((a, b) => b.id - a.id);
 }
 function getAllJobs() {
   if (!fs.existsSync('jobs.json')) return [];
