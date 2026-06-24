@@ -1553,6 +1553,11 @@ app.get('/jobs/:sector/job/:id',(req,res)=>{
     <div class="post">
       <h2>${job.title}</h2>
       <p>${job.description||''}</p>
+ ${job.content ? `
+    <div style="margin-top:20px;line-height:2;font-size:16px;color:#334155;white-space:pre-line">
+      ${job.content}
+    </div>
+  ` : ''}
       ${job.email ? `<p style="margin-top:14px"><strong>البريد:</strong> ${job.email}</p>` : ''}
       <div style="margin-top:8px">${applyBtn}</div>
     </div>
