@@ -1638,6 +1638,90 @@ app.get('/privacy', (req, res) => {
 
   res.send(layout('سياسة الخصوصية', body));
 });
+/* =========================
+   SITEMAP
+========================= */
+
+app.get('/sitemap.xml', (req,res)=>{
+
+  const baseUrl = "https://jobs-site-0hcz.onrender.com";
+
+  let urls = [
+    `${baseUrl}/`,
+    `${baseUrl}/about`,
+    `${baseUrl}/contact`,
+    `${baseUrl}/articles`,
+    `${baseUrl}/stories`,
+    `${baseUrl}/contests`,
+    `${baseUrl}/privacy`,
+    `${baseUrl}/terms`
+  ];
+
+  const jobs = getAllJobs();
+
+  jobs.forEach(job=>{
+    urls.push(
+      `${baseUrl}/jobs/${job.sector}/job/${job.id}`
+    );
+  });
+
+
+  const articles = getArticles();
+
+  articles.forEach(article=>{
+    urls.push(
+      `${baseUrl}/articles/${article.id}`
+    );
+  });
+
+
+  const stories = getStories();
+
+  stories.forEach(story=>{
+    urls.push(
+      `${baseUrl}/stories/${story.id}`
+    );
+  });
+
+
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
+
+  urls.forEach(url=>{
+    xml += `
+<url>
+<loc>${url}</loc>
+</url>`;
+  });
+
+
+  xml += `
+</urlset>`;
+
+
+  res.header('Content-Type','application/xml');
+  res.send(xml);
+
+});
+
+
+/* =========================
+   ROBOTS
+========================= */
+
+app.get('/robots.txt',(req,res)=>{
+
+res.type('text/plain');
+
+res.send(`
+User-agent: *
+Allow: /
+
+Sitemap: https://jobs-site-0hcz.onrender.com/sitemap.xml
+`);
+
+});
+
 /* ========================= */
 app.listen(PORT,()=>{
   console.log(`Server running on http://localhost:${PORT}`);
