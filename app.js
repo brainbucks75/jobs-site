@@ -253,6 +253,14 @@ return `<!doctype html><html lang="ar" dir="rtl"><head>
 <title>${title}</title>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
      crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DSDN57CY0H"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-DSDN57CY0H');
+</script>
 ${pageStyle()}
 </head><body>
 ${header()}
