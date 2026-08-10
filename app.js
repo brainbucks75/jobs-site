@@ -1700,6 +1700,89 @@ app.post('/cv-builder/professional/pdf', express.urlencoded({ extended: true }),
   try {
 
     const data = req.body;
+const colors = {
+  navy: {
+    primary: '#15203a',
+    accent: '#3b82f6',
+    light: '#eff6ff',
+    border: '#bfdbfe',
+    text: '#1d4ed8'
+  },
+
+  blue: {
+    primary: '#1e3a8a',
+    accent: '#2563eb',
+    light: '#eff6ff',
+    border: '#bfdbfe',
+    text: '#1d4ed8'
+  },
+
+  green: {
+    primary: '#064e3b',
+    accent: '#059669',
+    light: '#ecfdf5',
+    border: '#a7f3d0',
+    text: '#047857'
+  },
+
+  teal: {
+    primary: '#134e4a',
+    accent: '#0f766e',
+    light: '#f0fdfa',
+    border: '#99f6e4',
+    text: '#0f766e'
+  },
+
+  purple: {
+    primary: '#3b0764',
+    accent: '#7c3aed',
+    light: '#f5f3ff',
+    border: '#ddd6fe',
+    text: '#6d28d9'
+  },
+
+  burgundy: {
+    primary: '#450a0a',
+    accent: '#991b1b',
+    light: '#fef2f2',
+    border: '#fecaca',
+    text: '#b91c1c'
+  },
+
+  orange: {
+    primary: '#431407',
+    accent: '#ea580c',
+    light: '#fff7ed',
+    border: '#fed7aa',
+    text: '#c2410c'
+  },
+
+  brown: {
+    primary: '#451a03',
+    accent: '#78350f',
+    light: '#fffbeb',
+    border: '#fde68a',
+    text: '#92400e'
+  },
+
+  gray: {
+    primary: '#1e293b',
+    accent: '#475569',
+    light: '#f1f5f9',
+    border: '#cbd5e1',
+    text: '#334155'
+  },
+
+  black: {
+    primary: '#111827',
+    accent: '#000000',
+    light: '#f3f4f6',
+    border: '#d1d5db',
+    text: '#111827'
+  }
+};
+
+const theme = colors[data.cvColor] || colors.navy;
 
     const browser = await puppeteer.launch({
       headless: true,
@@ -1742,7 +1825,7 @@ app.post('/cv-builder/professional/pdf', express.urlencoded({ extended: true }),
           }
 
           .header {
-            background: #15203a;
+          background: ${theme.primary};
             color: #ffffff;
             padding: 15mm;
             position: relative;
@@ -1754,7 +1837,7 @@ app.post('/cv-builder/professional/pdf', express.urlencoded({ extended: true }),
             right: 0;
             width: 100%;
             height: 2mm;
-            background: #3b82f6;
+          background: ${theme.accent};
           }
 
           h1 {
@@ -1764,7 +1847,7 @@ app.post('/cv-builder/professional/pdf', express.urlencoded({ extended: true }),
 
           .job-title {
             margin-top: 5px;
-            color: #93c5fd;
+            color: ${theme.light};
             font-size: 15px;
             font-weight: bold;
           }
@@ -1772,7 +1855,7 @@ app.post('/cv-builder/professional/pdf', express.urlencoded({ extended: true }),
           .contact {
             margin-top: 12px;
             font-size: 9px;
-            color: #dbeafe;
+          color: ${theme.light};
             line-height: 2;
           }
 
@@ -1783,8 +1866,8 @@ app.post('/cv-builder/professional/pdf', express.urlencoded({ extended: true }),
           .section-title {
             font-size: 15px;
             font-weight: bold;
-            color: #15203a;
-            border-right: 3px solid #3b82f6;
+           color: ${theme.primary};
+           border-right: 3px solid ${theme.accent};
             padding-right: 8px;
             margin-bottom: 8px;
           }
@@ -1797,7 +1880,7 @@ app.post('/cv-builder/professional/pdf', express.urlencoded({ extended: true }),
           }
 
           .item {
-            border-right: 2px solid #bfdbfe;
+          border-right: 2px solid ${theme.border};
             padding-right: 10px;
           }
 
@@ -1807,7 +1890,7 @@ app.post('/cv-builder/professional/pdf', express.urlencoded({ extended: true }),
           }
 
           .company {
-            color: #2563eb;
+          color: ${theme.accent};
             font-size: 10px;
             margin-top: 3px;
           }
@@ -1825,9 +1908,9 @@ app.post('/cv-builder/professional/pdf', express.urlencoded({ extended: true }),
           }
 
           .skill {
-            background: #eff6ff;
-            border: 1px solid #dbeafe;
-            color: #1d4ed8;
+            background: ${theme.light};
+           border: 1px solid ${theme.border};
+           color: ${theme.text};
             padding: 4px 8px;
             border-radius: 5px;
             font-size: 9px;
