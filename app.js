@@ -502,6 +502,172 @@ app.get('/cv-builder/professional', (req, res) => {
 
   <form method="POST" action="/cv-builder/professional/preview">
 
+<!-- اختيار لون القالب -->
+<div style="
+  margin-bottom:32px;
+  padding:22px;
+  background:#f8fafc;
+  border:1px solid var(--border);
+  border-radius:14px;
+">
+
+  <h3 style="
+    font-size:19px;
+    font-weight:800;
+    margin-bottom:8px;
+  ">
+    اختر لون السيرة الذاتية
+  </h3>
+
+  <p style="
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:18px;
+  ">
+    اختر اللون الذي يناسبك، وسيتم استخدامه في تصميم السيرة الذاتية وملف PDF.
+  </p>
+
+  <div style="
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    align-items:center;
+  ">
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="navy" checked style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#15203a;
+        border-radius:50%;
+        border:4px solid #ffffff;
+        box-shadow:0 0 0 2px #15203a;
+      "></span>
+      <small style="display:block;margin-top:6px">كحلي</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="blue" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#2563eb;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">أزرق</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="green" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#059669;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">أخضر</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="teal" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#0f766e;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">تركواز</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="purple" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#7c3aed;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">بنفسجي</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="burgundy" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#991b1b;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">خمري</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="orange" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#ea580c;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">برتقالي</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="brown" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#78350f;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">بني</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="gray" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#475569;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">رمادي</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="black" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#111827;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">أسود</small>
+    </label>
+
+  </div>
+
+</div>
     <h2 style="font-size:24px;font-weight:800;margin-bottom:8px">
 
         القالب الرسمي Professional
@@ -952,6 +1118,81 @@ app.post('/cv-builder/professional/preview', express.urlencoded({ extended: true
 
   const data = req.body;
 
+const colors = {
+  navy: {
+    primary: '#15203a',
+    accent: '#3b82f6',
+    light: '#eff6ff',
+    border: '#bfdbfe',
+    text: '#1d4ed8'
+  },
+  blue: {
+    primary: '#1e3a8a',
+    accent: '#2563eb',
+    light: '#eff6ff',
+    border: '#bfdbfe',
+    text: '#1d4ed8'
+  },
+  green: {
+    primary: '#064e3b',
+    accent: '#059669',
+    light: '#ecfdf5',
+    border: '#a7f3d0',
+    text: '#047857'
+  },
+  teal: {
+    primary: '#134e4a',
+    accent: '#0f766e',
+    light: '#f0fdfa',
+    border: '#99f6e4',
+    text: '#0f766e'
+  },
+  purple: {
+    primary: '#3b0764',
+    accent: '#7c3aed',
+    light: '#f5f3ff',
+    border: '#ddd6fe',
+    text: '#6d28d9'
+  },
+  burgundy: {
+    primary: '#450a0a',
+    accent: '#991b1b',
+    light: '#fef2f2',
+    border: '#fecaca',
+    text: '#b91c1c'
+  },
+  orange: {
+    primary: '#431407',
+    accent: '#ea580c',
+    light: '#fff7ed',
+    border: '#fed7aa',
+    text: '#c2410c'
+  },
+  brown: {
+    primary: '#451a03',
+    accent: '#78350f',
+    light: '#fffbeb',
+    border: '#fde68a',
+    text: '#92400e'
+  },
+  gray: {
+    primary: '#1e293b',
+    accent: '#475569',
+    light: '#f1f5f9',
+    border: '#cbd5e1',
+    text: '#334155'
+  },
+  black: {
+    primary: '#111827',
+    accent: '#000000',
+    light: '#f3f4f6',
+    border: '#d1d5db',
+    text: '#111827'
+  }
+};
+
+const theme = colors[data.cvColor] || colors.navy;
+
   const body = `
   <div style="
     background:#eef2f7;
@@ -974,7 +1215,7 @@ app.post('/cv-builder/professional/preview', express.urlencoded({ extended: true
 
       <!-- TOP HEADER -->
       <div style="
-        background:#15203a;
+       background:${theme.primary};
         color:#ffffff;
         padding:42px 55px 34px;
         position:relative;
@@ -986,7 +1227,7 @@ app.post('/cv-builder/professional/preview', express.urlencoded({ extended: true
           right:0;
           width:100%;
           height:5px;
-          background:#3b82f6;
+         background:${theme.accent};
         "></div>
 
         <h1 style="
@@ -1002,7 +1243,7 @@ app.post('/cv-builder/professional/preview', express.urlencoded({ extended: true
         <div style="
           margin-top:6px;
           font-size:17px;
-          color:#93c5fd;
+         color:${theme.light};
           font-weight:700;
         ">
           ${data.jobTitle || 'المسمى الوظيفي'}
@@ -1157,7 +1398,7 @@ app.post('/cv-builder/professional/preview', express.urlencoded({ extended: true
             <div style="
               margin-top:4px;
               font-size:13px;
-              color:#2563eb;
+             color:${theme.accent};
               font-weight:700;
             ">
               ${data.company}
@@ -1224,7 +1465,7 @@ app.post('/cv-builder/professional/preview', express.urlencoded({ extended: true
           </div>
 
           <div style="
-            border-right:2px solid #bfdbfe;
+          border-right:2px solid ${theme.border};
             padding-right:16px;
           ">
 
@@ -1316,9 +1557,9 @@ app.post('/cv-builder/professional/preview', express.urlencoded({ extended: true
               .split(',')
               .map(skill => `
                 <span style="
-                  background:#eff6ff;
-                  border:1px solid #dbeafe;
-                  color:#1d4ed8;
+                 background:${theme.light};
+                  border:1px solid ${theme.border};
+                  color:${theme.text};
                   padding:6px 12px;
                   border-radius:7px;
                   font-size:11px;
