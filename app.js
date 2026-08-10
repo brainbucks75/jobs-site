@@ -450,21 +450,29 @@ app.get('/cv-builder', (req, res) => {
       ${templates.map(template => `
         <div class="post" style="text-align:center">
 
-          <div style="
-            height:280px;
-            background:#f8fafc;
-            border:1px solid var(--border);
-            border-radius:14px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            margin-bottom:18px;
-            font-size:22px;
-            font-weight:800;
-            color:var(--navy);
-          ">
-            معاينة القالب
-          </div>
+         <div style="
+  height:320px;
+  background:#f8fafc;
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+  margin-bottom:18px;
+  box-shadow:0 8px 25px rgba(15,23,42,.08);
+">
+
+  <img
+    src="${template.image}"
+    alt="${template.nameAr}"
+    style="
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:top center;
+      display:block;
+    "
+  >
+
+</div>
 
           <h2 style="font-size:21px">
             ${template.nameAr}
