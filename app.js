@@ -498,9 +498,12 @@ app.get('/cv-builder/professional', (req, res) => {
 
     <h1 class="section-title">إنشاء السيرة الذاتية</h1>
 
-    <div class="post">
+   <div class="post">
 
-      <h2 style="font-size:24px;font-weight:800;margin-bottom:8px">
+  <form method="POST" action="/cv-builder/professional/preview">
+
+    <h2 style="font-size:24px;font-weight:800;margin-bottom:8px">
+
         القالب الرسمي Professional
       </h2>
 
@@ -892,13 +895,296 @@ app.get('/cv-builder/professional', (req, res) => {
 
       <div style="text-align:center;margin-top:30px">
 
-        <button
-          type="button"
+      <button
+  type="submit"
+  class="btn-primary"
+  style="border:none;cursor:pointer;font-family:inherit"
+>
+  معاينة السيرة الذاتية
+</button>
+
+      </div>
+
+      </form>
+
+  </div>
+
+</div>
+`;
+
+  res.send(layout('إنشاء السيرة الذاتية - القالب الرسمي', body));
+});
+
+/* =========================
+   CV PROFESSIONAL - PREVIEW
+========================= */
+app.post('/cv-builder/professional/preview', express.urlencoded({ extended: true }), (req, res) => {
+
+  const data = req.body;
+
+  const body = `
+  <div class="page-container">
+
+    <div class="post">
+
+      <h1 style="
+        font-size:30px;
+        font-weight:900;
+        margin-bottom:8px;
+      ">
+        معاينة السيرة الذاتية
+      </h1>
+
+      <p style="
+        color:var(--muted);
+        margin-bottom:30px;
+      ">
+        هذه معاينة أولية لسيرتك الذاتية.
+      </p>
+
+
+      <!-- رأس السيرة -->
+
+      <div style="
+        text-align:center;
+        padding-bottom:25px;
+        border-bottom:2px solid var(--border);
+      ">
+
+        <h2 style="
+          font-size:30px;
+          font-weight:900;
+        ">
+          ${data.fullName || 'الاسم الكامل'}
+        </h2>
+
+        <p style="
+          font-size:18px;
+          color:var(--brand-2);
+          font-weight:700;
+          margin-top:5px;
+        ">
+          ${data.jobTitle || 'المسمى الوظيفي'}
+        </p>
+
+        <p style="
+          color:var(--muted);
+          margin-top:10px;
+        ">
+          ${data.country || ''}
+          ${data.city ? ' - ' + data.city : ''}
+          ${data.phone ? ' | ' + data.phone : ''}
+          ${data.email ? ' | ' + data.email : ''}
+        </p>
+
+      </div>
+
+
+      <!-- الملخص -->
+
+      ${data.summary ? `
+      <div style="margin-top:30px">
+
+        <h3 style="
+          font-size:20px;
+          font-weight:800;
+          border-bottom:2px solid var(--border);
+          padding-bottom:8px;
+        ">
+          الملخص المهني
+        </h3>
+
+        <p style="
+          margin-top:12px;
+          line-height:2;
+          white-space:pre-line;
+        ">
+          ${data.summary}
+        </p>
+
+      </div>
+      ` : ''}
+
+
+      <!-- الخبرة -->
+
+      ${(data.experienceTitle || data.company) ? `
+      <div style="margin-top:30px">
+
+        <h3 style="
+          font-size:20px;
+          font-weight:800;
+          border-bottom:2px solid var(--border);
+          padding-bottom:8px;
+        ">
+          الخبرة المهنية
+        </h3>
+
+        <div style="margin-top:15px">
+
+          <h4 style="font-size:18px;font-weight:800">
+            ${data.experienceTitle || ''}
+          </h4>
+
+          <p style="
+            color:var(--brand-2);
+            font-weight:600;
+            margin-top:4px;
+          ">
+            ${data.company || ''}
+          </p>
+
+          <p style="
+            color:var(--muted);
+            font-size:13px;
+            margin-top:4px;
+          ">
+            ${data.experienceStart || ''}
+            ${data.experienceEnd ? ' - ' + data.experienceEnd : ''}
+          </p>
+
+          <p style="
+            margin-top:10px;
+            line-height:2;
+            white-space:pre-line;
+          ">
+            ${data.experienceDescription || ''}
+          </p>
+
+        </div>
+
+      </div>
+      ` : ''}
+
+
+      <!-- التعليم -->
+
+      ${(data.degree || data.specialization || data.university) ? `
+      <div style="margin-top:30px">
+
+        <h3 style="
+          font-size:20px;
+          font-weight:800;
+          border-bottom:2px solid var(--border);
+          padding-bottom:8px;
+        ">
+          التعليم
+        </h3>
+
+        <div style="margin-top:15px">
+
+          <h4 style="font-size:18px;font-weight:800">
+            ${data.degree || ''}
+          </h4>
+
+          <p style="margin-top:4px">
+            ${data.specialization || ''}
+          </p>
+
+          <p style="
+            color:var(--muted);
+            margin-top:4px;
+          ">
+            ${data.university || ''}
+            ${data.graduationYear ? ' - ' + data.graduationYear : ''}
+          </p>
+
+        </div>
+
+      </div>
+      ` : ''}
+
+
+      <!-- المهارات -->
+
+      ${data.skills ? `
+      <div style="margin-top:30px">
+
+        <h3 style="
+          font-size:20px;
+          font-weight:800;
+          border-bottom:2px solid var(--border);
+          padding-bottom:8px;
+        ">
+          المهارات
+        </h3>
+
+        <p style="
+          margin-top:12px;
+          line-height:2;
+        ">
+          ${data.skills}
+        </p>
+
+      </div>
+      ` : ''}
+
+
+      <!-- الشهادات -->
+
+      ${data.certificates ? `
+      <div style="margin-top:30px">
+
+        <h3 style="
+          font-size:20px;
+          font-weight:800;
+          border-bottom:2px solid var(--border);
+          padding-bottom:8px;
+        ">
+          الدورات والشهادات
+        </h3>
+
+        <p style="
+          margin-top:12px;
+          line-height:2;
+          white-space:pre-line;
+        ">
+          ${data.certificates}
+        </p>
+
+      </div>
+      ` : ''}
+
+
+      <!-- اللغات -->
+
+      ${data.languages ? `
+      <div style="margin-top:30px">
+
+        <h3 style="
+          font-size:20px;
+          font-weight:800;
+          border-bottom:2px solid var(--border);
+          padding-bottom:8px;
+        ">
+          اللغات
+        </h3>
+
+        <p style="
+          margin-top:12px;
+          line-height:2;
+          white-space:pre-line;
+        ">
+          ${data.languages}
+        </p>
+
+      </div>
+      ` : ''}
+
+
+      <div style="
+        text-align:center;
+        margin-top:35px;
+        padding-top:25px;
+        border-top:1px solid var(--border);
+      ">
+
+        <a
+          href="/cv-builder/professional"
           class="btn-primary"
-          style="border:none;cursor:pointer;font-family:inherit"
         >
-          معاينة السيرة الذاتية
-        </button>
+          تعديل البيانات
+        </a>
 
       </div>
 
@@ -907,7 +1193,7 @@ app.get('/cv-builder/professional', (req, res) => {
   </div>
   `;
 
-  res.send(layout('إنشاء السيرة الذاتية - القالب الرسمي', body));
+  res.send(layout('معاينة السيرة الذاتية - وظائف الوطن العربي', body));
 });
 /* =========================
    ARTICLES PAGE
