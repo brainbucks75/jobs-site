@@ -1315,7 +1315,7 @@ app.post('/cv-builder/professional/preview', express.urlencoded({ extended: true
   `;
 
   res.send(layout('معاينة السيرة الذاتية - وظائف الوطن العربي', body));
-
+});
   /* =========================
    ARTICLES PAGE
 ========================= */
