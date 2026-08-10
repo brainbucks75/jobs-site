@@ -40,7 +40,9 @@ function getPrivacy() {
   if (!fs.existsSync('privacy.json')) return null;
   return JSON.parse(fs.readFileSync('privacy.json'));
 }
-
+function getCVTemplates() {
+  return safeRead('cv-templates.json');
+}
 /* =========================
    GLOBAL STYLE (NEW DESIGN)
 ========================= */
@@ -421,6 +423,8 @@ app.get('/', (req,res)=>{
    CV BUILDER
 ========================= */
 app.get('/cv-builder', (req, res) => {
+
+  const templates = getCVTemplates();
 
   const body = `
   <div class="page-container">
