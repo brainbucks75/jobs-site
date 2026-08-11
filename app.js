@@ -250,7 +250,7 @@ return `<!doctype html><html lang="ar" dir="rtl"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="google-site-verification" content="12WvV3-XgAjFGCg9j7I4r_pi-n17R-XADE3MIOLw2JE" />
-<meta name="description" content="موقع وظائف الوطن العربي - أحدث الوظائف والمقالات والقصص">
+<meta name="description" content="موقع وظائف الوطن العربي - أحدث الوظائف والمقالات الخاصة بالتوظيف">
 <meta name="keywords" content="وظائف, عمل, توظيف, وظائف عربية">
 <title>${title}</title>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
@@ -281,22 +281,22 @@ app.get('/', (req,res)=>{
 
   const articles = getArticles();
   const stories  = getStories();
-  const featuredArticle = articles[0] || {title:'كيف تكتب سيرة ذاتية احترافية تجذب أصحاب العمل', date:'12 مايو 2024'};
-  const featuredStory   = stories[0]   || {title:'رحلة نجاح: من الصفر إلى القمة', date:'11 مايو 2024'};
+  const featuredArticle = articles[0] || {title:'كيف تكتب سيرة ذاتية احترافية تجذب أصحاب العمل', date:'12 مايو 2026'};
+  const featuredStory   = stories[0]   || {title:'رحلة نجاح: من الصفر إلى القمة', date:'11 مايو 2026'};
   const restArticles = articles.slice(1,3);
   const restStories  = stories.slice(1,3);
 
   const articleItems = restArticles.length ? restArticles.map(a=>`
     <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">${a.title}</div><div class="d">${a.date||''}</div></div></div>
   `).join('') : `
-    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">أهم المهارات المطلوبة في سوق العمل 2024</div><div class="d">10 مايو 2024</div></div></div>
+    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">أهم المهارات المطلوبة في سوق العمل 2026</div><div class="d">10 مايو 2026</div></div></div>
     <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">أخطاء شائعة في مقابلات العمل وكيف تجنبها</div><div class="d">8 مايو 2026</div></div></div>
   `;
 
   const storyItems = restStories.length ? restStories.map(s=>`
     <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">${s.title}</div><div class="d">${s.date||''}</div></div></div>
   `).join('') : `
-    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">قصة شاب بدأ من لا شيء وأصبح رائد أعمال ناجح</div><div class="d">9 مايو 2024</div></div></div>
+    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">قصة شاب بدأ من لا شيء وأصبح رائد أعمال ناجح</div><div class="d">9 مايو 2026</div></div></div>
     <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">كيف غيّرت التعلم المستمر مجرى حياتي المهنية</div><div class="d">7 مايو 2026</div></div></div>
   `;
 
@@ -419,6 +419,7 @@ app.get('/', (req,res)=>{
   res.send(layout('وظائف الوطن العربي - ابحث عن وظيفتك القادمة', body));
 });
 
+```js
 /* =========================
    CV BUILDER
 ========================= */
@@ -427,74 +428,782 @@ app.get('/cv-builder', (req, res) => {
   const templates = getCVTemplates();
 
   const body = `
+
   <div class="page-container">
 
     <h1 class="section-title">إنشاء سيرتك الذاتية</h1>
 
-    <div class="post" style="text-align:center;margin-bottom:30px">
-      <h2 style="font-size:24px;font-weight:800">
+    <div class="post" style="
+      text-align:center;
+      margin-bottom:30px;
+    ">
+
+      <h2 style="
+        font-size:24px;
+        font-weight:800;
+      ">
         اختر قالب السيرة الذاتية المناسب لك
       </h2>
 
-      <p style="margin-top:10px;color:var(--muted);font-size:15px">
+      <p style="
+        margin-top:10px;
+        color:var(--muted);
+        font-size:15px;
+      ">
         اختر التصميم الذي يناسب مجالك، ثم املأ بياناتك الشخصية والتعليمية والمهنية.
       </p>
+
     </div>
 
-       <div style="
+
+    <div style="
       display:grid;
       grid-template-columns:repeat(2,1fr);
       gap:24px;
     ">
 
+
       ${templates.map(template => `
-        <div class="post" style="text-align:center">
 
-         <div style="
-  height:320px;
-  background:#f8fafc;
-  border:1px solid var(--border);
-  border-radius:14px;
-  overflow:hidden;
-  margin-bottom:18px;
-  box-shadow:0 8px 25px rgba(15,23,42,.08);
-">
+        <div class="post" style="
+          text-align:center;
+        ">
 
-  <img
-    src="${template.image}"
-    alt="${template.nameAr}"
-    style="
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      object-position:top center;
-      display:block;
-    "
-  >
 
-</div>
+          <!-- =========================
+               TEMPLATE PREVIEW
+          ========================== -->
 
-          <h2 style="font-size:21px">
+          <div style="
+            height:330px;
+            background:#eef2f7;
+            border:1px solid var(--border);
+            border-radius:14px;
+            overflow:hidden;
+            margin-bottom:18px;
+            box-shadow:0 8px 25px rgba(15,23,42,.08);
+            padding:14px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+          ">
+
+
+            <!-- =========================
+                 PROFESSIONAL
+            ========================== -->
+
+            ${template.type === 'professional' ? `
+
+            <div style="
+              width:210px;
+              height:295px;
+              background:#fff;
+              box-shadow:0 6px 18px rgba(15,23,42,.15);
+              direction:rtl;
+              text-align:right;
+              overflow:hidden;
+              font-family:Arial,sans-serif;
+            ">
+
+              <div style="
+                height:82px;
+                background:#15203a;
+                border-top:4px solid #3b82f6;
+                padding:14px;
+                color:#fff;
+              ">
+
+                <div style="
+                  font-size:13px;
+                  font-weight:800;
+                ">
+                  أحمد محمد
+                </div>
+
+                <div style="
+                  margin-top:3px;
+                  font-size:7px;
+                  color:#93c5fd;
+                  font-weight:bold;
+                ">
+                  مهندس برمجيات
+                </div>
+
+                <div style="
+                  margin-top:8px;
+                  font-size:5px;
+                  color:#dbeafe;
+                ">
+                  عمّان - الأردن | 0790000000
+                </div>
+
+              </div>
+
+
+              <div style="padding:12px 14px">
+
+                <div style="
+                  border-right:3px solid #3b82f6;
+                  padding-right:6px;
+                  font-size:7px;
+                  font-weight:800;
+                  color:#15203a;
+                  margin-bottom:6px;
+                ">
+                  الملخص المهني
+                </div>
+
+                <div style="
+                  height:18px;
+                  background:#f1f5f9;
+                  margin-bottom:12px;
+                "></div>
+
+
+                <div style="
+                  border-right:3px solid #3b82f6;
+                  padding-right:6px;
+                  font-size:7px;
+                  font-weight:800;
+                  color:#15203a;
+                  margin-bottom:6px;
+                ">
+                  الخبرة المهنية
+                </div>
+
+                <div style="
+                  font-size:6px;
+                  font-weight:bold;
+                ">
+                  مهندس برمجيات
+                </div>
+
+                <div style="
+                  font-size:5px;
+                  color:#2563eb;
+                  margin-top:2px;
+                ">
+                  شركة تقنية
+                </div>
+
+                <div style="
+                  height:22px;
+                  background:#f1f5f9;
+                  margin-top:5px;
+                  margin-bottom:11px;
+                "></div>
+
+
+                <div style="
+                  border-right:3px solid #3b82f6;
+                  padding-right:6px;
+                  font-size:7px;
+                  font-weight:800;
+                  color:#15203a;
+                  margin-bottom:6px;
+                ">
+                  التعليم
+                </div>
+
+                <div style="
+                  font-size:6px;
+                  font-weight:bold;
+                ">
+                  بكالوريوس هندسة البرمجيات
+                </div>
+
+                <div style="
+                  font-size:5px;
+                  color:#2563eb;
+                  margin-top:2px;
+                ">
+                  الجامعة الأردنية
+                </div>
+
+
+                <div style="
+                  border-right:3px solid #3b82f6;
+                  padding-right:6px;
+                  font-size:7px;
+                  font-weight:800;
+                  color:#15203a;
+                  margin-top:12px;
+                  margin-bottom:6px;
+                ">
+                  المهارات
+                </div>
+
+                <div style="
+                  display:flex;
+                  gap:3px;
+                  flex-wrap:wrap;
+                ">
+
+                  <span style="
+                    background:#eff6ff;
+                    color:#1d4ed8;
+                    padding:3px 5px;
+                    border-radius:3px;
+                    font-size:5px;
+                  ">
+                    JavaScript
+                  </span>
+
+                  <span style="
+                    background:#eff6ff;
+                    color:#1d4ed8;
+                    padding:3px 5px;
+                    border-radius:3px;
+                    font-size:5px;
+                  ">
+                    Excel
+                  </span>
+
+                  <span style="
+                    background:#eff6ff;
+                    color:#1d4ed8;
+                    padding:3px 5px;
+                    border-radius:3px;
+                    font-size:5px;
+                  ">
+                    التواصل
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            ` : ''}
+
+
+            <!-- =========================
+                 ATS
+            ========================== -->
+
+            ${template.type === 'ats' ? `
+
+            <div style="
+              width:210px;
+              height:295px;
+              background:#fff;
+              box-shadow:0 6px 18px rgba(15,23,42,.12);
+              direction:rtl;
+              text-align:right;
+              overflow:hidden;
+              font-family:Arial,sans-serif;
+              padding:18px;
+            ">
+
+              <div style="
+                font-size:14px;
+                font-weight:800;
+                color:#111827;
+              ">
+                أحمد محمد
+              </div>
+
+              <div style="
+                font-size:7px;
+                color:#374151;
+                margin-top:4px;
+              ">
+                مهندس برمجيات
+              </div>
+
+              <div style="
+                font-size:5px;
+                color:#6b7280;
+                margin-top:6px;
+                border-bottom:1px solid #d1d5db;
+                padding-bottom:9px;
+              ">
+                عمّان - الأردن | 0790000000 | example@email.com
+              </div>
+
+
+              <div style="
+                font-size:7px;
+                font-weight:800;
+                color:#111827;
+                margin-top:12px;
+                border-bottom:1px solid #111827;
+                padding-bottom:3px;
+              ">
+                الملخص المهني
+              </div>
+
+              <div style="
+                height:20px;
+                background:#f3f4f6;
+                margin-top:6px;
+              "></div>
+
+
+              <div style="
+                font-size:7px;
+                font-weight:800;
+                color:#111827;
+                margin-top:11px;
+                border-bottom:1px solid #111827;
+                padding-bottom:3px;
+              ">
+                الخبرة المهنية
+              </div>
+
+              <div style="
+                font-size:6px;
+                font-weight:bold;
+                margin-top:6px;
+              ">
+                مهندس برمجيات - شركة تقنية
+              </div>
+
+              <div style="
+                height:24px;
+                background:#f3f4f6;
+                margin-top:5px;
+              "></div>
+
+
+              <div style="
+                font-size:7px;
+                font-weight:800;
+                color:#111827;
+                margin-top:11px;
+                border-bottom:1px solid #111827;
+                padding-bottom:3px;
+              ">
+                التعليم
+              </div>
+
+              <div style="
+                font-size:6px;
+                margin-top:6px;
+              ">
+                بكالوريوس هندسة البرمجيات
+              </div>
+
+
+              <div style="
+                font-size:7px;
+                font-weight:800;
+                color:#111827;
+                margin-top:11px;
+                border-bottom:1px solid #111827;
+                padding-bottom:3px;
+              ">
+                المهارات
+              </div>
+
+              <div style="
+                font-size:6px;
+                margin-top:6px;
+                line-height:1.8;
+              ">
+                JavaScript • Excel • التواصل • إدارة الوقت
+              </div>
+
+            </div>
+
+
+            ` : ''}
+
+
+            <!-- =========================
+                 MODERN
+            ========================== -->
+
+            ${template.type === 'modern' ? `
+
+            <div style="
+              width:210px;
+              height:295px;
+              background:#fff;
+              box-shadow:0 6px 18px rgba(15,23,42,.15);
+              direction:rtl;
+              text-align:right;
+              overflow:hidden;
+              font-family:Arial,sans-serif;
+              display:flex;
+            ">
+
+              <div style="
+                width:58px;
+                background:#4f46e5;
+                color:#fff;
+                padding:12px 8px;
+              ">
+
+                <div style="
+                  width:30px;
+                  height:30px;
+                  border-radius:50%;
+                  background:#c7d2fe;
+                  margin:0 auto 12px;
+                "></div>
+
+                <div style="
+                  font-size:5px;
+                  font-weight:bold;
+                  text-align:center;
+                  line-height:1.8;
+                ">
+                  المهارات
+                </div>
+
+                <div style="
+                  margin-top:8px;
+                  font-size:4px;
+                  line-height:2;
+                  text-align:center;
+                ">
+                  JavaScript<br>
+                  Excel<br>
+                  التواصل<br>
+                  القيادة
+                </div>
+
+              </div>
+
+
+              <div style="
+                flex:1;
+                padding:15px 12px;
+              ">
+
+                <div style="
+                  font-size:14px;
+                  font-weight:800;
+                  color:#1e1b4b;
+                ">
+                  أحمد محمد
+                </div>
+
+                <div style="
+                  font-size:7px;
+                  color:#6366f1;
+                  font-weight:bold;
+                  margin-top:3px;
+                ">
+                  مهندس برمجيات
+                </div>
+
+
+                <div style="
+                  height:1px;
+                  background:#e0e7ff;
+                  margin:10px 0;
+                "></div>
+
+
+                <div style="
+                  font-size:7px;
+                  font-weight:800;
+                  color:#312e81;
+                  margin-bottom:5px;
+                ">
+                  نبذة مهنية
+                </div>
+
+                <div style="
+                  height:22px;
+                  background:#f5f3ff;
+                  margin-bottom:10px;
+                "></div>
+
+
+                <div style="
+                  font-size:7px;
+                  font-weight:800;
+                  color:#312e81;
+                  margin-bottom:5px;
+                ">
+                  الخبرة
+                </div>
+
+                <div style="
+                  font-size:6px;
+                  font-weight:bold;
+                ">
+                  مهندس برمجيات
+                </div>
+
+                <div style="
+                  font-size:5px;
+                  color:#6366f1;
+                  margin-top:2px;
+                ">
+                  شركة تقنية
+                </div>
+
+                <div style="
+                  height:28px;
+                  background:#f5f3ff;
+                  margin-top:5px;
+                  margin-bottom:10px;
+                "></div>
+
+
+                <div style="
+                  font-size:7px;
+                  font-weight:800;
+                  color:#312e81;
+                  margin-bottom:5px;
+                ">
+                  التعليم
+                </div>
+
+                <div style="
+                  font-size:6px;
+                ">
+                  بكالوريوس هندسة البرمجيات
+                </div>
+
+              </div>
+
+            </div>
+
+
+            ` : ''}
+
+
+            <!-- =========================
+                 CREATIVE
+            ========================== -->
+
+            ${template.type === 'creative' ? `
+
+            <div style="
+              width:210px;
+              height:295px;
+              background:#fff;
+              box-shadow:0 6px 18px rgba(15,23,42,.15);
+              direction:rtl;
+              text-align:right;
+              overflow:hidden;
+              font-family:Arial,sans-serif;
+            ">
+
+              <div style="
+                height:72px;
+                background:linear-gradient(135deg,#f97316,#ec4899);
+                padding:13px;
+                color:#fff;
+              ">
+
+                <div style="
+                  font-size:14px;
+                  font-weight:800;
+                ">
+                  أحمد محمد
+                </div>
+
+                <div style="
+                  font-size:7px;
+                  margin-top:3px;
+                  font-weight:bold;
+                ">
+                  مصمم جرافيك
+                </div>
+
+              </div>
+
+
+              <div style="
+                padding:12px 14px;
+              ">
+
+                <div style="
+                  display:flex;
+                  gap:5px;
+                  align-items:center;
+                  margin-bottom:5px;
+                ">
+
+                  <div style="
+                    width:8px;
+                    height:8px;
+                    background:#f97316;
+                    border-radius:2px;
+                  "></div>
+
+                  <div style="
+                    font-size:7px;
+                    font-weight:800;
+                    color:#1f2937;
+                  ">
+                    الملف المهني
+                  </div>
+
+                </div>
+
+                <div style="
+                  height:20px;
+                  background:#fff7ed;
+                  margin-bottom:11px;
+                "></div>
+
+
+                <div style="
+                  display:flex;
+                  gap:5px;
+                  align-items:center;
+                  margin-bottom:5px;
+                ">
+
+                  <div style="
+                    width:8px;
+                    height:8px;
+                    background:#ec4899;
+                    border-radius:2px;
+                  "></div>
+
+                  <div style="
+                    font-size:7px;
+                    font-weight:800;
+                  ">
+                    الخبرة
+                  </div>
+
+                </div>
+
+                <div style="
+                  font-size:6px;
+                  font-weight:bold;
+                ">
+                  مصمم جرافيك
+                </div>
+
+                <div style="
+                  font-size:5px;
+                  color:#ec4899;
+                  margin-top:2px;
+                ">
+                  وكالة إبداعية
+                </div>
+
+                <div style="
+                  height:25px;
+                  background:#fdf2f8;
+                  margin-top:5px;
+                  margin-bottom:11px;
+                "></div>
+
+
+                <div style="
+                  display:flex;
+                  gap:5px;
+                  align-items:center;
+                  margin-bottom:5px;
+                ">
+
+                  <div style="
+                    width:8px;
+                    height:8px;
+                    background:#f97316;
+                    border-radius:2px;
+                  "></div>
+
+                  <div style="
+                    font-size:7px;
+                    font-weight:800;
+                  ">
+                    التعليم
+                  </div>
+
+                </div>
+
+                <div style="
+                  font-size:6px;
+                ">
+                  بكالوريوس تصميم جرافيكي
+                </div>
+
+
+                <div style="
+                  display:flex;
+                  gap:4px;
+                  margin-top:12px;
+                ">
+
+                  <span style="
+                    background:#fff7ed;
+                    color:#ea580c;
+                    padding:3px 5px;
+                    border-radius:4px;
+                    font-size:5px;
+                  ">
+                    Photoshop
+                  </span>
+
+                  <span style="
+                    background:#fdf2f8;
+                    color:#db2777;
+                    padding:3px 5px;
+                    border-radius:4px;
+                    font-size:5px;
+                  ">
+                    Illustrator
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            ` : ''}
+
+          </div>
+
+
+          <!-- TEMPLATE NAME -->
+
+          <h2 style="
+            font-size:21px;
+            margin:0;
+          ">
             ${template.nameAr}
           </h2>
 
-          <p style="font-size:14px;margin-top:6px">
+
+          <!-- DESCRIPTION -->
+
+          <p style="
+            font-size:14px;
+            margin-top:6px;
+          ">
             ${template.description}
           </p>
 
-          <a href="/cv-builder/${template.type}" class="apply" style="margin-top:14px">
+
+          <!-- BUTTON -->
+
+          <a
+            href="/cv-builder/${template.type}"
+            class="apply"
+            style="margin-top:14px"
+          >
             استخدام هذا القالب
           </a>
 
+
         </div>
+
       `).join('')}
 
     </div>
+
   </div>
   `;
 
   res.send(layout('إنشاء سيرة ذاتية - وظائف الوطن العربي', body));
 });
+```
 
 /* =========================
    CV PROFESSIONAL - FORM
