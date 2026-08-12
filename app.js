@@ -40,7 +40,9 @@ function getPrivacy() {
   if (!fs.existsSync('privacy.json')) return null;
   return JSON.parse(fs.readFileSync('privacy.json'));
 }
-
+function getCVTemplates() {
+  return safeRead('cv-templates.json');
+}
 /* =========================
    GLOBAL STYLE (NEW DESIGN)
 ========================= */
@@ -417,6 +419,72 @@ app.get('/', (req,res)=>{
   res.send(layout('وظائف الوطن العربي - ابحث عن وظيفتك القادمة', body));
 });
 
+/* =========================
+   CV BUILDER
+========================= */
+app.get('/cv-builder', (req, res) => {
+  const templates = getCVTemplates();
+  const body = `
+  <div class="page-container">
+
+    <h1 class="section-title">إنشاء سيرتك الذاتية</h1>
+
+    <div class="post" style="text-align:center;margin-bottom:30px">
+      <h2 style="font-size:24px;font-weight:800">
+        اختر قالب السيرة الذاتية المناسب لك
+      </h2>
+
+      <p style="margin-top:10px;color:var(--muted);font-size:15px">
+        اختر التصميم الذي يناسب مجالك، ثم املأ بياناتك الشخصية والتعليمية والمهنية.
+      </p>
+    </div>
+
+       <div style="
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:24px;
+    ">
+
+      ${templates.map(template => `
+        <div class="post" style="text-align:center">
+
+          <div style="
+            height:280px;
+            background:#f8fafc;
+            border:1px solid var(--border);
+            border-radius:14px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            margin-bottom:18px;
+            font-size:22px;
+            font-weight:800;
+            color:var(--navy);
+          ">
+            معاينة القالب
+          </div>
+
+          <h2 style="font-size:21px">
+            ${template.nameAr}
+          </h2>
+
+          <p style="font-size:14px;margin-top:6px">
+            ${template.description}
+          </p>
+
+          <a href="/cv-builder/${template.type}" class="apply" style="margin-top:14px">
+            استخدام هذا القالب
+          </a>
+
+        </div>
+      `).join('')}
+
+    </div>
+  </div>
+  `;
+
+  res.send(layout('إنشاء سيرة ذاتية - وظائف الوطن العربي', body));
+});
 /* =========================
    ARTICLES PAGE
 ========================= */
