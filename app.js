@@ -485,6 +485,715 @@ app.get('/cv-builder', (req, res) => {
 
   res.send(layout('إنشاء سيرة ذاتية - وظائف الوطن العربي', body));
 });
+
+/* =========================
+   CV PROFESSIONAL - FORM
+========================= */
+app.get('/cv-builder/professional', (req, res) => {
+
+  const body = `
+  <div class="page-container">
+
+    <h1 class="section-title">إنشاء السيرة الذاتية</h1>
+
+   <div class="post">
+
+  <form method="POST" action="/cv-builder/professional/preview">
+
+    <h2 style="font-size:24px;font-weight:800;margin-bottom:8px">
+
+        القالب الرسمي Professional
+      </h2>
+
+      <p style="color:var(--muted);margin-bottom:28px">
+        املأ بياناتك التالية، وسنستخدمها لاحقًا لإنشاء سيرتك الذاتية بصيغة احترافية.
+      </p>
+
+
+      <!-- المعلومات الشخصية -->
+      <div style="margin-bottom:32px">
+
+        <h3 style="
+          font-size:19px;
+          font-weight:800;
+          margin-bottom:18px;
+          padding-bottom:10px;
+          border-bottom:2px solid var(--border);
+        ">
+          المعلومات الشخصية
+        </h3>
+
+        <div style="
+          display:grid;
+          grid-template-columns:repeat(2,1fr);
+          gap:18px;
+        ">
+
+          <div>
+            <label>الاسم الكامل</label>
+            <input
+              type="text"
+              name="fullName"
+              placeholder="مثال: أحمد محمد"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px"
+            >
+          </div>
+
+          <div>
+            <label>المسمى الوظيفي</label>
+            <input
+              type="text"
+              name="jobTitle"
+              placeholder="مثال: مهندس برمجيات"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px"
+            >
+          </div>
+
+          <div>
+            <label>الدولة</label>
+            <input
+              type="text"
+              name="country"
+              placeholder="مثال: الأردن"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px"
+            >
+          </div>
+
+          <div>
+            <label>المدينة</label>
+            <input
+              type="text"
+              name="city"
+              placeholder="مثال: عمّان"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px"
+            >
+          </div>
+
+          <div>
+            <label>رقم الهاتف</label>
+            <input
+              type="tel"
+              name="phone"
+              placeholder="مثال: 0790000000"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px"
+            >
+          </div>
+
+          <div>
+            <label>البريد الإلكتروني</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="example@email.com"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px"
+            >
+          </div>
+
+          <div>
+            <label>LinkedIn</label>
+            <input
+              type="text"
+              name="linkedin"
+              placeholder="رابط حساب LinkedIn - اختياري"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px"
+            >
+          </div>
+
+          <div>
+            <label>الموقع الشخصي</label>
+            <input
+              type="text"
+              name="website"
+              placeholder="رابط الموقع - اختياري"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px"
+            >
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- الملخص المهني -->
+      <div style="margin-bottom:32px">
+
+        <h3 style="
+          font-size:19px;
+          font-weight:800;
+          margin-bottom:18px;
+          padding-bottom:10px;
+          border-bottom:2px solid var(--border);
+        ">
+          الملخص المهني
+        </h3>
+
+        <textarea
+          name="summary"
+          rows="6"
+          placeholder="اكتب نبذة مختصرة عن خبرتك ومهاراتك وأهدافك المهنية..."
+          style="
+            width:100%;
+            padding:12px;
+            border:1px solid var(--border);
+            border-radius:10px;
+            resize:vertical;
+            font-family:inherit;
+            line-height:1.8;
+          "
+        ></textarea>
+
+      </div>
+
+
+      <!-- الخبرات -->
+      <div style="margin-bottom:32px">
+
+        <h3 style="
+          font-size:19px;
+          font-weight:800;
+          margin-bottom:18px;
+          padding-bottom:10px;
+          border-bottom:2px solid var(--border);
+        ">
+          الخبرات المهنية
+        </h3>
+
+        <div style="
+          background:#f8fafc;
+          border:1px solid var(--border);
+          border-radius:12px;
+          padding:20px;
+        ">
+
+          <div style="
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:18px;
+          ">
+
+            <div>
+              <label>المسمى الوظيفي</label>
+              <input
+                type="text"
+                name="experienceTitle"
+                placeholder="مثال: محاسب"
+                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px"
+              >
+            </div>
+
+            <div>
+              <label>اسم الشركة</label>
+              <input
+                type="text"
+                name="company"
+                placeholder="اسم الشركة"
+                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px"
+              >
+            </div>
+
+            <div>
+              <label>تاريخ البداية</label>
+              <input
+                type="month"
+                name="experienceStart"
+                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px"
+              >
+            </div>
+
+            <div>
+              <label>تاريخ النهاية</label>
+              <input
+                type="month"
+                name="experienceEnd"
+                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px"
+              >
+            </div>
+
+          </div>
+
+          <div style="margin-top:18px">
+
+            <label>وصف الخبرة والمسؤوليات</label>
+
+            <textarea
+              name="experienceDescription"
+              rows="5"
+              placeholder="اكتب أهم المسؤوليات والإنجازات..."
+              style="
+                width:100%;
+                padding:12px;
+                border:1px solid var(--border);
+                border-radius:10px;
+                resize:vertical;
+                font-family:inherit;
+                line-height:1.8;
+                margin-top:6px;
+              "
+            ></textarea>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- التعليم -->
+      <div style="margin-bottom:32px">
+
+        <h3 style="
+          font-size:19px;
+          font-weight:800;
+          margin-bottom:18px;
+          padding-bottom:10px;
+          border-bottom:2px solid var(--border);
+        ">
+          التعليم
+        </h3>
+
+        <div style="
+          display:grid;
+          grid-template-columns:repeat(2,1fr);
+          gap:18px;
+        ">
+
+          <div>
+            <label>الدرجة العلمية</label>
+            <input
+              type="text"
+              name="degree"
+              placeholder="مثال: بكالوريوس"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px"
+            >
+          </div>
+
+          <div>
+            <label>التخصص</label>
+            <input
+              type="text"
+              name="specialization"
+              placeholder="مثال: إدارة الأعمال"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px"
+            >
+          </div>
+
+          <div>
+            <label>الجامعة أو المؤسسة التعليمية</label>
+            <input
+              type="text"
+              name="university"
+              placeholder="اسم الجامعة"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px"
+            >
+          </div>
+
+          <div>
+            <label>سنة التخرج</label>
+            <input
+              type="number"
+              name="graduationYear"
+              placeholder="2026"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px"
+            >
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- المهارات -->
+      <div style="margin-bottom:32px">
+
+        <h3 style="
+          font-size:19px;
+          font-weight:800;
+          margin-bottom:18px;
+          padding-bottom:10px;
+          border-bottom:2px solid var(--border);
+        ">
+          المهارات
+        </h3>
+
+        <input
+          type="text"
+          name="skills"
+          placeholder="اكتب مهاراتك، مثال: Excel، إدارة الوقت، التواصل، البرمجة"
+          style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px"
+        >
+
+        <p style="font-size:12px;color:var(--muted);margin-top:6px">
+          افصل بين المهارات باستخدام الفاصلة.
+        </p>
+
+      </div>
+
+
+      <!-- الدورات والشهادات -->
+      <div style="margin-bottom:32px">
+
+        <h3 style="
+          font-size:19px;
+          font-weight:800;
+          margin-bottom:18px;
+          padding-bottom:10px;
+          border-bottom:2px solid var(--border);
+        ">
+          الدورات والشهادات
+        </h3>
+
+        <textarea
+          name="certificates"
+          rows="4"
+          placeholder="اكتب الدورات والشهادات التي حصلت عليها..."
+          style="
+            width:100%;
+            padding:12px;
+            border:1px solid var(--border);
+            border-radius:10px;
+            resize:vertical;
+            font-family:inherit;
+            line-height:1.8;
+          "
+        ></textarea>
+
+      </div>
+
+
+      <!-- اللغات -->
+      <div style="margin-bottom:32px">
+
+        <h3 style="
+          font-size:19px;
+          font-weight:800;
+          margin-bottom:18px;
+          padding-bottom:10px;
+          border-bottom:2px solid var(--border);
+        ">
+          اللغات
+        </h3>
+
+        <textarea
+          name="languages"
+          rows="3"
+          placeholder="مثال: العربية - اللغة الأم&#10;الإنجليزية - جيد جدًا"
+          style="
+            width:100%;
+            padding:12px;
+            border:1px solid var(--border);
+            border-radius:10px;
+            resize:vertical;
+            font-family:inherit;
+            line-height:1.8;
+          "
+        ></textarea>
+
+      </div>
+
+
+      <div style="text-align:center;margin-top:30px">
+
+       <button
+  type="submit"
+  class="btn-primary"
+  style="border:none;cursor:pointer;font-family:inherit"
+>
+  معاينة السيرة الذاتية
+</button>
+
+      </div>
+
+       </form>
+
+  </div>
+
+</div>
+`;
+
+  res.send(layout('إنشاء السيرة الذاتية - القالب الرسمي', body));
+});
+
+/* =========================
+   CV PROFESSIONAL - PREVIEW
+========================= */
+app.post('/cv-builder/professional/preview', express.urlencoded({ extended: true }), (req, res) => {
+
+  const data = req.body;
+
+  const body = `
+  <div class="page-container">
+
+    <div class="post">
+
+      <h1 style="
+        font-size:30px;
+        font-weight:900;
+        margin-bottom:8px;
+      ">
+        معاينة السيرة الذاتية
+      </h1>
+
+      <p style="
+        color:var(--muted);
+        margin-bottom:30px;
+      ">
+        هذه معاينة أولية لسيرتك الذاتية.
+      </p>
+
+
+      <!-- رأس السيرة -->
+
+      <div style="
+        text-align:center;
+        padding-bottom:25px;
+        border-bottom:2px solid var(--border);
+      ">
+
+        <h2 style="
+          font-size:30px;
+          font-weight:900;
+        ">
+          ${data.fullName || 'الاسم الكامل'}
+        </h2>
+
+        <p style="
+          font-size:18px;
+          color:var(--brand-2);
+          font-weight:700;
+          margin-top:5px;
+        ">
+          ${data.jobTitle || 'المسمى الوظيفي'}
+        </p>
+
+        <p style="
+          color:var(--muted);
+          margin-top:10px;
+        ">
+          ${data.country || ''}
+          ${data.city ? ' - ' + data.city : ''}
+          ${data.phone ? ' | ' + data.phone : ''}
+          ${data.email ? ' | ' + data.email : ''}
+        </p>
+
+      </div>
+
+
+      <!-- الملخص -->
+
+      ${data.summary ? `
+      <div style="margin-top:30px">
+
+        <h3 style="
+          font-size:20px;
+          font-weight:800;
+          border-bottom:2px solid var(--border);
+          padding-bottom:8px;
+        ">
+          الملخص المهني
+        </h3>
+
+        <p style="
+          margin-top:12px;
+          line-height:2;
+          white-space:pre-line;
+        ">
+          ${data.summary}
+        </p>
+
+      </div>
+      ` : ''}
+
+
+      <!-- الخبرة -->
+
+      ${(data.experienceTitle || data.company) ? `
+      <div style="margin-top:30px">
+
+        <h3 style="
+          font-size:20px;
+          font-weight:800;
+          border-bottom:2px solid var(--border);
+          padding-bottom:8px;
+        ">
+          الخبرة المهنية
+        </h3>
+
+        <div style="margin-top:15px">
+
+          <h4 style="font-size:18px;font-weight:800">
+            ${data.experienceTitle || ''}
+          </h4>
+
+          <p style="
+            color:var(--brand-2);
+            font-weight:600;
+            margin-top:4px;
+          ">
+            ${data.company || ''}
+          </p>
+
+          <p style="
+            color:var(--muted);
+            font-size:13px;
+            margin-top:4px;
+          ">
+            ${data.experienceStart || ''}
+            ${data.experienceEnd ? ' - ' + data.experienceEnd : ''}
+          </p>
+
+          <p style="
+            margin-top:10px;
+            line-height:2;
+            white-space:pre-line;
+          ">
+            ${data.experienceDescription || ''}
+          </p>
+
+        </div>
+
+      </div>
+      ` : ''}
+
+
+      <!-- التعليم -->
+
+      ${(data.degree || data.specialization || data.university) ? `
+      <div style="margin-top:30px">
+
+        <h3 style="
+          font-size:20px;
+          font-weight:800;
+          border-bottom:2px solid var(--border);
+          padding-bottom:8px;
+        ">
+          التعليم
+        </h3>
+
+        <div style="margin-top:15px">
+
+          <h4 style="font-size:18px;font-weight:800">
+            ${data.degree || ''}
+          </h4>
+
+          <p style="margin-top:4px">
+            ${data.specialization || ''}
+          </p>
+
+          <p style="
+            color:var(--muted);
+            margin-top:4px;
+          ">
+            ${data.university || ''}
+            ${data.graduationYear ? ' - ' + data.graduationYear : ''}
+          </p>
+
+        </div>
+
+      </div>
+      ` : ''}
+
+
+      <!-- المهارات -->
+
+      ${data.skills ? `
+      <div style="margin-top:30px">
+
+        <h3 style="
+          font-size:20px;
+          font-weight:800;
+          border-bottom:2px solid var(--border);
+          padding-bottom:8px;
+        ">
+          المهارات
+        </h3>
+
+        <p style="
+          margin-top:12px;
+          line-height:2;
+        ">
+          ${data.skills}
+        </p>
+
+      </div>
+      ` : ''}
+
+
+      <!-- الشهادات -->
+
+      ${data.certificates ? `
+      <div style="margin-top:30px">
+
+        <h3 style="
+          font-size:20px;
+          font-weight:800;
+          border-bottom:2px solid var(--border);
+          padding-bottom:8px;
+        ">
+          الدورات والشهادات
+        </h3>
+
+        <p style="
+          margin-top:12px;
+          line-height:2;
+          white-space:pre-line;
+        ">
+          ${data.certificates}
+        </p>
+
+      </div>
+      ` : ''}
+
+
+      <!-- اللغات -->
+
+      ${data.languages ? `
+      <div style="margin-top:30px">
+
+        <h3 style="
+          font-size:20px;
+          font-weight:800;
+          border-bottom:2px solid var(--border);
+          padding-bottom:8px;
+        ">
+          اللغات
+        </h3>
+
+        <p style="
+          margin-top:12px;
+          line-height:2;
+          white-space:pre-line;
+        ">
+          ${data.languages}
+        </p>
+
+      </div>
+      ` : ''}
+
+
+      <div style="
+        text-align:center;
+        margin-top:35px;
+        padding-top:25px;
+        border-top:1px solid var(--border);
+      ">
+
+        <a
+          href="/cv-builder/professional"
+          class="btn-primary"
+        >
+          تعديل البيانات
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+  `;
+
+  res.send(layout('معاينة السيرة الذاتية - وظائف الوطن العربي', body));
+});
+
 /* =========================
    ARTICLES PAGE
 ========================= */
