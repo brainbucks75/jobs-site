@@ -2445,10 +2445,15 @@ const colors = {
 
 const theme = colors[data.cvColor] || colors.navy;
 
-    const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
+   const browser = await puppeteer.launch({
+  headless: true,
+  executablePath: puppeteer.executablePath(),
+  args: [
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-dev-shm-usage'
+  ]
+});
 
     const page = await browser.newPage();
 
