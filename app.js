@@ -2445,9 +2445,11 @@ const colors = {
 
 const theme = colors[data.cvColor] || colors.navy;
 
-   const browser = await puppeteer.launch({
+  const chromePath = await puppeteer.executablePath();
+
+const browser = await puppeteer.launch({
   headless: true,
-  executablePath: puppeteer.executablePath(),
+  executablePath: chromePath,
   args: [
     '--no-sandbox',
     '--disable-setuid-sandbox',
