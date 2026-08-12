@@ -501,6 +501,173 @@ app.get('/cv-builder/professional', (req, res) => {
 
   <form method="POST" action="/cv-builder/professional/preview">
 
+<!-- اختيار لون القالب -->
+<div style="
+  margin-bottom:32px;
+  padding:22px;
+  background:#f8fafc;
+  border:1px solid var(--border);
+  border-radius:14px;
+">
+
+  <h3 style="
+    font-size:19px;
+    font-weight:800;
+    margin-bottom:8px;
+  ">
+    اختر لون السيرة الذاتية
+  </h3>
+
+  <p style="
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:18px;
+  ">
+    اختر اللون الذي يناسبك، وسيتم استخدامه في تصميم السيرة الذاتية وملف PDF.
+  </p>
+
+  <div style="
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    align-items:center;
+  ">
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="navy" checked style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#15203a;
+        border-radius:50%;
+        border:4px solid #ffffff;
+        box-shadow:0 0 0 2px #15203a;
+      "></span>
+      <small style="display:block;margin-top:6px">كحلي</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="blue" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#2563eb;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">أزرق</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="green" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#059669;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">أخضر</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="teal" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#0f766e;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">تركواز</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="purple" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#7c3aed;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">بنفسجي</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="burgundy" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#991b1b;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">خمري</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="orange" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#ea580c;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">برتقالي</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="brown" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#78350f;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">بني</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="gray" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#475569;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">رمادي</small>
+    </label>
+
+
+    <label style="cursor:pointer;text-align:center">
+      <input type="radio" name="cvColor" value="black" style="display:none">
+      <span style="
+        display:block;
+        width:48px;
+        height:48px;
+        background:#111827;
+        border-radius:50%;
+      "></span>
+      <small style="display:block;margin-top:6px">أسود</small>
+    </label>
+
+  </div>
+
+</div>
+
     <h2 style="font-size:24px;font-weight:800;margin-bottom:8px">
 
         القالب الرسمي Professional
