@@ -343,7 +343,36 @@ app.get('/', (req,res)=>{
     <div class="center"><a href="/jobs/health/page/1" class="btn-primary">عرض جميع القطاعات</a></div>
   </div>
 </section>
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <h2 class="section-title">أدوات الباحث عن العمل</h2>
 
+    <div class="three-col">
+
+      <a href="/cv-builder" class="content-card" style="text-decoration:none;color:inherit;transition:.3s">
+        <img
+          class="cc-thumb"
+          src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=800&q=80"
+          alt="إنشاء سيرة ذاتية"
+        >
+
+        <div class="cc-feature">
+          <h4>إنشاء سيرة ذاتية احترافية</h4>
+          <div class="date">
+            اختر قالب السيرة الذاتية المناسب لك واملأ بياناتك وحمّلها بصيغة PDF.
+          </div>
+        </div>
+
+        <div style="padding:0 20px 20px">
+          <span class="btn-primary" style="display:inline-block">
+            إنشاء سيرتي الذاتية
+          </span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
 <section class="section" style="padding-top:0">
   <div class="container">
     <div class="three-col">
