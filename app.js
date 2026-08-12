@@ -418,6 +418,7 @@ app.get('/', (req,res)=>{
 
   res.send(layout('وظائف الوطن العربي - ابحث عن وظيفتك القادمة', body));
 });
+
 /* =========================
    CV BUILDER
 ========================= */
@@ -453,24 +454,17 @@ app.get('/cv-builder', (req, res) => {
 
     </div>
 
-
     <div style="
       display:grid;
       grid-template-columns:repeat(2,1fr);
       gap:24px;
     ">
 
-
       ${templates.map(template => `
 
         <div class="post" style="
           text-align:center;
         ">
-
-
-          <!-- =========================
-               TEMPLATE PREVIEW
-          ========================== -->
 
           <div style="
             height:330px;
@@ -485,11 +479,6 @@ app.get('/cv-builder', (req, res) => {
             justify-content:center;
             align-items:center;
           ">
-
-
-            <!-- =========================
-                 PROFESSIONAL
-            ========================== -->
 
             ${template.type === 'professional' ? `
 
@@ -538,7 +527,6 @@ app.get('/cv-builder', (req, res) => {
 
               </div>
 
-
               <div style="padding:12px 14px">
 
                 <div style="
@@ -557,7 +545,6 @@ app.get('/cv-builder', (req, res) => {
                   background:#f1f5f9;
                   margin-bottom:12px;
                 "></div>
-
 
                 <div style="
                   border-right:3px solid #3b82f6;
@@ -592,7 +579,6 @@ app.get('/cv-builder', (req, res) => {
                   margin-bottom:11px;
                 "></div>
 
-
                 <div style="
                   border-right:3px solid #3b82f6;
                   padding-right:6px;
@@ -618,7 +604,6 @@ app.get('/cv-builder', (req, res) => {
                 ">
                   الجامعة الأردنية
                 </div>
-
 
                 <div style="
                   border-right:3px solid #3b82f6;
@@ -674,13 +659,8 @@ app.get('/cv-builder', (req, res) => {
 
             </div>
 
-
             ` : ''}
 
-
-            <!-- =========================
-                 ATS
-            ========================== -->
 
             ${template.type === 'ats' ? `
 
@@ -722,7 +702,6 @@ app.get('/cv-builder', (req, res) => {
                 عمّان - الأردن | 0790000000 | example@email.com
               </div>
 
-
               <div style="
                 font-size:7px;
                 font-weight:800;
@@ -739,7 +718,6 @@ app.get('/cv-builder', (req, res) => {
                 background:#f3f4f6;
                 margin-top:6px;
               "></div>
-
 
               <div style="
                 font-size:7px;
@@ -766,7 +744,6 @@ app.get('/cv-builder', (req, res) => {
                 margin-top:5px;
               "></div>
 
-
               <div style="
                 font-size:7px;
                 font-weight:800;
@@ -784,7 +761,6 @@ app.get('/cv-builder', (req, res) => {
               ">
                 بكالوريوس هندسة البرمجيات
               </div>
-
 
               <div style="
                 font-size:7px;
@@ -807,13 +783,8 @@ app.get('/cv-builder', (req, res) => {
 
             </div>
 
-
             ` : ''}
 
-
-            <!-- =========================
-                 MODERN
-            ========================== -->
 
             ${template.type === 'modern' ? `
 
@@ -867,7 +838,6 @@ app.get('/cv-builder', (req, res) => {
 
               </div>
 
-
               <div style="
                 flex:1;
                 padding:15px 12px;
@@ -890,13 +860,11 @@ app.get('/cv-builder', (req, res) => {
                   مهندس برمجيات
                 </div>
 
-
                 <div style="
                   height:1px;
                   background:#e0e7ff;
                   margin:10px 0;
                 "></div>
-
 
                 <div style="
                   font-size:7px;
@@ -912,7 +880,6 @@ app.get('/cv-builder', (req, res) => {
                   background:#f5f3ff;
                   margin-bottom:10px;
                 "></div>
-
 
                 <div style="
                   font-size:7px;
@@ -945,7 +912,6 @@ app.get('/cv-builder', (req, res) => {
                   margin-bottom:10px;
                 "></div>
 
-
                 <div style="
                   font-size:7px;
                   font-weight:800;
@@ -965,13 +931,8 @@ app.get('/cv-builder', (req, res) => {
 
             </div>
 
-
             ` : ''}
 
-
-            <!-- =========================
-                 CREATIVE
-            ========================== -->
 
             ${template.type === 'creative' ? `
 
@@ -1010,7 +971,6 @@ app.get('/cv-builder', (req, res) => {
 
               </div>
 
-
               <div style="
                 padding:12px 14px;
               ">
@@ -1044,7 +1004,6 @@ app.get('/cv-builder', (req, res) => {
                   background:#fff7ed;
                   margin-bottom:11px;
                 "></div>
-
 
                 <div style="
                   display:flex;
@@ -1091,7 +1050,6 @@ app.get('/cv-builder', (req, res) => {
                   margin-bottom:11px;
                 "></div>
 
-
                 <div style="
                   display:flex;
                   gap:5px;
@@ -1120,7 +1078,6 @@ app.get('/cv-builder', (req, res) => {
                 ">
                   بكالوريوس تصميم جرافيكي
                 </div>
-
 
                 <div style="
                   display:flex;
@@ -1158,18 +1115,12 @@ app.get('/cv-builder', (req, res) => {
 
           </div>
 
-
-          <!-- TEMPLATE NAME -->
-
           <h2 style="
             font-size:21px;
             margin:0;
           ">
             ${template.nameAr}
           </h2>
-
-
-          <!-- DESCRIPTION -->
 
           <p style="
             font-size:14px;
@@ -1178,9 +1129,6 @@ app.get('/cv-builder', (req, res) => {
             ${template.description}
           </p>
 
-
-          <!-- BUTTON -->
-
           <a
             href="/cv-builder/${template.type}"
             class="apply"
@@ -1188,7 +1136,6 @@ app.get('/cv-builder', (req, res) => {
           >
             استخدام هذا القالب
           </a>
-
 
         </div>
 
@@ -1201,7 +1148,6 @@ app.get('/cv-builder', (req, res) => {
 
   res.send(layout('إنشاء سيرة ذاتية - وظائف الوطن العربي', body));
 });
-```
 
 /* =========================
    CV PROFESSIONAL - FORM
