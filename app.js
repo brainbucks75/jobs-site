@@ -1795,8 +1795,6 @@ const colors = {
 const theme = colors[data.cvColor] || colors.navy;
 
 
-console.log('PUPPETEER EXECUTABLE:', executablePath);
-
 const browser = await puppeteer.launch({
   headless: true,
   args: [
@@ -1805,6 +1803,7 @@ const browser = await puppeteer.launch({
     '--disable-dev-shm-usage'
   ]
 });
+
 
 const page = await browser.newPage();
     await page.setContent(`
