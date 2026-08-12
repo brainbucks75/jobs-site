@@ -1794,7 +1794,6 @@ const colors = {
 
 const theme = colors[data.cvColor] || colors.navy;
 
-const executablePath = await puppeteer.executablePath();
 
 console.log('PUPPETEER EXECUTABLE:', executablePath);
 
