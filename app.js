@@ -1794,18 +1794,19 @@ const colors = {
 
 const theme = colors[data.cvColor] || colors.navy;
 
-console.log('PUPPETEER EXECUTABLE:', puppeteer.executablePath());
+const executablePath = await puppeteer.executablePath();
+
+console.log('PUPPETEER EXECUTABLE:', executablePath);
 
 const browser = await puppeteer.launch({
   headless: true,
-  executablePath: puppeteer.executablePath(),
+  executablePath: executablePath,
   args: [
     '--no-sandbox',
     '--disable-setuid-sandbox',
     '--disable-dev-shm-usage'
   ]
 });
-
     const page = await browser.newPage();
 
     await page.setContent(`
