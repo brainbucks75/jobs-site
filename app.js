@@ -1,5 +1,6 @@
-﻿const express = require('express');
+const express = require('express');
 const fs = require('fs');
+const puppeteer = require('puppeteer');
 const app = express();
 
 const PORT = 3000;
@@ -891,17 +892,48 @@ app.get('/cv-builder/professional', (req, res) => {
       </div>
 
 
-      <div style="text-align:center;margin-top:30px">
+     <div style="
+  text-align:center;
+  margin-top:30px;
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+">
 
-       <button
-  type="submit"
-  class="btn-primary"
-  style="border:none;cursor:pointer;font-family:inherit"
->
-  معاينة السيرة الذاتية
-</button>
+  <!-- زر المعاينة -->
+  <button
+    type="submit"
+    class="btn-primary"
+    style="
+      border:none;
+      cursor:pointer;
+      font-family:inherit;
+    "
+  >
+    <i class="fas fa-eye"></i>
+    معاينة السيرة الذاتية
+  </button>
 
-      </div>
+
+  <!-- زر تحميل PDF -->
+  <button
+    type="submit"
+    formaction="/cv-builder/professional/pdf"
+    formmethod="POST"
+    class="btn-primary"
+    style="
+      border:none;
+      cursor:pointer;
+      font-family:inherit;
+      background:#10b981;
+    "
+  >
+    <i class="fas fa-file-pdf"></i>
+    تحميل PDF
+  </button>
+
+</div>
 
        </form>
 
@@ -1418,6 +1450,372 @@ app.post('/cv-builder/professional/preview', express.urlencoded({ extended: true
 
   res.send(layout('معاينة السيرة الذاتية - وظائف الوطن العربي', body));
 });
+
+/* =========================
+   PROFESSIONAL CV PDF
+========================= */
+app.post('/cv-builder/professional/pdf', express.urlencoded({ extended: true }), async (req, res) => {
+
+  try {
+
+    const data = req.body;
+
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+
+    const page = await browser.newPage();
+
+    await page.setContent(`
+      <!DOCTYPE html>
+      <html lang="ar" dir="rtl">
+      <head>
+        <meta charset="UTF-8">
+
+        <style>
+
+          @page {
+            size: A4;
+            margin: 0;
+          }
+
+          * {
+            box-sizing: border-box;
+          }
+
+          body {
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            color: #1e293b;
+          }
+
+          .cv {
+            width: 210mm;
+            min-height: 297mm;
+            background: #ffffff;
+            padding: 18mm;
+          }
+
+          .header {
+            background: #15203a;
+            color: #ffffff;
+            padding: 15mm;
+            position: relative;
+          }
+
+          .top-line {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 2mm;
+            background: #3b82f6;
+          }
+
+          h1 {
+            margin: 0;
+            font-size: 28px;
+          }
+
+          .job-title {
+            margin-top: 5px;
+            color: #93c5fd;
+            font-size: 15px;
+            font-weight: bold;
+          }
+
+          .contact {
+            margin-top: 12px;
+            font-size: 9px;
+            color: #dbeafe;
+            line-height: 2;
+          }
+
+          .section {
+            margin-top: 18px;
+          }
+
+          .section-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #15203a;
+            border-right: 3px solid #3b82f6;
+            padding-right: 8px;
+            margin-bottom: 8px;
+          }
+
+          .text {
+            font-size: 10px;
+            line-height: 1.9;
+            color: #475569;
+            white-space: pre-line;
+          }
+
+          .item {
+            border-right: 2px solid #bfdbfe;
+            padding-right: 10px;
+          }
+
+          .item-title {
+            font-size: 12px;
+            font-weight: bold;
+          }
+
+          .company {
+            color: #2563eb;
+            font-size: 10px;
+            margin-top: 3px;
+          }
+
+          .date {
+            color: #94a3b8;
+            font-size: 8px;
+            margin-top: 3px;
+          }
+
+          .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+          }
+
+          .skill {
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            color: #1d4ed8;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 9px;
+            font-weight: bold;
+          }
+
+        </style>
+      </head>
+
+      <body>
+
+        <div class="cv">
+
+          <div class="header">
+
+            <div class="top-line"></div>
+
+            <h1>
+              ${data.fullName || 'الاسم الكامل'}
+            </h1>
+
+            <div class="job-title">
+              ${data.jobTitle || 'المسمى الوظيفي'}
+            </div>
+
+            <div class="contact">
+
+              ${data.country || data.city ? `
+                📍 ${data.country || ''}
+                ${data.city ? ' - ' + data.city : ''}
+              ` : ''}
+
+              ${data.phone ? ` &nbsp; | &nbsp; ☎ ${data.phone}` : ''}
+
+              ${data.email ? ` &nbsp; | &nbsp; ✉ ${data.email}` : ''}
+
+              ${data.linkedin ? ` &nbsp; | &nbsp; LinkedIn: ${data.linkedin}` : ''}
+
+              ${data.website ? ` &nbsp; | &nbsp; ${data.website}` : ''}
+
+            </div>
+
+          </div>
+
+
+          ${data.summary ? `
+          <div class="section">
+
+            <div class="section-title">
+              الملخص المهني
+            </div>
+
+            <div class="text">
+              ${data.summary}
+            </div>
+
+          </div>
+          ` : ''}
+
+
+          ${(data.experienceTitle || data.company) ? `
+          <div class="section">
+
+            <div class="section-title">
+              الخبرة المهنية
+            </div>
+
+            <div class="item">
+
+              <div class="item-title">
+                ${data.experienceTitle || ''}
+              </div>
+
+              ${data.company ? `
+                <div class="company">
+                  ${data.company}
+                </div>
+              ` : ''}
+
+              ${(data.experienceStart || data.experienceEnd) ? `
+                <div class="date">
+                  ${data.experienceStart || ''}
+                  ${data.experienceEnd ? ' - ' + data.experienceEnd : ' - حتى الآن'}
+                </div>
+              ` : ''}
+
+              ${data.experienceDescription ? `
+                <div class="text" style="margin-top:6px">
+                  ${data.experienceDescription}
+                </div>
+              ` : ''}
+
+            </div>
+
+          </div>
+          ` : ''}
+
+
+          ${(data.degree || data.specialization || data.university) ? `
+          <div class="section">
+
+            <div class="section-title">
+              التعليم
+            </div>
+
+            <div class="item">
+
+              ${data.degree ? `
+                <div class="item-title">
+                  ${data.degree}
+                </div>
+              ` : ''}
+
+              ${data.specialization ? `
+                <div class="company">
+                  ${data.specialization}
+                </div>
+              ` : ''}
+
+              ${data.university ? `
+                <div class="text">
+                  ${data.university}
+                </div>
+              ` : ''}
+
+              ${data.graduationYear ? `
+                <div class="date">
+                  سنة التخرج: ${data.graduationYear}
+                </div>
+              ` : ''}
+
+            </div>
+
+          </div>
+          ` : ''}
+
+
+          ${data.skills ? `
+          <div class="section">
+
+            <div class="section-title">
+              المهارات
+            </div>
+
+            <div class="skills">
+
+              ${data.skills
+                .split(',')
+                .map(skill => `
+                  <span class="skill">
+                    ${skill.trim()}
+                  </span>
+                `)
+                .join('')}
+
+            </div>
+
+          </div>
+          ` : ''}
+
+
+          ${data.certificates ? `
+          <div class="section">
+
+            <div class="section-title">
+              الدورات والشهادات
+            </div>
+
+            <div class="text">
+              ${data.certificates}
+            </div>
+
+          </div>
+          ` : ''}
+
+
+          ${data.languages ? `
+          <div class="section">
+
+            <div class="section-title">
+              اللغات
+            </div>
+
+            <div class="text">
+              ${data.languages}
+            </div>
+
+          </div>
+          ` : ''}
+
+        </div>
+
+      </body>
+      </html>
+    `, {
+      waitUntil: 'networkidle0'
+    });
+
+    const pdf = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      margin: {
+        top: '0',
+        right: '0',
+        bottom: '0',
+        left: '0'
+      }
+    });
+
+    await browser.close();
+
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'attachment; filename="my-cv.pdf"',
+      'Content-Length': pdf.length
+    });
+
+    res.send(pdf);
+
+  } catch (error) {
+
+    console.error('PDF ERROR:', error);
+
+    res.status(500).send('حدث خطأ أثناء إنشاء ملف PDF');
+
+  }
+
+});
+
 /* =========================
    ARTICLES PAGE
 ========================= */
