@@ -5,7 +5,7 @@
     "nameAr": "القالب الرسمي",
     "description": "قالب رسمي واحترافي مناسب لمعظم الوظائف.",
     "type": "professional",
-    "image": ""
+    "image": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=85"
   },
   {
     "id": 2,
@@ -13,7 +13,7 @@
     "nameAr": "قالب ATS",
     "description": "قالب بسيط مصمم ليكون سهل القراءة بواسطة أنظمة التوظيف.",
     "type": "ats",
-    "image": ""
+    "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&q=85"
   },
   {
     "id": 3,
@@ -21,7 +21,7 @@
     "nameAr": "القالب العصري",
     "description": "تصميم عصري وأنيق مناسب للشركات والقطاع الخاص.",
     "type": "modern",
-    "image": ""
+    "image": "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=900&q=85"
   },
   {
     "id": 4,
@@ -29,6 +29,6 @@
     "nameAr": "القالب الإبداعي",
     "description": "قالب إبداعي مناسب للتصميم والتسويق والإعلام والمجالات الإبداعية.",
     "type": "creative",
-    "image": ""
+    "image": "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=85"
   }
 ]
