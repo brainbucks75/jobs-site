@@ -2,11 +2,11 @@
   "name": "jobs-site",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-  "start": "node app.js",
-  "build": "npx puppeteer browsers install chrome"
-},
+    "start": "node app.js",
+    "build": "npx puppeteer browsers install chrome"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
