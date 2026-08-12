@@ -1799,15 +1799,14 @@ console.log('PUPPETEER EXECUTABLE:', executablePath);
 
 const browser = await puppeteer.launch({
   headless: true,
-  executablePath: executablePath,
   args: [
     '--no-sandbox',
     '--disable-setuid-sandbox',
     '--disable-dev-shm-usage'
   ]
 });
-    const page = await browser.newPage();
 
+const page = await browser.newPage();
     await page.setContent(`
       <!DOCTYPE html>
       <html lang="ar" dir="rtl">
