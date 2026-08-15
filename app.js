@@ -4948,20 +4948,20 @@ app.post('/cv-builder/modern/pdf', express.urlencoded({ extended: true }), async
 
     const theme = colors[data.cvColor] || colors.navy;
 
-    const executablePath = await puppeteer.executablePath();
+   const executablePath = await puppeteer.executablePath();
 
-    console.log('===== MODERN CV PDF =====');
-    console.log('PUPPETEER EXECUTABLE:', executablePath);
+console.log('===== PDF TEST =====');
+console.log('PUPPETEER EXECUTABLE:', executablePath);
 
-    const browser = await puppeteer.launch({
-      headless: true,
-      executablePath: executablePath,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage'
-      ]
-    });
+const browser = await puppeteer.launch({
+  headless: true,
+  executablePath: executablePath,
+  args: [
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-dev-shm-usage'
+  ]
+});
 
     const page = await browser.newPage();
 
@@ -5439,28 +5439,26 @@ app.post('/cv-builder/modern/pdf', express.urlencoded({ extended: true }), async
     });
 
 
-    const pdf = await page.pdf({
-      format: 'A4',
-      printBackground: true,
-      margin: {
-        top: '0',
-        right: '0',
-        bottom: '0',
-        left: '0'
-      }
-    });
+   const pdf = await page.pdf({
+  format: 'A4',
+  printBackground: true,
+  margin: {
+    top: '0',
+    right: '0',
+    bottom: '0',
+    left: '0'
+  }
+});
 
+await browser.close();
 
-    await browser.close();
+res.set({
+  'Content-Type': 'application/pdf',
+  'Content-Disposition': 'attachment; filename="my-cv.pdf"',
+  'Content-Length': pdf.length
+});
 
-
-    res.set({
-      'Content-Type': 'application/pdf',
-      'Content-Disposition': 'attachment; filename="modern-cv.pdf"',
-      'Content-Length': pdf.length
-    });
-
-    res.send(pdf);
+res.send(pdf);
 
   } catch (error) {
 
