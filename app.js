@@ -1796,6 +1796,10 @@ const theme = colors[data.cvColor] || colors.navy;
 
 const executablePath = await puppeteer.executablePath();
 
+console.log('===== PDF TEST =====');
+console.log('PUPPETEER EXECUTABLE:', executablePath);
+console.log('====================');
+
 console.log('PUPPETEER EXECUTABLE:', executablePath);
 
 const browser = await puppeteer.launch({
