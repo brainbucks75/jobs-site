@@ -3827,6 +3827,1651 @@ app.post('/cv-builder/ats/pdf', express.urlencoded({ extended: true }), async (r
   }
 
 });
+
+/* =========================
+   CV MODERN - FORM
+========================= */
+app.get('/cv-builder/modern', (req, res) => {
+
+  const body = `
+
+  <div class="page-container">
+
+    <h1 class="section-title">إنشاء السيرة الذاتية</h1>
+
+    <h2 style="font-size:24px;font-weight:800;margin-bottom:8px">
+      القالب العصري Modern
+    </h2>
+
+    <p style="color:var(--muted);margin-bottom:28px">
+      أنشئ سيرة ذاتية عصرية ومنظمة، واختر اللون الذي يناسبك ثم قم بمعاينتها أو تحميلها بصيغة PDF.
+    </p>
+
+    <form method="POST" action="/cv-builder/modern/preview">
+
+      <!-- الألوان -->
+      <div style="margin-bottom:32px">
+
+        <h3 style="
+          font-size:19px;
+          font-weight:800;
+          margin-bottom:18px;
+          padding-bottom:10px;
+          border-bottom:2px solid var(--border);
+        ">
+          اختر لون السيرة الذاتية
+        </h3>
+
+        <div style="
+          display:flex;
+          flex-wrap:wrap;
+          gap:18px;
+          align-items:center;
+        ">
+
+          <label style="cursor:pointer;text-align:center">
+            <input type="radio" name="cvColor" value="navy" checked style="display:none">
+            <span style="display:block;width:48px;height:48px;background:#15203a;border-radius:50%;border:4px solid #fff;box-shadow:0 0 0 2px #15203a"></span>
+            <small style="display:block;margin-top:6px">كحلي</small>
+          </label>
+
+          <label style="cursor:pointer;text-align:center">
+            <input type="radio" name="cvColor" value="blue" style="display:none">
+            <span style="display:block;width:48px;height:48px;background:#2563eb;border-radius:50%"></span>
+            <small style="display:block;margin-top:6px">أزرق</small>
+          </label>
+
+          <label style="cursor:pointer;text-align:center">
+            <input type="radio" name="cvColor" value="green" style="display:none">
+            <span style="display:block;width:48px;height:48px;background:#059669;border-radius:50%"></span>
+            <small style="display:block;margin-top:6px">أخضر</small>
+          </label>
+
+          <label style="cursor:pointer;text-align:center">
+            <input type="radio" name="cvColor" value="teal" style="display:none">
+            <span style="display:block;width:48px;height:48px;background:#0f766e;border-radius:50%"></span>
+            <small style="display:block;margin-top:6px">تركواز</small>
+          </label>
+
+          <label style="cursor:pointer;text-align:center">
+            <input type="radio" name="cvColor" value="purple" style="display:none">
+            <span style="display:block;width:48px;height:48px;background:#7c3aed;border-radius:50%"></span>
+            <small style="display:block;margin-top:6px">بنفسجي</small>
+          </label>
+
+          <label style="cursor:pointer;text-align:center">
+            <input type="radio" name="cvColor" value="burgundy" style="display:none">
+            <span style="display:block;width:48px;height:48px;background:#991b1b;border-radius:50%"></span>
+            <small style="display:block;margin-top:6px">خمري</small>
+          </label>
+
+          <label style="cursor:pointer;text-align:center">
+            <input type="radio" name="cvColor" value="orange" style="display:none">
+            <span style="display:block;width:48px;height:48px;background:#ea580c;border-radius:50%"></span>
+            <small style="display:block;margin-top:6px">برتقالي</small>
+          </label>
+
+          <label style="cursor:pointer;text-align:center">
+            <input type="radio" name="cvColor" value="brown" style="display:none">
+            <span style="display:block;width:48px;height:48px;background:#78350f;border-radius:50%"></span>
+            <small style="display:block;margin-top:6px">بني</small>
+          </label>
+
+          <label style="cursor:pointer;text-align:center">
+            <input type="radio" name="cvColor" value="gray" style="display:none">
+            <span style="display:block;width:48px;height:48px;background:#475569;border-radius:50%"></span>
+            <small style="display:block;margin-top:6px">رمادي</small>
+          </label>
+
+          <label style="cursor:pointer;text-align:center">
+            <input type="radio" name="cvColor" value="black" style="display:none">
+            <span style="display:block;width:48px;height:48px;background:#111827;border-radius:50%"></span>
+            <small style="display:block;margin-top:6px">أسود</small>
+          </label>
+
+        </div>
+      </div>
+
+
+      <!-- المعلومات الشخصية -->
+      <div style="margin-bottom:32px">
+
+        <h3 style="
+          font-size:19px;
+          font-weight:800;
+          margin-bottom:18px;
+          padding-bottom:10px;
+          border-bottom:2px solid var(--border);
+        ">
+          المعلومات الشخصية
+        </h3>
+
+        <div style="
+          display:grid;
+          grid-template-columns:repeat(2,1fr);
+          gap:18px;
+        ">
+
+          <div>
+            <label>الاسم الكامل</label>
+            <input type="text" name="fullName"
+              placeholder="مثال: أحمد محمد"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px">
+          </div>
+
+          <div>
+            <label>المسمى الوظيفي</label>
+            <input type="text" name="jobTitle"
+              placeholder="مثال: مهندس برمجيات"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px">
+          </div>
+
+          <div>
+            <label>الدولة</label>
+            <input type="text" name="country"
+              placeholder="مثال: الأردن"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px">
+          </div>
+
+          <div>
+            <label>المدينة</label>
+            <input type="text" name="city"
+              placeholder="مثال: عمّان"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px">
+          </div>
+
+          <div>
+            <label>رقم الهاتف</label>
+            <input type="tel" name="phone"
+              placeholder="مثال: 0790000000"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px">
+          </div>
+
+          <div>
+            <label>البريد الإلكتروني</label>
+            <input type="email" name="email"
+              placeholder="example@email.com"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px">
+          </div>
+
+          <div>
+            <label>LinkedIn</label>
+            <input type="text" name="linkedin"
+              placeholder="رابط LinkedIn - اختياري"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px">
+          </div>
+
+          <div>
+            <label>الموقع الشخصي</label>
+            <input type="text" name="website"
+              placeholder="رابط الموقع - اختياري"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px">
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- الملخص -->
+      <div style="margin-bottom:32px">
+
+        <h3 style="
+          font-size:19px;
+          font-weight:800;
+          margin-bottom:18px;
+          padding-bottom:10px;
+          border-bottom:2px solid var(--border);
+        ">
+          الملخص المهني
+        </h3>
+
+        <textarea
+          name="summary"
+          rows="6"
+          placeholder="اكتب نبذة مختصرة عن خبرتك ومهاراتك وأهدافك المهنية..."
+          style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;resize:vertical;font-family:inherit;line-height:1.8"
+        ></textarea>
+
+      </div>
+
+
+      <!-- الخبرة -->
+      <div style="margin-bottom:32px">
+
+        <h3 style="
+          font-size:19px;
+          font-weight:800;
+          margin-bottom:18px;
+          padding-bottom:10px;
+          border-bottom:2px solid var(--border);
+        ">
+          الخبرات المهنية
+        </h3>
+
+        <div style="
+          background:#f8fafc;
+          border:1px solid var(--border);
+          border-radius:12px;
+          padding:20px;
+        ">
+
+          <div style="
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:18px;
+          ">
+
+            <div>
+              <label>المسمى الوظيفي</label>
+              <input type="text" name="experienceTitle"
+                placeholder="مثال: محاسب"
+                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px">
+            </div>
+
+            <div>
+              <label>اسم الشركة</label>
+              <input type="text" name="company"
+                placeholder="اسم الشركة"
+                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px">
+            </div>
+
+            <div>
+              <label>تاريخ البداية</label>
+              <input type="month" name="experienceStart"
+                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px">
+            </div>
+
+            <div>
+              <label>تاريخ النهاية</label>
+              <input type="month" name="experienceEnd"
+                style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px">
+            </div>
+
+          </div>
+
+          <div style="margin-top:18px">
+
+            <label>وصف الخبرة والمسؤوليات</label>
+
+            <textarea
+              name="experienceDescription"
+              rows="5"
+              placeholder="اكتب أهم المسؤوليات والإنجازات..."
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;resize:vertical;font-family:inherit;line-height:1.8;margin-top:6px"
+            ></textarea>
+
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- التعليم -->
+      <div style="margin-bottom:32px">
+
+        <h3 style="
+          font-size:19px;
+          font-weight:800;
+          margin-bottom:18px;
+          padding-bottom:10px;
+          border-bottom:2px solid var(--border);
+        ">
+          التعليم
+        </h3>
+
+        <div style="
+          display:grid;
+          grid-template-columns:repeat(2,1fr);
+          gap:18px;
+        ">
+
+          <div>
+            <label>الدرجة العلمية</label>
+            <input type="text" name="degree"
+              placeholder="مثال: بكالوريوس"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px">
+          </div>
+
+          <div>
+            <label>التخصص</label>
+            <input type="text" name="specialization"
+              placeholder="مثال: إدارة الأعمال"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px">
+          </div>
+
+          <div>
+            <label>الجامعة أو المؤسسة التعليمية</label>
+            <input type="text" name="university"
+              placeholder="اسم الجامعة"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px">
+          </div>
+
+          <div>
+            <label>سنة التخرج</label>
+            <input type="number" name="graduationYear"
+              placeholder="2026"
+              style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-top:6px">
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- المهارات -->
+      <div style="margin-bottom:32px">
+
+        <h3 style="
+          font-size:19px;
+          font-weight:800;
+          margin-bottom:18px;
+          padding-bottom:10px;
+          border-bottom:2px solid var(--border);
+        ">
+          المهارات
+        </h3>
+
+        <input
+          type="text"
+          name="skills"
+          placeholder="Excel، التواصل، إدارة الوقت، البرمجة..."
+          style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px"
+        >
+
+        <p style="font-size:12px;color:var(--muted);margin-top:6px">
+          افصل بين المهارات باستخدام الفاصلة.
+        </p>
+
+      </div>
+
+
+      <!-- الدورات -->
+      <div style="margin-bottom:32px">
+
+        <h3 style="
+          font-size:19px;
+          font-weight:800;
+          margin-bottom:18px;
+          padding-bottom:10px;
+          border-bottom:2px solid var(--border);
+        ">
+          الدورات والشهادات
+        </h3>
+
+        <textarea
+          name="certificates"
+          rows="4"
+          placeholder="اكتب الدورات والشهادات..."
+          style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;resize:vertical;font-family:inherit;line-height:1.8"
+        ></textarea>
+
+      </div>
+
+
+      <!-- اللغات -->
+      <div style="margin-bottom:32px">
+
+        <h3 style="
+          font-size:19px;
+          font-weight:800;
+          margin-bottom:18px;
+          padding-bottom:10px;
+          border-bottom:2px solid var(--border);
+        ">
+          اللغات
+        </h3>
+
+        <textarea
+          name="languages"
+          rows="3"
+          placeholder="العربية - اللغة الأم&#10;الإنجليزية - جيد جدًا"
+          style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;resize:vertical;font-family:inherit;line-height:1.8"
+        ></textarea>
+
+      </div>
+
+
+      <!-- الأزرار -->
+      <div style="
+        text-align:center;
+        margin-top:30px;
+        display:flex;
+        justify-content:center;
+        gap:12px;
+        flex-wrap:wrap;
+      ">
+
+        <button
+          type="submit"
+          class="btn-primary"
+          style="border:none;cursor:pointer;font-family:inherit"
+        >
+          <i class="fas fa-eye"></i>
+          معاينة السيرة الذاتية
+        </button>
+
+        <button
+          type="submit"
+          formaction="/cv-builder/modern/pdf"
+          formmethod="POST"
+          class="btn-primary"
+          style="
+            border:none;
+            cursor:pointer;
+            font-family:inherit;
+            background:#10b981;
+          "
+        >
+          <i class="fas fa-file-pdf"></i>
+          تحميل PDF
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+  `;
+
+  res.send(layout('إنشاء السيرة الذاتية - القالب العصري', body));
+});
+
+/* =========================
+   CV MODERN - PREVIEW
+========================= */
+app.post('/cv-builder/modern/preview', express.urlencoded({ extended: true }), (req, res) => {
+
+  const data = req.body;
+
+  const colors = {
+    navy: {
+      primary: '#15203a',
+      accent: '#3b82f6',
+      light: '#eff6ff',
+      border: '#bfdbfe',
+      text: '#1d4ed8'
+    },
+    blue: {
+      primary: '#1e3a8a',
+      accent: '#2563eb',
+      light: '#eff6ff',
+      border: '#bfdbfe',
+      text: '#1d4ed8'
+    },
+    green: {
+      primary: '#064e3b',
+      accent: '#059669',
+      light: '#ecfdf5',
+      border: '#a7f3d0',
+      text: '#047857'
+    },
+    teal: {
+      primary: '#134e4a',
+      accent: '#0f766e',
+      light: '#f0fdfa',
+      border: '#99f6e4',
+      text: '#0f766e'
+    },
+    purple: {
+      primary: '#3b0764',
+      accent: '#7c3aed',
+      light: '#f5f3ff',
+      border: '#ddd6fe',
+      text: '#6d28d9'
+    },
+    burgundy: {
+      primary: '#450a0a',
+      accent: '#991b1b',
+      light: '#fef2f2',
+      border: '#fecaca',
+      text: '#b91c1c'
+    },
+    orange: {
+      primary: '#431407',
+      accent: '#ea580c',
+      light: '#fff7ed',
+      border: '#fed7aa',
+      text: '#c2410c'
+    },
+    brown: {
+      primary: '#451a03',
+      accent: '#78350f',
+      light: '#fffbeb',
+      border: '#fde68a',
+      text: '#92400e'
+    },
+    gray: {
+      primary: '#1e293b',
+      accent: '#475569',
+      light: '#f1f5f9',
+      border: '#cbd5e1',
+      text: '#334155'
+    },
+    black: {
+      primary: '#111827',
+      accent: '#000000',
+      light: '#f3f4f6',
+      border: '#d1d5db',
+      text: '#111827'
+    }
+  };
+
+  const theme = colors[data.cvColor] || colors.navy;
+
+  const skills = data.skills
+    ? data.skills.split(',').map(skill => `
+      <span style="
+        background:${theme.light};
+        border:1px solid ${theme.border};
+        color:${theme.text};
+        padding:6px 11px;
+        border-radius:6px;
+        font-size:10px;
+        font-weight:700;
+        display:inline-block;
+      ">
+        ${skill.trim()}
+      </span>
+    `).join('')
+    : '';
+
+  const body = `
+  <div style="
+    background:#eef2f7;
+    padding:40px 15px;
+    min-height:100vh;
+    direction:rtl;
+  ">
+
+    <div style="
+      max-width:794px;
+      min-height:1123px;
+      margin:0 auto;
+      background:#fff;
+      box-shadow:0 12px 40px rgba(15,23,42,.15);
+      display:flex;
+      overflow:hidden;
+      direction:rtl;
+      font-family:'Cairo',Arial,sans-serif;
+    ">
+
+      <!-- SIDE -->
+      <aside style="
+        width:235px;
+        flex-shrink:0;
+        background:${theme.primary};
+        color:#fff;
+        padding:34px 22px;
+      ">
+
+        <div style="
+          width:90px;
+          height:90px;
+          border-radius:50%;
+          background:${theme.accent};
+          margin:0 auto 20px;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          font-size:34px;
+          font-weight:800;
+        ">
+          ${(data.fullName || 'ا').trim().charAt(0)}
+        </div>
+
+        <h1 style="
+          text-align:center;
+          margin:0;
+          font-size:23px;
+          line-height:1.5;
+          font-weight:800;
+          color:#fff;
+        ">
+          ${data.fullName || 'الاسم الكامل'}
+        </h1>
+
+        <div style="
+          text-align:center;
+          margin-top:6px;
+          color:${theme.light};
+          font-size:12px;
+          font-weight:700;
+          line-height:1.6;
+        ">
+          ${data.jobTitle || 'المسمى الوظيفي'}
+        </div>
+
+
+        <div style="
+          margin-top:28px;
+          padding-top:18px;
+          border-top:1px solid rgba(255,255,255,.2);
+        ">
+
+          <div style="
+            font-size:12px;
+            font-weight:800;
+            margin-bottom:12px;
+            color:#fff;
+          ">
+            معلومات التواصل
+          </div>
+
+          ${data.country || data.city ? `
+          <div style="font-size:10px;line-height:1.8;margin-bottom:8px">
+            📍 ${data.country || ''}${data.city ? ' - ' + data.city : ''}
+          </div>
+          ` : ''}
+
+          ${data.phone ? `
+          <div style="font-size:10px;line-height:1.8;margin-bottom:8px">
+            ☎ ${data.phone}
+          </div>
+          ` : ''}
+
+          ${data.email ? `
+          <div style="font-size:10px;line-height:1.8;margin-bottom:8px;word-break:break-word">
+            ✉ ${data.email}
+          </div>
+          ` : ''}
+
+          ${data.linkedin ? `
+          <div style="font-size:10px;line-height:1.8;margin-bottom:8px;word-break:break-word">
+            LinkedIn<br>${data.linkedin}
+          </div>
+          ` : ''}
+
+          ${data.website ? `
+          <div style="font-size:10px;line-height:1.8;word-break:break-word">
+            🌐 ${data.website}
+          </div>
+          ` : ''}
+
+        </div>
+
+
+        ${data.skills ? `
+        <div style="
+          margin-top:26px;
+          padding-top:18px;
+          border-top:1px solid rgba(255,255,255,.2);
+        ">
+
+          <div style="
+            font-size:12px;
+            font-weight:800;
+            margin-bottom:12px;
+          ">
+            المهارات
+          </div>
+
+          ${data.skills.split(',').map(skill => `
+            <div style="
+              margin-bottom:7px;
+              font-size:10px;
+              line-height:1.6;
+              color:#f8fafc;
+            ">
+              • ${skill.trim()}
+            </div>
+          `).join('')}
+
+        </div>
+        ` : ''}
+
+
+        ${data.languages ? `
+        <div style="
+          margin-top:26px;
+          padding-top:18px;
+          border-top:1px solid rgba(255,255,255,.2);
+        ">
+
+          <div style="
+            font-size:12px;
+            font-weight:800;
+            margin-bottom:10px;
+          ">
+            اللغات
+          </div>
+
+          <div style="
+            font-size:10px;
+            line-height:2;
+            white-space:pre-line;
+            color:#f8fafc;
+          ">
+            ${data.languages}
+          </div>
+
+        </div>
+        ` : ''}
+
+      </aside>
+
+
+      <!-- MAIN -->
+      <main style="
+        flex:1;
+        padding:38px 34px;
+        color:#1e293b;
+        min-width:0;
+      ">
+
+        ${data.summary ? `
+        <section style="margin-bottom:25px">
+
+          <div style="
+            display:flex;
+            align-items:center;
+            gap:9px;
+            margin-bottom:10px;
+          ">
+
+            <div style="
+              width:30px;
+              height:4px;
+              background:${theme.accent};
+              border-radius:4px;
+            "></div>
+
+            <h2 style="
+              margin:0;
+              font-size:16px;
+              font-weight:800;
+              color:${theme.primary};
+            ">
+              الملف المهني
+            </h2>
+
+          </div>
+
+          <p style="
+            margin:0;
+            font-size:11px;
+            line-height:2;
+            color:#475569;
+            white-space:pre-line;
+          ">
+            ${data.summary}
+          </p>
+
+        </section>
+        ` : ''}
+
+
+        ${(data.experienceTitle || data.company) ? `
+        <section style="margin-bottom:25px">
+
+          <div style="
+            display:flex;
+            align-items:center;
+            gap:9px;
+            margin-bottom:13px;
+          ">
+
+            <div style="
+              width:30px;
+              height:4px;
+              background:${theme.accent};
+              border-radius:4px;
+            "></div>
+
+            <h2 style="
+              margin:0;
+              font-size:16px;
+              font-weight:800;
+              color:${theme.primary};
+            ">
+              الخبرة المهنية
+            </h2>
+
+          </div>
+
+
+          <div style="
+            border-right:3px solid ${theme.light};
+            padding-right:14px;
+          ">
+
+            <h3 style="
+              margin:0;
+              font-size:13px;
+              font-weight:800;
+            ">
+              ${data.experienceTitle || ''}
+            </h3>
+
+            ${data.company ? `
+            <div style="
+              color:${theme.accent};
+              font-size:11px;
+              font-weight:700;
+              margin-top:4px;
+            ">
+              ${data.company}
+            </div>
+            ` : ''}
+
+            ${(data.experienceStart || data.experienceEnd) ? `
+            <div style="
+              color:#94a3b8;
+              font-size:9px;
+              margin-top:4px;
+            ">
+              ${data.experienceStart || ''}
+              ${data.experienceEnd ? ' - ' + data.experienceEnd : ' - حتى الآن'}
+            </div>
+            ` : ''}
+
+            ${data.experienceDescription ? `
+            <p style="
+              margin:8px 0 0;
+              font-size:10.5px;
+              line-height:1.9;
+              color:#475569;
+              white-space:pre-line;
+            ">
+              ${data.experienceDescription}
+            </p>
+            ` : ''}
+
+          </div>
+
+        </section>
+        ` : ''}
+
+
+        ${(data.degree || data.specialization || data.university) ? `
+        <section style="margin-bottom:25px">
+
+          <div style="
+            display:flex;
+            align-items:center;
+            gap:9px;
+            margin-bottom:13px;
+          ">
+
+            <div style="
+              width:30px;
+              height:4px;
+              background:${theme.accent};
+              border-radius:4px;
+            "></div>
+
+            <h2 style="
+              margin:0;
+              font-size:16px;
+              font-weight:800;
+              color:${theme.primary};
+            ">
+              التعليم
+            </h2>
+
+          </div>
+
+          <div style="
+            border-right:3px solid ${theme.light};
+            padding-right:14px;
+          ">
+
+            ${data.degree ? `
+            <h3 style="margin:0;font-size:13px;font-weight:800">
+              ${data.degree}
+            </h3>
+            ` : ''}
+
+            ${data.specialization ? `
+            <div style="
+              color:${theme.accent};
+              font-size:11px;
+              font-weight:700;
+              margin-top:4px;
+            ">
+              ${data.specialization}
+            </div>
+            ` : ''}
+
+            ${data.university ? `
+            <div style="
+              font-size:10.5px;
+              color:#475569;
+              margin-top:4px;
+            ">
+              ${data.university}
+            </div>
+            ` : ''}
+
+            ${data.graduationYear ? `
+            <div style="
+              font-size:9px;
+              color:#94a3b8;
+              margin-top:4px;
+            ">
+              سنة التخرج: ${data.graduationYear}
+            </div>
+            ` : ''}
+
+          </div>
+
+        </section>
+        ` : ''}
+
+
+        ${data.skills ? `
+        <section style="margin-bottom:25px">
+
+          <div style="
+            display:flex;
+            align-items:center;
+            gap:9px;
+            margin-bottom:12px;
+          ">
+
+            <div style="
+              width:30px;
+              height:4px;
+              background:${theme.accent};
+              border-radius:4px;
+            "></div>
+
+            <h2 style="
+              margin:0;
+              font-size:16px;
+              font-weight:800;
+              color:${theme.primary};
+            ">
+              المهارات
+            </h2>
+
+          </div>
+
+          <div style="
+            display:flex;
+            flex-wrap:wrap;
+            gap:6px;
+          ">
+            ${skills}
+          </div>
+
+        </section>
+        ` : ''}
+
+
+        ${data.certificates ? `
+        <section style="margin-bottom:25px">
+
+          <div style="
+            display:flex;
+            align-items:center;
+            gap:9px;
+            margin-bottom:12px;
+          ">
+
+            <div style="
+              width:30px;
+              height:4px;
+              background:${theme.accent};
+              border-radius:4px;
+            "></div>
+
+            <h2 style="
+              margin:0;
+              font-size:16px;
+              font-weight:800;
+              color:${theme.primary};
+            ">
+              الدورات والشهادات
+            </h2>
+
+          </div>
+
+          <div style="
+            font-size:10.5px;
+            line-height:1.9;
+            color:#475569;
+            white-space:pre-line;
+          ">
+            ${data.certificates}
+          </div>
+
+        </section>
+        ` : ''}
+
+      </main>
+
+    </div>
+
+
+    <div style="
+      max-width:794px;
+      margin:25px auto 0;
+      text-align:center;
+    ">
+
+      <a
+        href="/cv-builder/modern"
+        class="btn-primary"
+        style="margin-left:8px"
+      >
+        تعديل البيانات
+      </a>
+
+    </div>
+
+  </div>
+  `;
+
+  res.send(layout('معاينة السيرة الذاتية - القالب العصري', body));
+});
+
+/* =========================
+   CV MODERN - PDF
+========================= */
+app.post('/cv-builder/modern/pdf', express.urlencoded({ extended: true }), async (req, res) => {
+
+  try {
+
+    const data = req.body;
+
+    const colors = {
+      navy: {
+        primary: '#15203a',
+        accent: '#3b82f6',
+        light: '#eff6ff',
+        border: '#bfdbfe',
+        text: '#1d4ed8'
+      },
+      blue: {
+        primary: '#1e3a8a',
+        accent: '#2563eb',
+        light: '#eff6ff',
+        border: '#bfdbfe',
+        text: '#1d4ed8'
+      },
+      green: {
+        primary: '#064e3b',
+        accent: '#059669',
+        light: '#ecfdf5',
+        border: '#a7f3d0',
+        text: '#047857'
+      },
+      teal: {
+        primary: '#134e4a',
+        accent: '#0f766e',
+        light: '#f0fdfa',
+        border: '#99f6e4',
+        text: '#0f766e'
+      },
+      purple: {
+        primary: '#3b0764',
+        accent: '#7c3aed',
+        light: '#f5f3ff',
+        border: '#ddd6fe',
+        text: '#6d28d9'
+      },
+      burgundy: {
+        primary: '#450a0a',
+        accent: '#991b1b',
+        light: '#fef2f2',
+        border: '#fecaca',
+        text: '#b91c1c'
+      },
+      orange: {
+        primary: '#431407',
+        accent: '#ea580c',
+        light: '#fff7ed',
+        border: '#fed7aa',
+        text: '#c2410c'
+      },
+      brown: {
+        primary: '#451a03',
+        accent: '#78350f',
+        light: '#fffbeb',
+        border: '#fde68a',
+        text: '#92400e'
+      },
+      gray: {
+        primary: '#1e293b',
+        accent: '#475569',
+        light: '#f1f5f9',
+        border: '#cbd5e1',
+        text: '#334155'
+      },
+      black: {
+        primary: '#111827',
+        accent: '#000000',
+        light: '#f3f4f6',
+        border: '#d1d5db',
+        text: '#111827'
+      }
+    };
+
+    const theme = colors[data.cvColor] || colors.navy;
+
+    const executablePath = await puppeteer.executablePath();
+
+    console.log('===== MODERN CV PDF =====');
+    console.log('PUPPETEER EXECUTABLE:', executablePath);
+
+    const browser = await puppeteer.launch({
+      headless: true,
+      executablePath: executablePath,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage'
+      ]
+    });
+
+    const page = await browser.newPage();
+
+    await page.setContent(`
+      <!DOCTYPE html>
+
+      <html lang="ar" dir="rtl">
+
+      <head>
+
+        <meta charset="UTF-8">
+
+        <style>
+
+          @page {
+            size: A4;
+            margin: 0;
+          }
+
+          * {
+            box-sizing: border-box;
+          }
+
+          html,
+          body {
+            margin: 0;
+            padding: 0;
+            width: 210mm;
+            min-height: 297mm;
+            background: #ffffff;
+          }
+
+          body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            color: #1e293b;
+          }
+
+          .cv {
+            width: 210mm;
+            min-height: 297mm;
+            display: flex;
+            background: #ffffff;
+            direction: rtl;
+          }
+
+          .sidebar {
+            width: 62mm;
+            min-height: 297mm;
+            background: ${theme.primary};
+            color: #ffffff;
+            padding: 11mm 6mm;
+            flex-shrink: 0;
+          }
+
+          .main {
+            width: 148mm;
+            min-height: 297mm;
+            padding: 11mm 10mm;
+            background: #ffffff;
+          }
+
+          .avatar {
+            width: 27mm;
+            height: 27mm;
+            border-radius: 50%;
+            background: ${theme.accent};
+            margin: 0 auto 5mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 23px;
+            font-weight: bold;
+          }
+
+          .name {
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.5;
+            font-weight: bold;
+            color: #ffffff;
+          }
+
+          .job-title {
+            text-align: center;
+            margin-top: 2mm;
+            color: ${theme.light};
+            font-size: 9px;
+            font-weight: bold;
+            line-height: 1.6;
+          }
+
+          .side-section {
+            margin-top: 8mm;
+            padding-top: 5mm;
+            border-top: 1px solid rgba(255,255,255,.22);
+          }
+
+          .side-title {
+            font-size: 9px;
+            font-weight: bold;
+            margin-bottom: 3mm;
+            color: #ffffff;
+          }
+
+          .side-text {
+            font-size: 7.5px;
+            line-height: 1.9;
+            color: #f8fafc;
+            word-break: break-word;
+            white-space: pre-line;
+          }
+
+          .side-skill {
+            font-size: 7.5px;
+            line-height: 1.8;
+            margin-bottom: 1mm;
+            color: #f8fafc;
+          }
+
+          .section {
+            margin-bottom: 6mm;
+          }
+
+          .section-title {
+            display: flex;
+            align-items: center;
+            gap: 3mm;
+            margin-bottom: 3mm;
+          }
+
+          .section-line {
+            width: 10mm;
+            height: 1.3mm;
+            background: ${theme.accent};
+            border-radius: 2mm;
+          }
+
+          .section-title-text {
+            font-size: 12px;
+            font-weight: bold;
+            color: ${theme.primary};
+          }
+
+          .text {
+            font-size: 8.5px;
+            line-height: 1.9;
+            color: #475569;
+            white-space: pre-line;
+          }
+
+          .item {
+            border-right: 1.2mm solid ${theme.light};
+            padding-right: 4mm;
+          }
+
+          .item-title {
+            font-size: 10px;
+            font-weight: bold;
+            color: #1e293b;
+          }
+
+          .company {
+            color: ${theme.accent};
+            font-size: 8.5px;
+            font-weight: bold;
+            margin-top: 1mm;
+          }
+
+          .date {
+            color: #94a3b8;
+            font-size: 7px;
+            margin-top: 1mm;
+          }
+
+          .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2mm;
+          }
+
+          .skill {
+            background: ${theme.light};
+            border: 0.3mm solid ${theme.border};
+            color: ${theme.text};
+            padding: 1.5mm 2.5mm;
+            border-radius: 1.5mm;
+            font-size: 7.5px;
+            font-weight: bold;
+          }
+
+        </style>
+
+      </head>
+
+      <body>
+
+        <div class="cv">
+
+          <!-- SIDEBAR -->
+
+          <aside class="sidebar">
+
+            <div class="avatar">
+              ${(data.fullName || 'ا').trim().charAt(0)}
+            </div>
+
+            <div class="name">
+              ${data.fullName || 'الاسم الكامل'}
+            </div>
+
+            <div class="job-title">
+              ${data.jobTitle || 'المسمى الوظيفي'}
+            </div>
+
+
+            <div class="side-section">
+
+              <div class="side-title">
+                معلومات التواصل
+              </div>
+
+              ${data.country || data.city ? `
+                <div class="side-text">
+                  📍 ${data.country || ''}${data.city ? ' - ' + data.city : ''}
+                </div>
+              ` : ''}
+
+              ${data.phone ? `
+                <div class="side-text">
+                  ☎ ${data.phone}
+                </div>
+              ` : ''}
+
+              ${data.email ? `
+                <div class="side-text">
+                  ✉ ${data.email}
+                </div>
+              ` : ''}
+
+              ${data.linkedin ? `
+                <div class="side-text">
+                  LinkedIn<br>${data.linkedin}
+                </div>
+              ` : ''}
+
+              ${data.website ? `
+                <div class="side-text">
+                  🌐 ${data.website}
+                </div>
+              ` : ''}
+
+            </div>
+
+
+            ${data.skills ? `
+
+            <div class="side-section">
+
+              <div class="side-title">
+                المهارات
+              </div>
+
+              ${data.skills.split(',').map(skill => `
+                <div class="side-skill">
+                  • ${skill.trim()}
+                </div>
+              `).join('')}
+
+            </div>
+
+            ` : ''}
+
+
+            ${data.languages ? `
+
+            <div class="side-section">
+
+              <div class="side-title">
+                اللغات
+              </div>
+
+              <div class="side-text">
+                ${data.languages}
+              </div>
+
+            </div>
+
+            ` : ''}
+
+          </aside>
+
+
+          <!-- MAIN -->
+
+          <main class="main">
+
+            ${data.summary ? `
+
+            <section class="section">
+
+              <div class="section-title">
+
+                <div class="section-line"></div>
+
+                <div class="section-title-text">
+                  الملف المهني
+                </div>
+
+              </div>
+
+              <div class="text">
+                ${data.summary}
+              </div>
+
+            </section>
+
+            ` : ''}
+
+
+            ${(data.experienceTitle || data.company) ? `
+
+            <section class="section">
+
+              <div class="section-title">
+
+                <div class="section-line"></div>
+
+                <div class="section-title-text">
+                  الخبرة المهنية
+                </div>
+
+              </div>
+
+              <div class="item">
+
+                <div class="item-title">
+                  ${data.experienceTitle || ''}
+                </div>
+
+                ${data.company ? `
+                  <div class="company">
+                    ${data.company}
+                  </div>
+                ` : ''}
+
+                ${(data.experienceStart || data.experienceEnd) ? `
+                  <div class="date">
+                    ${data.experienceStart || ''}
+                    ${data.experienceEnd ? ' - ' + data.experienceEnd : ' - حتى الآن'}
+                  </div>
+                ` : ''}
+
+                ${data.experienceDescription ? `
+                  <div class="text" style="margin-top:2mm">
+                    ${data.experienceDescription}
+                  </div>
+                ` : ''}
+
+              </div>
+
+            </section>
+
+            ` : ''}
+
+
+            ${(data.degree || data.specialization || data.university) ? `
+
+            <section class="section">
+
+              <div class="section-title">
+
+                <div class="section-line"></div>
+
+                <div class="section-title-text">
+                  التعليم
+                </div>
+
+              </div>
+
+              <div class="item">
+
+                ${data.degree ? `
+                  <div class="item-title">
+                    ${data.degree}
+                  </div>
+                ` : ''}
+
+                ${data.specialization ? `
+                  <div class="company">
+                    ${data.specialization}
+                  </div>
+                ` : ''}
+
+                ${data.university ? `
+                  <div class="text">
+                    ${data.university}
+                  </div>
+                ` : ''}
+
+                ${data.graduationYear ? `
+                  <div class="date">
+                    سنة التخرج: ${data.graduationYear}
+                  </div>
+                ` : ''}
+
+              </div>
+
+            </section>
+
+            ` : ''}
+
+
+            ${data.skills ? `
+
+            <section class="section">
+
+              <div class="section-title">
+
+                <div class="section-line"></div>
+
+                <div class="section-title-text">
+                  المهارات
+                </div>
+
+              </div>
+
+              <div class="skills">
+
+                ${data.skills.split(',').map(skill => `
+                  <span class="skill">
+                    ${skill.trim()}
+                  </span>
+                `).join('')}
+
+              </div>
+
+            </section>
+
+            ` : ''}
+
+
+            ${data.certificates ? `
+
+            <section class="section">
+
+              <div class="section-title">
+
+                <div class="section-line"></div>
+
+                <div class="section-title-text">
+                  الدورات والشهادات
+                </div>
+
+              </div>
+
+              <div class="text">
+                ${data.certificates}
+              </div>
+
+            </section>
+
+            ` : ''}
+
+          </main>
+
+        </div>
+
+      </body>
+
+      </html>
+    `, {
+      waitUntil: 'networkidle0'
+    });
+
+
+    const pdf = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      margin: {
+        top: '0',
+        right: '0',
+        bottom: '0',
+        left: '0'
+      }
+    });
+
+
+    await browser.close();
+
+
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'attachment; filename="modern-cv.pdf"',
+      'Content-Length': pdf.length
+    });
+
+    res.send(pdf);
+
+  } catch (error) {
+
+    console.error('MODERN PDF ERROR:', error);
+
+    res.status(500).send('حدث خطأ أثناء إنشاء ملف PDF');
+
+  }
+
+});
+
 /* =========================
    ARTICLES PAGE
 ========================= */
