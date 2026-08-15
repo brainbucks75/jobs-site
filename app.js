@@ -1,10 +1,11 @@
+const express = require('express');
+const path = require('path');
 const fs = require('fs');
 const puppeteer = require('puppeteer');
+
 const app = express();
 
-const express = require('express');
-const PORT = 3000;
-
+const PORT = process.env.PORT || 3000;
 /* =========================
    READ JSON FILES
 ========================= */
