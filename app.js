@@ -2385,7 +2385,12 @@ const page = await browser.newPage();
       }
     });
 
+console.log('===== PDF GENERATED =====');
+console.log('PDF SIZE:', pdf.length);
+
     await browser.close();
+
+console.log('===== BROWSER CLOSED =====');
 
     res.set({
       'Content-Type': 'application/pdf',
@@ -2394,6 +2399,7 @@ const page = await browser.newPage();
     });
 
     res.send(pdf);
+console.log('===== PDF SENT =====');
 
   } catch (error) {
 
