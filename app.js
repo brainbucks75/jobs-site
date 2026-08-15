@@ -6404,521 +6404,670 @@ CV CREATIVE - PDF
 ========================= */
 app.post('/cv-builder/creative/pdf', express.urlencoded({ extended: true }), async (req, res) => {
 
-try {
+  let browser;
 
-const data = req.body;
+  try {
 
-const colors = {
-  navy:    { primary:'#15203a', accent:'#3b82f6', light:'#eff6ff', border:'#bfdbfe', text:'#1d4ed8' },
-  blue:    { primary:'#1e3a8a', accent:'#2563eb', light:'#eff6ff', border:'#bfdbfe', text:'#1d4ed8' },
-  green:   { primary:'#064e3b', accent:'#059669', light:'#ecfdf5', border:'#a7f3d0', text:'#047857' },
-  teal:    { primary:'#134e4a', accent:'#0f766e', light:'#f0fdfa', border:'#99f6e4', text:'#0f766e' },
-  purple:  { primary:'#3b0764', accent:'#7c3aed', light:'#f5f3ff', border:'#ddd6fe', text:'#6d28d9' },
-  burgundy:{ primary:'#450a0a', accent:'#991b1b', light:'#fef2f2', border:'#fecaca', text:'#b91c1c' },
-  orange:  { primary:'#431407', accent:'#ea580c', light:'#fff7ed', border:'#fed7aa', text:'#c2410c' },
-  brown:   { primary:'#451a03', accent:'#78350f', light:'#fffbeb', border:'#fde68a', text:'#92400e' },
-  gray:    { primary:'#1e293b', accent:'#475569', light:'#f1f5f9', border:'#cbd5e1', text:'#334155' },
-  black:   { primary:'#111827', accent:'#000000', light:'#f3f4f6', border:'#d1d5db', text:'#111827' }
-};
+    const data = req.body;
 
-const theme = colors[data.cvColor] || colors.navy;
+    const colors = {
+      navy: {
+        primary: '#15203a',
+        accent: '#3b82f6',
+        light: '#eff6ff',
+        border: '#bfdbfe',
+        text: '#1d4ed8'
+      },
+      blue: {
+        primary: '#1e3a8a',
+        accent: '#2563eb',
+        light: '#eff6ff',
+        border: '#bfdbfe',
+        text: '#1d4ed8'
+      },
+      green: {
+        primary: '#064e3b',
+        accent: '#059669',
+        light: '#ecfdf5',
+        border: '#a7f3d0',
+        text: '#047857'
+      },
+      teal: {
+        primary: '#134e4a',
+        accent: '#0f766e',
+        light: '#f0fdfa',
+        border: '#99f6e4',
+        text: '#0f766e'
+      },
+      purple: {
+        primary: '#3b0764',
+        accent: '#7c3aed',
+        light: '#f5f3ff',
+        border: '#ddd6fe',
+        text: '#6d28d9'
+      },
+      burgundy: {
+        primary: '#450a0a',
+        accent: '#991b1b',
+        light: '#fef2f2',
+        border: '#fecaca',
+        text: '#b91c1c'
+      },
+      orange: {
+        primary: '#431407',
+        accent: '#ea580c',
+        light: '#fff7ed',
+        border: '#fed7aa',
+        text: '#c2410c'
+      },
+      brown: {
+        primary: '#451a03',
+        accent: '#78350f',
+        light: '#fffbeb',
+        border: '#fde68a',
+        text: '#92400e'
+      },
+      gray: {
+        primary: '#1e293b',
+        accent: '#475569',
+        light: '#f1f5f9',
+        border: '#cbd5e1',
+        text: '#334155'
+      },
+      black: {
+        primary: '#111827',
+        accent: '#000000',
+        light: '#f3f4f6',
+        border: '#d1d5db',
+        text: '#111827'
+      }
+    };
+
+    const theme = colors[data.cvColor] || colors.navy;
+
+    /* =========================
+       PUPPETEER
+    ========================= */
+
+    const executablePath = await puppeteer.executablePath();
+
+    console.log('===== CREATIVE PDF TEST =====');
+    console.log('PUPPETEER EXECUTABLE:', executablePath);
+
+    browser = await puppeteer.launch({
+      headless: true,
+      executablePath: executablePath,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage'
+      ]
+    });
+
+    const page = await browser.newPage();
+
+    /* =========================
+       PDF HTML
+    ========================= */
+
+    await page.setContent(`
+      <!DOCTYPE html>
+
+      <html lang="ar" dir="rtl">
+
+      <head>
+
+        <meta charset="UTF-8">
+
+        <style>
+
+          @page {
+            size: A4;
+            margin: 0;
+          }
+
+          * {
+            box-sizing: border-box;
+          }
+
+          html,
+          body {
+            margin: 0;
+            padding: 0;
+            width: 210mm;
+            min-height: 297mm;
+            background: #ffffff;
+          }
+
+          body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            color: #1e293b;
+          }
+
+          .cv {
+            width: 210mm;
+            min-height: 297mm;
+            background: #ffffff;
+            position: relative;
+            overflow: hidden;
+          }
+
+          /* =========================
+             HEADER
+          ========================= */
+
+          .header {
+            width: 100%;
+            min-height: 58mm;
+            background: ${theme.primary};
+            position: relative;
+            overflow: hidden;
+            color: #ffffff;
+          }
+
+          .circle-one {
+            position: absolute;
+            width: 70mm;
+            height: 70mm;
+            border-radius: 50%;
+            background: ${theme.accent};
+            opacity: .18;
+            top: -38mm;
+            left: -18mm;
+          }
+
+          .circle-two {
+            position: absolute;
+            width: 45mm;
+            height: 45mm;
+            border-radius: 50%;
+            background: #ffffff;
+            opacity: .07;
+            bottom: -28mm;
+            right: -12mm;
+          }
+
+          .header-content {
+            position: relative;
+            z-index: 2;
+            padding: 12mm 13mm;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10mm;
+          }
+
+          .identity {
+            display: flex;
+            align-items: center;
+            gap: 6mm;
+            min-width: 0;
+          }
+
+          .avatar {
+            width: 27mm;
+            height: 27mm;
+            min-width: 27mm;
+            border-radius: 50%;
+            background: ${theme.accent};
+            border: 2mm solid rgba(255,255,255,.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 22px;
+            font-weight: bold;
+          }
+
+          .name {
+            font-size: 22px;
+            line-height: 1.5;
+            font-weight: bold;
+            color: #ffffff;
+          }
+
+          .job-title {
+            margin-top: 2mm;
+            color: ${theme.light};
+            font-size: 10px;
+            font-weight: bold;
+            line-height: 1.6;
+          }
+
+          .contact {
+            width: 65mm;
+            display: flex;
+            flex-direction: column;
+            gap: 2.2mm;
+            font-size: 7.8px;
+            line-height: 1.6;
+            color: #f8fafc;
+            word-break: break-word;
+          }
+
+          /* =========================
+             CONTENT
+          ========================= */
+
+          .content {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            width: 100%;
+            min-height: 239mm;
+          }
+
+          .main {
+            width: 137mm;
+            padding: 10mm 10mm 12mm 12mm;
+            background: #ffffff;
+          }
+
+          .side {
+            width: 73mm;
+            min-height: 239mm;
+            padding: 10mm 9mm;
+            background: ${theme.light};
+            border-right: 1px solid ${theme.border};
+          }
+
+          .section {
+            margin-bottom: 7mm;
+          }
+
+          .section-head {
+            display: flex;
+            align-items: center;
+            gap: 3mm;
+            margin-bottom: 3.5mm;
+          }
+
+          .section-mark {
+            width: 10mm;
+            height: 1.5mm;
+            background: ${theme.accent};
+            border-radius: 2mm;
+            flex-shrink: 0;
+          }
+
+          .section-title {
+            font-size: 12.5px;
+            font-weight: bold;
+            color: ${theme.primary};
+          }
+
+          .text {
+            font-size: 8.5px;
+            line-height: 1.9;
+            color: #475569;
+            white-space: pre-line;
+          }
+
+          /* =========================
+             EXPERIENCE / EDUCATION
+          ========================= */
+
+          .item {
+            border-right: 1.2mm solid ${theme.accent};
+            padding-right: 4mm;
+            margin-bottom: 2mm;
+          }
+
+          .item-title {
+            font-size: 10.5px;
+            font-weight: bold;
+            color: #1e293b;
+            line-height: 1.6;
+          }
+
+          .company {
+            color: ${theme.accent};
+            font-size: 8.8px;
+            font-weight: bold;
+            margin-top: 1mm;
+          }
+
+          .date {
+            color: #94a3b8;
+            font-size: 7px;
+            margin-top: 1mm;
+          }
+
+          /* =========================
+             SIDE
+          ========================= */
+
+          .side-title {
+            font-size: 10px;
+            font-weight: bold;
+            color: ${theme.primary};
+            padding-bottom: 2mm;
+            margin-bottom: 3mm;
+            border-bottom: 1px solid ${theme.border};
+          }
+
+          .side-text {
+            font-size: 7.8px;
+            line-height: 1.9;
+            color: #475569;
+            white-space: pre-line;
+            word-break: break-word;
+          }
+
+          .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2mm;
+          }
+
+          .skill {
+            background: #ffffff;
+            border: .35mm solid ${theme.border};
+            color: ${theme.text};
+            padding: 1.5mm 2.5mm;
+            border-radius: 2mm;
+            font-size: 7.5px;
+            font-weight: bold;
+          }
+
+        </style>
+
+      </head>
+
+      <body>
+
+        <div class="cv">
+
+          <!-- HEADER -->
+
+          <header class="header">
+
+            <div class="circle-one"></div>
+            <div class="circle-two"></div>
+
+            <div class="header-content">
+
+              <div class="identity">
+
+                <div class="avatar">
+                  ${(data.fullName || 'ا').trim().charAt(0)}
+                </div>
+
+                <div>
+
+                  <div class="name">
+                    ${data.fullName || 'الاسم الكامل'}
+                  </div>
+
+                  <div class="job-title">
+                    ${data.jobTitle || 'المسمى الوظيفي'}
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="contact">
+
+                ${data.country || data.city ? `
+                  <span>
+                    📍 ${data.country || ''}${data.city ? ' - ' + data.city : ''}
+                  </span>
+                ` : ''}
+
+                ${data.phone ? `
+                  <span>☎ ${data.phone}</span>
+                ` : ''}
+
+                ${data.email ? `
+                  <span>✉ ${data.email}</span>
+                ` : ''}
+
+                ${data.linkedin ? `
+                  <span>LinkedIn: ${data.linkedin}</span>
+                ` : ''}
+
+                ${data.website ? `
+                  <span>🌐 ${data.website}</span>
+                ` : ''}
+
+              </div>
+
+            </div>
+
+          </header>
 
 
-/* نفس إعداد Puppeteer الناجح */
+          <!-- CONTENT -->
 
-const executablePath = await puppeteer.executablePath();
+          <div class="content">
 
-console.log('===== CREATIVE PDF TEST =====');
-console.log('PUPPETEER EXECUTABLE:', executablePath);
+            <!-- MAIN -->
 
-const browser = await puppeteer.launch({
-  headless: true,
-  executablePath: executablePath,
-  args: [
-    '--no-sandbox',
-    '--disable-setuid-sandbox',
-    '--disable-dev-shm-usage'
-  ]
-});
+            <main class="main">
 
-const page = await browser.newPage();
+              ${data.summary ? `
+                <section class="section">
 
-await page.setContent(`
-<!DOCTYPE html>
+                  <div class="section-head">
+                    <div class="section-mark"></div>
+                    <div class="section-title">
+                      نبذة مهنية
+                    </div>
+                  </div>
 
-<html lang="ar" dir="rtl">
+                  <div class="text">
+                    ${data.summary}
+                  </div>
 
-<head>
+                </section>
+              ` : ''}
 
-<meta charset="UTF-8">
 
-<style>
+              ${(data.experienceTitle || data.company) ? `
+                <section class="section">
 
-@page {
-  size:A4;
-  margin:0;
-}
+                  <div class="section-head">
+                    <div class="section-mark"></div>
+                    <div class="section-title">
+                      الخبرة المهنية
+                    </div>
+                  </div>
 
-* {
-  box-sizing:border-box;
-}
+                  <div class="item">
 
-html,
-body {
-  margin:0;
-  padding:0;
-  width:210mm;
-  min-height:297mm;
-  background:#fff;
-}
+                    <div class="item-title">
+                      ${data.experienceTitle || ''}
+                    </div>
 
-body {
-  font-family:Arial,sans-serif;
-  direction:rtl;
-  color:#1e293b;
-}
+                    ${data.company ? `
+                      <div class="company">
+                        ${data.company}
+                      </div>
+                    ` : ''}
 
-.cv {
-  width:210mm;
-  min-height:297mm;
-  background:#fff;
-  direction:rtl;
-}
+                    ${(data.experienceStart || data.experienceEnd) ? `
+                      <div class="date">
+                        ${data.experienceStart || ''}
+                        ${data.experienceEnd
+                          ? ' - ' + data.experienceEnd
+                          : ' - حتى الآن'}
+                      </div>
+                    ` : ''}
 
-.header {
-  height:65mm;
-  background:${theme.primary};
-  color:#fff;
-  padding:10mm 12mm 8mm;
-  position:relative;
-  overflow:hidden;
-}
+                    ${data.experienceDescription ? `
+                      <div class="text" style="margin-top:2mm">
+                        ${data.experienceDescription}
+                      </div>
+                    ` : ''}
 
-.circle-one {
-  position:absolute;
-  width:65mm;
-  height:65mm;
-  border-radius:50%;
-  background:${theme.accent};
-  opacity:.15;
-  left:-20mm;
-  top:-30mm;
-}
+                  </div>
 
-.circle-two {
-  position:absolute;
-  width:35mm;
-  height:35mm;
-  border-radius:50%;
-  border:7mm solid ${theme.accent};
-  opacity:.15;
-  right:15mm;
-  top:-15mm;
-}
+                </section>
+              ` : ''}
 
-.header-content {
-  position:relative;
-}
 
-.identity {
-  display:flex;
-  align-items:center;
-  gap:7mm;
-}
+              ${(data.degree || data.specialization || data.university) ? `
+                <section class="section">
 
-.avatar {
-  width:27mm;
-  height:27mm;
-  border-radius:7mm;
-  background:${theme.accent};
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:23px;
-  font-weight:bold;
-  color:#fff;
-  transform:rotate(-5deg);
-  flex-shrink:0;
-}
+                  <div class="section-head">
+                    <div class="section-mark"></div>
+                    <div class="section-title">
+                      التعليم
+                    </div>
+                  </div>
 
-.name {
-  font-size:21px;
-  font-weight:bold;
-  line-height:1.5;
-  color:#fff;
-}
+                  <div class="item">
 
-.job-title {
-  margin-top:1mm;
-  font-size:9.5px;
-  font-weight:bold;
-  color:${theme.light};
-}
+                    ${data.degree ? `
+                      <div class="item-title">
+                        ${data.degree}
+                      </div>
+                    ` : ''}
 
-.contact {
-  margin-top:7mm;
-  display:flex;
-  flex-wrap:wrap;
-  gap:2mm 6mm;
-  font-size:7.5px;
-  color:#f8fafc;
-}
+                    ${data.specialization ? `
+                      <div class="company">
+                        ${data.specialization}
+                      </div>
+                    ` : ''}
 
-.body {
-  display:flex;
-  flex-direction:row;
-  min-height:232mm;
-}
+                    ${data.university ? `
+                      <div class="text">
+                        ${data.university}
+                      </div>
+                    ` : ''}
 
-.main {
-  width:148mm;
-  padding:10mm 11mm;
-  background:#fff;
-}
+                    ${data.graduationYear ? `
+                      <div class="date">
+                        سنة التخرج: ${data.graduationYear}
+                      </div>
+                    ` : ''}
 
-.side {
-  width:62mm;
-  padding:10mm 7mm;
-  background:${theme.light};
-  border-right:.3mm solid ${theme.border};
-}
+                  </div>
 
-.section {
-  margin-bottom:7mm;
-}
+                </section>
+              ` : ''}
 
-.section-head {
-  display:flex;
-  align-items:center;
-  gap:3mm;
-  margin-bottom:3mm;
-}
+            </main>
 
-.section-mark {
-  width:11mm;
-  height:2.5mm;
-  background:${theme.accent};
-  border-radius:3mm;
-}
 
-.section-title {
-  font-size:12px;
-  font-weight:bold;
-  color:${theme.primary};
-}
+            <!-- SIDE -->
 
-.text {
-  font-size:8.5px;
-  line-height:1.9;
-  color:#475569;
-  white-space:pre-line;
-}
+            <aside class="side">
 
-.item {
-  padding-right:4mm;
-  border-right:1.2mm solid ${theme.light};
-}
+              ${data.skills ? `
+                <section class="section">
 
-.item-title {
-  font-size:10px;
-  font-weight:bold;
-}
+                  <div class="side-title">
+                    المهارات
+                  </div>
 
-.company {
-  color:${theme.accent};
-  font-size:8.5px;
-  font-weight:bold;
-  margin-top:1mm;
-}
+                  <div class="skills">
 
-.date {
-  color:#94a3b8;
-  font-size:7px;
-  margin-top:1mm;
-}
+                    ${data.skills
+                      .split(',')
+                      .map(skill => `
+                        <span class="skill">
+                          ${skill.trim()}
+                        </span>
+                      `)
+                      .join('')}
 
-.side-title {
-  font-size:10px;
-  font-weight:bold;
-  color:${theme.primary};
-  margin-bottom:3mm;
-}
+                  </div>
 
-.side-text {
-  font-size:7.8px;
-  line-height:1.9;
-  color:#475569;
-  white-space:pre-line;
-  word-break:break-word;
-}
+                </section>
+              ` : ''}
 
-.skills {
-  display:flex;
-  flex-wrap:wrap;
-  gap:2mm;
-}
 
-.skill {
-  background:#fff;
-  border:0.3mm solid ${theme.border};
-  color:${theme.text};
-  padding:1.5mm 2.5mm;
-  border-radius:5mm;
-  font-size:7px;
-  font-weight:bold;
-}
+              ${data.languages ? `
+                <section class="section">
 
-</style>
+                  <div class="side-title">
+                    اللغات
+                  </div>
 
-</head>
+                  <div class="side-text">
+                    ${data.languages}
+                  </div>
 
-<body>
+                </section>
+              ` : ''}
 
-<div class="cv">
 
-  <header class="header">
+              ${data.certificates ? `
+                <section class="section">
 
-    <div class="circle-one"></div>
-    <div class="circle-two"></div>
+                  <div class="side-title">
+                    الدورات والشهادات
+                  </div>
 
-    <div class="header-content">
+                  <div class="side-text">
+                    ${data.certificates}
+                  </div>
 
-      <div class="identity">
+                </section>
+              ` : ''}
 
-        <div class="avatar">
-          ${(data.fullName || 'ا').trim().charAt(0)}
-        </div>
+            </aside>
 
-        <div>
-
-          <div class="name">
-            ${data.fullName || 'الاسم الكامل'}
           </div>
 
-          <div class="job-title">
-            ${data.jobTitle || 'المسمى الوظيفي'}
-          </div>
-
         </div>
 
-      </div>
+      </body>
+
+      </html>
+    `, {
+      waitUntil: 'networkidle0'
+    });
 
 
-      <div class="contact">
+    /* =========================
+       CREATE PDF
+    ========================= */
 
-        ${data.country || data.city ? `
-        <span>📍 ${data.country || ''}${data.city ? ' - ' + data.city : ''}</span>
-        ` : ''}
-
-        ${data.phone ? `<span>☎ ${data.phone}</span>` : ''}
-
-        ${data.email ? `<span>${data.email}</span>` : ''}
-
-        ${data.linkedin ? `<span>LinkedIn: ${data.linkedin}</span>` : ''}
-
-        ${data.website ? `<span>${data.website}</span>` : ''}
-
-      </div>
-
-    </div>
-
-  </header>
+    const pdf = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      preferCSSPageSize: true,
+      margin: {
+        top: '0',
+        right: '0',
+        bottom: '0',
+        left: '0'
+      }
+    });
 
 
-  <div class="body">
-
-    <main class="main">
-
-      ${data.summary ? `
-      <section class="section">
-
-        <div class="section-head">
-          <div class="section-mark"></div>
-          <div class="section-title">نبذة مهنية</div>
-        </div>
-
-        <div class="text">
-          ${data.summary}
-        </div>
-
-      </section>
-      ` : ''}
+    await browser.close();
+    browser = null;
 
 
-      ${(data.experienceTitle || data.company) ? `
-      <section class="section">
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'attachment; filename="creative-cv.pdf"',
+      'Content-Length': pdf.length
+    });
 
-        <div class="section-head">
-          <div class="section-mark"></div>
-          <div class="section-title">الخبرة المهنية</div>
-        </div>
-
-        <div class="item">
-
-          <div class="item-title">
-            ${data.experienceTitle || ''}
-          </div>
-
-          ${data.company ? `
-          <div class="company">
-            ${data.company}
-          </div>
-          ` : ''}
-
-          ${(data.experienceStart || data.experienceEnd) ? `
-          <div class="date">
-            ${data.experienceStart || ''}
-            ${data.experienceEnd ? ' - ' + data.experienceEnd : ' - حتى الآن'}
-          </div>
-          ` : ''}
-
-          ${data.experienceDescription ? `
-          <div class="text" style="margin-top:2mm">
-            ${data.experienceDescription}
-          </div>
-          ` : ''}
-
-        </div>
-
-      </section>
-      ` : ''}
+    return res.send(pdf);
 
 
-      ${(data.degree || data.specialization || data.university) ? `
-      <section class="section">
+  } catch (error) {
 
-        <div class="section-head">
-          <div class="section-mark"></div>
-          <div class="section-title">التعليم</div>
-        </div>
+    console.error('CREATIVE PDF ERROR:', error);
 
-        <div class="item">
+    if (browser) {
+      try {
+        await browser.close();
+      } catch (closeError) {
+        console.error('BROWSER CLOSE ERROR:', closeError);
+      }
+    }
 
-          ${data.degree ? `
-          <div class="item-title">
-            ${data.degree}
-          </div>
-          ` : ''}
+    return res.status(500).send('حدث خطأ أثناء إنشاء ملف PDF');
 
-          ${data.specialization ? `
-          <div class="company">
-            ${data.specialization}
-          </div>
-          ` : ''}
-
-          ${data.university ? `
-          <div class="text">
-            ${data.university}
-          </div>
-          ` : ''}
-
-          ${data.graduationYear ? `
-          <div class="date">
-            سنة التخرج: ${data.graduationYear}
-          </div>
-          ` : ''}
-
-        </div>
-
-      </section>
-      ` : ''}
-
-    </main>
-
-
-    <aside class="side">
-
-      ${data.skills ? `
-      <section class="section">
-
-        <div class="side-title">
-          المهارات
-        </div>
-
-        <div class="skills">
-
-          ${data.skills.split(',').map(skill => `
-          <span class="skill">
-            ${skill.trim()}
-          </span>
-          `).join('')}
-
-        </div>
-
-      </section>
-      ` : ''}
-
-
-      ${data.languages ? `
-      <section class="section">
-
-        <div class="side-title">
-          اللغات
-        </div>
-
-        <div class="side-text">
-          ${data.languages}
-        </div>
-
-      </section>
-      ` : ''}
-
-
-      ${data.certificates ? `
-      <section class="section">
-
-        <div class="side-title">
-          الدورات والشهادات
-        </div>
-
-        <div class="side-text">
-          ${data.certificates}
-        </div>
-
-      </section>
-      ` : ''}
-
-    </aside>
-
-  </div>
-
-</div>
-
-</body>
-
-</html>
-`, {
-  waitUntil:'networkidle0'
-});
-
-const pdf = await page.pdf({
-  format:'A4',
-  printBackground:true,
-  margin:{
-    top:'0',
-    right:'0',
-    bottom:'0',
-    left:'0'
   }
-});
-
-await browser.close();
-
-res.set({
-  'Content-Type':'application/pdf',
-  'Content-Disposition':'attachment; filename="creative-cv.pdf"',
-  'Content-Length':pdf.length
-});
-
-res.send(pdf);
-
-} catch(error) {
-
-console.error('CREATIVE PDF ERROR:', error);
-
-res.status(500).send('حدث خطأ أثناء إنشاء ملف PDF');
-
-}
 
 });
 
