@@ -2793,7 +2793,35 @@ app.get('/cv-builder/ats', (req, res) => {
         </div>
 
       </form>
+<!-- وصف القالب -->
+<div style="
+  max-width:900px;
+  margin:50px auto;
+  padding:30px;
+  background:#ffffff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  line-height:2;
+  color:#334155;
+">
 
+  <h2 style="
+    font-size:24px;
+    font-weight:800;
+    margin-bottom:20px;
+  ">
+    قالب السيرة الذاتية الاحترافي Professional
+  </h2>
+
+  <div style="
+    font-size:15px;
+  ">
+
+    <!-- انسخ وصف القالب هنا -->
+
+  </div>
+
+</div>
     </div>
 
   </div>
@@ -4297,7 +4325,35 @@ app.get('/cv-builder/modern', (req, res) => {
       </div>
 
     </form>
+<!-- وصف القالب -->
+<div style="
+  max-width:900px;
+  margin:50px auto;
+  padding:30px;
+  background:#ffffff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  line-height:2;
+  color:#334155;
+">
 
+  <h2 style="
+    font-size:24px;
+    font-weight:800;
+    margin-bottom:20px;
+  ">
+    قالب السيرة الذاتية الاحترافي Professional
+  </h2>
+
+  <div style="
+    font-size:15px;
+  ">
+
+    <!-- انسخ وصف القالب هنا -->
+
+  </div>
+
+</div>
   </div>
   `;
 
@@ -5936,6 +5992,36 @@ const body = `
   </div>
 
 </form>
+<!-- وصف القالب -->
+<div style="
+  max-width:900px;
+  margin:50px auto;
+  padding:30px;
+  background:#ffffff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  line-height:2;
+  color:#334155;
+">
+
+  <h2 style="
+    font-size:24px;
+    font-weight:800;
+    margin-bottom:20px;
+  ">
+    قالب السيرة الذاتية الاحترافي Professional
+  </h2>
+
+  <div style="
+    font-size:15px;
+  ">
+
+    <!-- انسخ وصف القالب هنا -->
+
+  </div>
+
+</div>
+
 `;
 
 res.send(layout('إنشاء السيرة الذاتية - القالب الإبداعي', body));
