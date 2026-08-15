@@ -2370,7 +2370,8 @@ const page = await browser.newPage();
       </body>
       </html>
     `, {
-      waitUntil: 'networkidle0'
+     waitUntil: 'load',
+  timeout: 120000
     });
 
     const pdf = await page.pdf({
@@ -4189,7 +4190,8 @@ app.post('/cv-builder/ats/pdf', express.urlencoded({ extended: true }), async (r
 
     `, {
 
-      waitUntil:'networkidle0'
+      waitUntil: 'load',
+  timeout: 120000
 
     });
 
@@ -6179,7 +6181,8 @@ const browser = await puppeteer.launch({
 
       </html>
     `, {
-      waitUntil: 'networkidle0'
+      waitUntil: 'load',
+  timeout: 120000
     });
 
 
@@ -7966,8 +7969,8 @@ app.post('/cv-builder/creative/pdf', express.urlencoded({ extended: true }), asy
 
       </html>
     `, {
-      waitUntil: 'domcontentloaded',
-  timeout: 0
+     waitUntil: 'load',
+  timeout: 120000
     });
 
 
