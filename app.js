@@ -1136,7 +1136,7 @@ app.get('/cv-builder/professional', (req, res) => {
     font-size:15px;
   ">
 
-    <!-- انسخ وصف القالب هنا -->
+نكتب الوصف هنا
 
   </div>
 
