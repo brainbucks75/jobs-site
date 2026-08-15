@@ -7019,7 +7019,8 @@ app.post('/cv-builder/creative/pdf', express.urlencoded({ extended: true }), asy
 
       </html>
     `, {
-      waitUntil: 'networkidle0'
+      waitUntil: 'domcontentloaded',
+  timeout: 0
     });
 
 
