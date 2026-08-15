@@ -1,8 +1,8 @@
-const express = require('express');
 const fs = require('fs');
 const puppeteer = require('puppeteer');
 const app = express();
 
+const express = require('express');
 const PORT = 3000;
 
 /* =========================
@@ -2322,7 +2322,7 @@ app.get('/jobs/:sector/page/:page',(req,res)=>{
   const page   = parseInt(req.params.page) || 1;
   const jobs   = getJobs(sector);
 
-  const perPage = 5;
+  const perPage = 10;
   const start = (page-1)*perPage;
   const end = start+perPage;
   const paginatedJobs = jobs.slice(start,end);
@@ -2465,10 +2465,10 @@ app.get('/privacy', (req, res) => {
   res.send(layout('سياسة الخصوصية', body));
 });
 /* =========================
-   SITEMAP
+SITEMAP
 ========================= */
 
-app.get('/sitemap.xml', (req,res)=>{
+app.get('/sitemap.xml', (req, res) => {
 
   const baseUrl = "https://jobs-site-0hcz.onrender.com";
 
@@ -2482,63 +2482,129 @@ app.get('/sitemap.xml', (req,res)=>{
     `${baseUrl}/terms`
   ];
 
+  // =========================
+  // JOB DETAILS
+  // =========================
+
   const jobs = getAllJobs();
 
-  jobs.forEach(job=>{
+  jobs.forEach(job => {
     urls.push(
       `${baseUrl}/jobs/${job.sector}/job/${job.id}`
     );
   });
 
 
+  // =========================
+  // JOB SECTORS + PAGINATION
+  // =========================
+
+  const sectors = [
+    'health',
+    'engineering',
+    'education',
+    'management'
+  ];
+
+  const JOBS_PER_PAGE = 10;
+
+  sectors.forEach(sector => {
+
+    const sectorJobs = getJobs(sector);
+
+    const totalPages = Math.max(
+      1,
+      Math.ceil(sectorJobs.length / JOBS_PER_PAGE)
+    );
+
+    // الصفحة الأولى
+    urls.push(
+      `${baseUrl}/jobs/${sector}/page/1`
+    );
+
+    // باقي الصفحات
+    for (let page = 2; page <= totalPages; page++) {
+
+      urls.push(
+        `${baseUrl}/jobs/${sector}/page/${page}`
+      );
+
+    }
+
+  });
+
+
+  // =========================
+  // ARTICLES
+  // =========================
+
   const articles = getArticles();
 
-  articles.forEach(article=>{
+  articles.forEach(article => {
+
     urls.push(
       `${baseUrl}/articles/${article.id}`
     );
+
   });
 
+
+  // =========================
+  // STORIES
+  // =========================
 
   const stories = getStories();
 
-  stories.forEach(story=>{
+  stories.forEach(story => {
+
     urls.push(
       `${baseUrl}/stories/${story.id}`
     );
+
   });
 
 
-  let xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
+  // =========================
+  // CREATE XML
+  // =========================
 
-  urls.forEach(url=>{
-    xml += `
-<url>
-<loc>${url}</loc>
-</url>`;
-  });
-
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>`;
 
   xml += `
-</urlset>`;
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+`;
+
+  urls.forEach(url => {
+
+    xml += `
+  <url>
+    <loc>${url}</loc>
+  </url>
+`;
+
+  });
+
+  xml += `
+</urlset>
+`;
 
 
-  res.header('Content-Type','application/xml');
+  res.header('Content-Type', 'application/xml');
+
   res.send(xml);
 
 });
 
 
 /* =========================
-   ROBOTS
+ROBOTS
 ========================= */
 
-app.get('/robots.txt',(req,res)=>{
+app.get('/robots.txt', (req, res) => {
 
-res.type('text/plain');
+  res.type('text/plain');
 
-res.send(`
+  res.send(`
 User-agent: *
 Allow: /
 
@@ -2547,8 +2613,11 @@ Sitemap: https://jobs-site-0hcz.onrender.com/sitemap.xml
 
 });
 
-/* ========================= */
-app.listen(PORT,()=>{
-  console.log(`Server running on http://localhost:${PORT}`);
-});
 
+/* ========================= */
+
+app.listen(PORT, () => {
+
+  console.log(`Server running on http://localhost:${PORT}`);
+
+});
