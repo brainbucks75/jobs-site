@@ -1807,7 +1807,6 @@ const browser = await puppeteer.launch({
     '--disable-dev-shm-usage'
   ]
 });
-
 const page = await browser.newPage();
     await page.setContent(`
       <!DOCTYPE html>
