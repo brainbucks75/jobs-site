@@ -1093,25 +1093,82 @@ app.get('/cv-builder/professional', (req, res) => {
 
 
   <!-- زر تحميل PDF -->
-  <button
-    type="submit"
-    formaction="/cv-builder/professional/pdf"
-    formmethod="POST"
-    class="btn-primary"
-    style="
-      border:none;
-      cursor:pointer;
-      font-family:inherit;
-      background:#10b981;
-    "
-  >
-    <i class="fas fa-file-pdf"></i>
-    تحميل PDF
-  </button>
+ <button
+  type="button"
+  id="downloadProfessionalPDF"
+  class="btn-primary"
+  style="
+    border:none;
+    cursor:pointer;
+    font-family:inherit;
+    background:#10b981;
+  "
+>
+  <i class="fas fa-file-pdf"></i>
+  تحميل PDF
+</button>
 
 </div>
 
        </form>
+
+<script>
+document.getElementById('downloadProfessionalPDF').addEventListener('click', async function () {
+
+  const button = this;
+  const form = button.closest('form');
+
+  button.disabled = true;
+  button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري إنشاء PDF...';
+
+  try {
+
+    const formData = new FormData(form);
+
+    const response = await fetch('/cv-builder/professional/pdf', {
+      method: 'POST',
+      body: formData
+    });
+
+    if (!response.ok) {
+      throw new Error('PDF request failed');
+    }
+
+    const blob = await response.blob();
+
+    if (!blob || blob.size === 0) {
+      throw new Error('Empty PDF');
+    }
+
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'cv.pdf';
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    window.URL.revokeObjectURL(url);
+
+  } catch (error) {
+
+    console.error('PDF DOWNLOAD ERROR:', error);
+
+    alert('تعذر تحميل ملف PDF، يرجى المحاولة مرة أخرى.');
+
+  } finally {
+
+    button.disabled = false;
+
+    button.innerHTML = '<i class="fas fa-file-pdf"></i> تحميل PDF';
+
+  }
+
+});
+</script>
+
 <!-- وصف القالب -->
 <div style="
   max-width:900px;
