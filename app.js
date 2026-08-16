@@ -274,20 +274,18 @@ ${footer()}
 async function downloadCVPDF(form, button) {
 
   if (!form || !button) {
-    alert('حدث خطأ في نموذج السيرة الذاتية');
+    alert('تعذر تحميل ملف PDF. يرجى المحاولة مرة أخرى.');
     return;
   }
 
-  const originalText = button.innerHTML;
+  button.disabled = true;
 
-  let blob = null;
+  const originalHTML = button.innerHTML;
+
+  button.innerHTML =
+    '<i class="fas fa-spinner fa-spin"></i> جاري إنشاء PDF...';
 
   try {
-
-    button.disabled = true;
-
-    button.innerHTML =
-      '<i class="fas fa-spinner fa-spin"></i> جاري إنشاء PDF...';
 
     const formData = new FormData(form);
 
@@ -296,102 +294,81 @@ async function downloadCVPDF(form, button) {
       form.getAttribute('action');
 
     if (!pdfUrl) {
-      throw new Error('لم يتم العثور على رابط إنشاء PDF');
+      throw new Error('PDF URL not found');
     }
-
-    console.log('PDF URL:', pdfUrl);
 
     const response = await fetch(pdfUrl, {
       method: 'POST',
       body: formData
     });
 
-    console.log('PDF STATUS:', response.status);
-
     if (!response.ok) {
 
       const errorText = await response.text();
 
       throw new Error(
-        'Server Error ' +
+        'Server error ' +
         response.status +
         ': ' +
         errorText.substring(0, 200)
       );
     }
 
-    blob = await response.blob();
-
-    console.log('PDF SIZE:', blob.size);
+    const blob = await response.blob();
 
     if (!blob || blob.size === 0) {
-      throw new Error('ملف PDF فارغ');
+      throw new Error('Empty PDF file');
     }
 
+    /*
+     * إنشاء رابط مؤقت للملف
+     */
     const url = window.URL.createObjectURL(blob);
 
+    /*
+     * محاولة التحميل بالطريقة المعتادة
+     */
     const link = document.createElement('a');
 
     link.href = url;
     link.download = 'my-cv.pdf';
+    link.style.display = 'none';
 
     document.body.appendChild(link);
 
     link.click();
 
-    link.remove();
-
+    /*
+     * تنظيف الرابط بعد وقت بسيط
+     * حتى لا يتم إلغاؤه قبل أن يبدأ الهاتف التحميل
+     */
     setTimeout(() => {
-      window.URL.revokeObjectURL(url);
-    }, 10000);
 
-    console.log('PDF DOWNLOAD STARTED');
+      link.remove();
+
+      window.URL.revokeObjectURL(url);
+
+    }, 3000);
 
   } catch (error) {
 
     console.error('PDF DOWNLOAD ERROR:', error);
 
-    /*
-     * محاولة فتح PDF بدل التنزيل
-     */
-    if (blob && blob.size > 0) {
-
-      const fallbackUrl =
-        window.URL.createObjectURL(blob);
-
-      const newWindow =
-        window.open(fallbackUrl, '_blank');
-
-      /*
-       * إذا منع الهاتف فتح نافذة جديدة
-       */
-      if (!newWindow) {
-
-        alert(
-          'تم إنشاء ملف PDF بنجاح، ' +
-          'لكن المتصفح منع فتحه تلقائيًا. ' +
-          'يرجى السماح بفتح النوافذ ثم المحاولة مرة أخرى.'
-        );
-      }
-
-    } else {
-
-      alert(
-        'تعذر تحميل ملف PDF.\n\n' +
-        error.message
-      );
-    }
+    alert(
+      'تعذر تحميل ملف PDF.\n\n' +
+      'يرجى المحاولة مرة أخرى.'
+    );
 
   } finally {
 
     button.disabled = false;
 
-    button.innerHTML = originalText;
+    button.innerHTML = originalHTML;
 
   }
+
 }
 </script>
-
 </body></html>`;
 }
 
