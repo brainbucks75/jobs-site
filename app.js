@@ -270,6 +270,128 @@ ${pageStyle()}
 ${header()}
 ${body}
 ${footer()}
+<script>
+async function downloadCVPDF(form, button) {
+
+  if (!form || !button) {
+    alert('حدث خطأ في نموذج السيرة الذاتية');
+    return;
+  }
+
+  const originalText = button.innerHTML;
+
+  let blob = null;
+
+  try {
+
+    button.disabled = true;
+
+    button.innerHTML =
+      '<i class="fas fa-spinner fa-spin"></i> جاري إنشاء PDF...';
+
+    const formData = new FormData(form);
+
+    const pdfUrl =
+      button.getAttribute('formaction') ||
+      form.getAttribute('action');
+
+    if (!pdfUrl) {
+      throw new Error('لم يتم العثور على رابط إنشاء PDF');
+    }
+
+    console.log('PDF URL:', pdfUrl);
+
+    const response = await fetch(pdfUrl, {
+      method: 'POST',
+      body: formData
+    });
+
+    console.log('PDF STATUS:', response.status);
+
+    if (!response.ok) {
+
+      const errorText = await response.text();
+
+      throw new Error(
+        'Server Error ' +
+        response.status +
+        ': ' +
+        errorText.substring(0, 200)
+      );
+    }
+
+    blob = await response.blob();
+
+    console.log('PDF SIZE:', blob.size);
+
+    if (!blob || blob.size === 0) {
+      throw new Error('ملف PDF فارغ');
+    }
+
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+
+    link.href = url;
+    link.download = 'my-cv.pdf';
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    setTimeout(() => {
+      window.URL.revokeObjectURL(url);
+    }, 10000);
+
+    console.log('PDF DOWNLOAD STARTED');
+
+  } catch (error) {
+
+    console.error('PDF DOWNLOAD ERROR:', error);
+
+    /*
+     * محاولة فتح PDF بدل التنزيل
+     */
+    if (blob && blob.size > 0) {
+
+      const fallbackUrl =
+        window.URL.createObjectURL(blob);
+
+      const newWindow =
+        window.open(fallbackUrl, '_blank');
+
+      /*
+       * إذا منع الهاتف فتح نافذة جديدة
+       */
+      if (!newWindow) {
+
+        alert(
+          'تم إنشاء ملف PDF بنجاح، ' +
+          'لكن المتصفح منع فتحه تلقائيًا. ' +
+          'يرجى السماح بفتح النوافذ ثم المحاولة مرة أخرى.'
+        );
+      }
+
+    } else {
+
+      alert(
+        'تعذر تحميل ملف PDF.\n\n' +
+        error.message
+      );
+    }
+
+  } finally {
+
+    button.disabled = false;
+
+    button.innerHTML = originalText;
+
+  }
+}
+</script>
+
 </body></html>`;
 }
 
@@ -420,128 +542,6 @@ app.get('/', (req,res)=>{
 
   res.send(layout('وظائف الوطن العربي - ابحث عن وظيفتك القادمة', body));
 });
-
-<script>
-async function downloadCVPDF(form, button) {
-
-  if (!form || !button) {
-    alert('حدث خطأ في نموذج السيرة الذاتية');
-    return;
-  }
-
-  const originalText = button.innerHTML;
-
-  let blob = null;
-
-  try {
-
-    button.disabled = true;
-
-    button.innerHTML =
-      '<i class="fas fa-spinner fa-spin"></i> جاري إنشاء PDF...';
-
-    const formData = new FormData(form);
-
-    const pdfUrl =
-      button.getAttribute('formaction') ||
-      form.getAttribute('action');
-
-    if (!pdfUrl) {
-      throw new Error('لم يتم العثور على رابط إنشاء PDF');
-    }
-
-    console.log('PDF URL:', pdfUrl);
-
-    const response = await fetch(pdfUrl, {
-      method: 'POST',
-      body: formData
-    });
-
-    console.log('PDF STATUS:', response.status);
-
-    if (!response.ok) {
-
-      const errorText = await response.text();
-
-      throw new Error(
-        'Server Error ' +
-        response.status +
-        ': ' +
-        errorText.substring(0, 200)
-      );
-    }
-
-    blob = await response.blob();
-
-    console.log('PDF SIZE:', blob.size);
-
-    if (!blob || blob.size === 0) {
-      throw new Error('ملف PDF فارغ');
-    }
-
-    const url = window.URL.createObjectURL(blob);
-
-    const link = document.createElement('a');
-
-    link.href = url;
-    link.download = 'my-cv.pdf';
-
-    document.body.appendChild(link);
-
-    link.click();
-
-    link.remove();
-
-    setTimeout(() => {
-      window.URL.revokeObjectURL(url);
-    }, 10000);
-
-    console.log('PDF DOWNLOAD STARTED');
-
-  } catch (error) {
-
-    console.error('PDF DOWNLOAD ERROR:', error);
-
-    /*
-     * محاولة فتح PDF بدل التنزيل
-     */
-    if (blob && blob.size > 0) {
-
-      const fallbackUrl =
-        window.URL.createObjectURL(blob);
-
-      const newWindow =
-        window.open(fallbackUrl, '_blank');
-
-      /*
-       * إذا منع الهاتف فتح نافذة جديدة
-       */
-      if (!newWindow) {
-
-        alert(
-          'تم إنشاء ملف PDF بنجاح، ' +
-          'لكن المتصفح منع فتحه تلقائيًا. ' +
-          'يرجى السماح بفتح النوافذ ثم المحاولة مرة أخرى.'
-        );
-      }
-
-    } else {
-
-      alert(
-        'تعذر تحميل ملف PDF.\n\n' +
-        error.message
-      );
-    }
-
-  } finally {
-
-    button.disabled = false;
-
-    button.innerHTML = originalText;
-
-  }
-}
-</script>
 
 /* =========================
    CV BUILDER
@@ -3117,20 +3117,20 @@ app.get('/cv-builder/ats', (req, res) => {
           </button>
 
           <button
-            type="submit"
-            formaction="/cv-builder/ats/pdf"
-            formmethod="POST"
-            class="btn-primary"
-            style="
-              border:none;
-              cursor:pointer;
-              font-family:inherit;
-              background:#10b981;
-            "
-          >
-            <i class="fas fa-file-pdf"></i>
-            تحميل PDF
-          </button>
+  type="button"
+  class="btn-primary"
+  formaction="/cv-builder/professional/pdf"
+  onclick="downloadCVPDF(this.form, this)"
+  style="
+    border:none;
+    cursor:pointer;
+    font-family:inherit;
+    background:#10b981;
+  "
+>
+  <i class="fas fa-file-pdf"></i>
+  تحميل PDF
+</button>
 
         </div>
 
@@ -4791,20 +4791,20 @@ app.get('/cv-builder/modern', (req, res) => {
         </button>
 
         <button
-          type="submit"
-          formaction="/cv-builder/modern/pdf"
-          formmethod="POST"
-          class="btn-primary"
-          style="
-            border:none;
-            cursor:pointer;
-            font-family:inherit;
-            background:#10b981;
-          "
-        >
-          <i class="fas fa-file-pdf"></i>
-          تحميل PDF
-        </button>
+  type="button"
+  class="btn-primary"
+  formaction="/cv-builder/professional/pdf"
+  onclick="downloadCVPDF(this.form, this)"
+  style="
+    border:none;
+    cursor:pointer;
+    font-family:inherit;
+    background:#10b981;
+  "
+>
+  <i class="fas fa-file-pdf"></i>
+  تحميل PDF
+</button>
 
       </div>
 
@@ -6764,20 +6764,20 @@ const body = `
     </button>
 
     <button
-      type="submit"
-      formaction="/cv-builder/creative/pdf"
-      formmethod="POST"
-      class="btn-primary"
-      style="
-        border:none;
-        cursor:pointer;
-        font-family:inherit;
-        background:#10b981;
-      "
-    >
-      <i class="fas fa-file-pdf"></i>
-      تحميل PDF
-    </button>
+  type="button"
+  class="btn-primary"
+  formaction="/cv-builder/professional/pdf"
+  onclick="downloadCVPDF(this.form, this)"
+  style="
+    border:none;
+    cursor:pointer;
+    font-family:inherit;
+    background:#10b981;
+  "
+>
+  <i class="fas fa-file-pdf"></i>
+  تحميل PDF
+</button>
 
   </div>
 
