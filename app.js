@@ -1093,9 +1093,10 @@ app.get('/cv-builder/professional', (req, res) => {
 
 
   <!-- زر تحميل PDF -->
- <button
+<button
   type="button"
   id="downloadProfessionalPDF"
+  onclick="downloadProfessionalPDF()"
   class="btn-primary"
   style="
     border:none;
@@ -1113,9 +1114,9 @@ app.get('/cv-builder/professional', (req, res) => {
        </form>
 
 <script>
-document.getElementById('downloadProfessionalPDF').addEventListener('click', async function () {
+async function downloadProfessionalPDF() {
 
-  const button = this;
+  const button = document.getElementById('downloadProfessionalPDF');
   const form = button.closest('form');
 
   button.disabled = true;
@@ -1130,19 +1131,17 @@ document.getElementById('downloadProfessionalPDF').addEventListener('click', asy
       body: formData
     });
 
-   if (!response.ok) {
+    if (!response.ok) {
 
-  const errorText = await response.text();
+      const errorText = await response.text();
 
-  console.error('PDF SERVER RESPONSE:', errorText);
-
-  throw new Error(
-    'Server returned ' +
-    response.status +
-    ': ' +
-    errorText.substring(0, 200)
-  );
-}
+      throw new Error(
+        'Server returned ' +
+        response.status +
+        ': ' +
+        errorText.substring(0, 200)
+      );
+    }
 
     const blob = await response.blob();
 
@@ -1153,35 +1152,36 @@ document.getElementById('downloadProfessionalPDF').addEventListener('click', asy
     const url = window.URL.createObjectURL(blob);
 
     const link = document.createElement('a');
+
     link.href = url;
     link.download = 'cv.pdf';
 
     document.body.appendChild(link);
+
     link.click();
+
     link.remove();
 
     window.URL.revokeObjectURL(url);
 
- } catch (error) {
+  } catch (error) {
 
-  console.error('PDF DOWNLOAD ERROR:', error);
+    console.error('PDF DOWNLOAD ERROR:', error);
 
-  alert(
-    'تعذر تحميل ملف PDF.\n\n' +
-    'الخطأ: ' + error.message
-  );
-
-}
+    alert(
+      'تعذر تحميل ملف PDF.\n\n' +
+      error.message
+    );
 
   } finally {
 
     button.disabled = false;
 
-    button.innerHTML = '<i class="fas fa-file-pdf"></i> تحميل PDF';
+    button.innerHTML =
+      '<i class="fas fa-file-pdf"></i> تحميل PDF';
 
   }
-
-});
+}
 </script>
 
 <!-- وصف القالب -->
