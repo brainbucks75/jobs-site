@@ -1096,8 +1096,8 @@ app.get('/cv-builder/professional', (req, res) => {
 <button
   type="button"
   id="downloadProfessionalPDF"
-  onclick="downloadProfessionalPDF()"
   class="btn-primary"
+  onclick="downloadProfessionalPDF()"
   style="
     border:none;
     cursor:pointer;
