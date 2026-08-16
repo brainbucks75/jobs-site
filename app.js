@@ -283,22 +283,22 @@ app.get('/', (req,res)=>{
 
   const articles = getArticles();
   const stories  = getStories();
-  const featuredArticle = articles[0] || {title:'كيف تكتب سيرة ذاتية احترافية تجذب أصحاب العمل', date:'12 مايو 2024'};
-  const featuredStory   = stories[0]   || {title:'رحلة نجاح: من الصفر إلى القمة', date:'11 مايو 2024'};
+  const featuredArticle = articles[0] || {title:'كيف تكتب سيرة ذاتية احترافية تجذب أصحاب العمل', date:'12 مايو 2026'};
+  const featuredStory   = stories[0]   || {title:'رحلة نجاح: من الصفر إلى القمة', date:'11 مايو 2026'};
   const restArticles = articles.slice(1,3);
   const restStories  = stories.slice(1,3);
 
   const articleItems = restArticles.length ? restArticles.map(a=>`
     <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">${a.title}</div><div class="d">${a.date||''}</div></div></div>
   `).join('') : `
-    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">أهم المهارات المطلوبة في سوق العمل 2024</div><div class="d">10 مايو 2024</div></div></div>
+    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">أهم المهارات المطلوبة في سوق العمل 2026</div><div class="d">10 مايو 2026</div></div></div>
     <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">أخطاء شائعة في مقابلات العمل وكيف تجنبها</div><div class="d">8 مايو 2026</div></div></div>
   `;
 
   const storyItems = restStories.length ? restStories.map(s=>`
     <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">${s.title}</div><div class="d">${s.date||''}</div></div></div>
   `).join('') : `
-    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">قصة شاب بدأ من لا شيء وأصبح رائد أعمال ناجح</div><div class="d">9 مايو 2024</div></div></div>
+    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">قصة شاب بدأ من لا شيء وأصبح رائد أعمال ناجح</div><div class="d">9 مايو 2026</div></div></div>
     <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">كيف غيّرت التعلم المستمر مجرى حياتي المهنية</div><div class="d">7 مايو 2026</div></div></div>
   `;
 
@@ -420,6 +420,128 @@ app.get('/', (req,res)=>{
 
   res.send(layout('وظائف الوطن العربي - ابحث عن وظيفتك القادمة', body));
 });
+
+<script>
+async function downloadCVPDF(form, button) {
+
+  if (!form || !button) {
+    alert('حدث خطأ في نموذج السيرة الذاتية');
+    return;
+  }
+
+  const originalText = button.innerHTML;
+
+  let blob = null;
+
+  try {
+
+    button.disabled = true;
+
+    button.innerHTML =
+      '<i class="fas fa-spinner fa-spin"></i> جاري إنشاء PDF...';
+
+    const formData = new FormData(form);
+
+    const pdfUrl =
+      button.getAttribute('formaction') ||
+      form.getAttribute('action');
+
+    if (!pdfUrl) {
+      throw new Error('لم يتم العثور على رابط إنشاء PDF');
+    }
+
+    console.log('PDF URL:', pdfUrl);
+
+    const response = await fetch(pdfUrl, {
+      method: 'POST',
+      body: formData
+    });
+
+    console.log('PDF STATUS:', response.status);
+
+    if (!response.ok) {
+
+      const errorText = await response.text();
+
+      throw new Error(
+        'Server Error ' +
+        response.status +
+        ': ' +
+        errorText.substring(0, 200)
+      );
+    }
+
+    blob = await response.blob();
+
+    console.log('PDF SIZE:', blob.size);
+
+    if (!blob || blob.size === 0) {
+      throw new Error('ملف PDF فارغ');
+    }
+
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+
+    link.href = url;
+    link.download = 'my-cv.pdf';
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    setTimeout(() => {
+      window.URL.revokeObjectURL(url);
+    }, 10000);
+
+    console.log('PDF DOWNLOAD STARTED');
+
+  } catch (error) {
+
+    console.error('PDF DOWNLOAD ERROR:', error);
+
+    /*
+     * محاولة فتح PDF بدل التنزيل
+     */
+    if (blob && blob.size > 0) {
+
+      const fallbackUrl =
+        window.URL.createObjectURL(blob);
+
+      const newWindow =
+        window.open(fallbackUrl, '_blank');
+
+      /*
+       * إذا منع الهاتف فتح نافذة جديدة
+       */
+      if (!newWindow) {
+
+        alert(
+          'تم إنشاء ملف PDF بنجاح، ' +
+          'لكن المتصفح منع فتحه تلقائيًا. ' +
+          'يرجى السماح بفتح النوافذ ثم المحاولة مرة أخرى.'
+        );
+      }
+
+    } else {
+
+      alert(
+        'تعذر تحميل ملف PDF.\n\n' +
+        error.message
+      );
+    }
+
+  } finally {
+
+    button.disabled = false;
+
+    button.innerHTML = originalText;
+
+  }
+}
+</script>
 
 /* =========================
    CV BUILDER
@@ -1094,9 +1216,9 @@ app.get('/cv-builder/professional', (req, res) => {
 
   <!-- زر تحميل PDF -->
 <button
-  type="submit"
+  type="button"
   formaction="/cv-builder/professional/pdf"
-  formmethod="POST"
+  onclick="downloadCVPDF(this.form, this)"
   class="btn-primary"
   style="
     border:none;
@@ -1108,7 +1230,6 @@ app.get('/cv-builder/professional', (req, res) => {
   <i class="fas fa-file-pdf"></i>
   تحميل PDF
 </button>
-
 </div>
 
        </form>
