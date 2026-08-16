@@ -3790,10 +3790,11 @@ app.post('/cv-builder/ats/pdf', express.urlencoded({ extended: true }), async (r
 
     });
 
+console.log('ATS STEP 2 - Browser launched');
 
     const page = await browser.newPage();
 
-
+console.log('ATS STEP 3 - New page created');
     await page.setContent(`
 
       <!DOCTYPE html>
@@ -4204,7 +4205,7 @@ app.post('/cv-builder/ats/pdf', express.urlencoded({ extended: true }), async (r
 
     });
 
-
+console.log('ATS STEP 4 - Content loaded');
     const pdf = await page.pdf({
 
       format:'A4',
@@ -4220,11 +4221,15 @@ app.post('/cv-builder/ats/pdf', express.urlencoded({ extended: true }), async (r
 
     });
 
+console.log('ATS STEP 5 - PDF GENERATED');
+console.log('PDF SIZE:', pdf.length);
 
     await browser.close();
-
+console.log('ATS STEP 6 - BROWSER CLOSED');
 
     res.set({
+
+console.log('ATS STEP 7 - PDF SENT');
 
       'Content-Type':'application/pdf',
 
