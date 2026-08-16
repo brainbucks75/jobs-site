@@ -1130,9 +1130,19 @@ document.getElementById('downloadProfessionalPDF').addEventListener('click', asy
       body: formData
     });
 
-    if (!response.ok) {
-      throw new Error('PDF request failed');
-    }
+   if (!response.ok) {
+
+  const errorText = await response.text();
+
+  console.error('PDF SERVER RESPONSE:', errorText);
+
+  throw new Error(
+    'Server returned ' +
+    response.status +
+    ': ' +
+    errorText.substring(0, 200)
+  );
+}
 
     const blob = await response.blob();
 
@@ -1152,11 +1162,16 @@ document.getElementById('downloadProfessionalPDF').addEventListener('click', asy
 
     window.URL.revokeObjectURL(url);
 
-  } catch (error) {
+ } catch (error) {
 
-    console.error('PDF DOWNLOAD ERROR:', error);
+  console.error('PDF DOWNLOAD ERROR:', error);
 
-    alert('تعذر تحميل ملف PDF، يرجى المحاولة مرة أخرى.');
+  alert(
+    'تعذر تحميل ملف PDF.\n\n' +
+    'الخطأ: ' + error.message
+  );
+
+}
 
   } finally {
 
