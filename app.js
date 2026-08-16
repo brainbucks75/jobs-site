@@ -1098,6 +1098,7 @@ app.get('/cv-builder/professional', (req, res) => {
   type="submit"
   formaction="/cv-builder/professional/pdf"
   formmethod="POST"
+  formtarget="_blank"
   class="btn-primary"
   style="
     border:none;
@@ -2995,10 +2996,11 @@ app.get('/cv-builder/ats', (req, res) => {
             معاينة السيرة الذاتية
           </button>
 
-        <button
+      <button
   type="submit"
- formaction="/cv-builder/ats/pdf"
+  formaction="/cv-builder/ats/pdf"
   formmethod="POST"
+  formtarget="_blank"
   class="btn-primary"
   style="
     border:none;
@@ -4669,10 +4671,11 @@ app.get('/cv-builder/modern', (req, res) => {
           معاينة السيرة الذاتية
         </button>
 
-       <button
+<button
   type="submit"
-  formaction="/cv-builder/modern/pdf""
+  formaction="/cv-builder/modern/pdf"
   formmethod="POST"
+  formtarget="_blank"
   class="btn-primary"
   style="
     border:none;
@@ -6642,10 +6645,11 @@ const body = `
       معاينة السيرة الذاتية
     </button>
 
-    <button
+   <button
   type="submit"
- formaction="/cv-builder/creative/pdf"
+  formaction="/cv-builder/creative/pdf"
   formmethod="POST"
+  formtarget="_blank"
   class="btn-primary"
   style="
     border:none;
