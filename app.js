@@ -1097,7 +1097,6 @@ app.get('/cv-builder/professional', (req, res) => {
   type="button"
   id="downloadProfessionalPDF"
   class="btn-primary"
-  onclick="downloadProfessionalPDF()"
   style="
     border:none;
     cursor:pointer;
@@ -1114,74 +1113,103 @@ app.get('/cv-builder/professional', (req, res) => {
        </form>
 
 <script>
-async function downloadProfessionalPDF() {
+document.addEventListener('DOMContentLoaded', function () {
 
   const button = document.getElementById('downloadProfessionalPDF');
-  const form = button.closest('form');
 
-  button.disabled = true;
-  button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري إنشاء PDF...';
-
-  try {
-
-    const formData = new FormData(form);
-
-    const response = await fetch('/cv-builder/professional/pdf', {
-      method: 'POST',
-      body: formData
-    });
-
-    if (!response.ok) {
-
-      const errorText = await response.text();
-
-      throw new Error(
-        'Server returned ' +
-        response.status +
-        ': ' +
-        errorText.substring(0, 200)
-      );
-    }
-
-    const blob = await response.blob();
-
-    if (!blob || blob.size === 0) {
-      throw new Error('Empty PDF');
-    }
-
-    const url = window.URL.createObjectURL(blob);
-
-    const link = document.createElement('a');
-
-    link.href = url;
-    link.download = 'cv.pdf';
-
-    document.body.appendChild(link);
-
-    link.click();
-
-    link.remove();
-
-    window.URL.revokeObjectURL(url);
-
-  } catch (error) {
-
-    console.error('PDF DOWNLOAD ERROR:', error);
-
-    alert(
-      'تعذر تحميل ملف PDF.\n\n' +
-      error.message
-    );
-
-  } finally {
-
-    button.disabled = false;
-
-    button.innerHTML =
-      '<i class="fas fa-file-pdf"></i> تحميل PDF';
-
+  if (!button) {
+    console.error('PDF BUTTON NOT FOUND');
+    return;
   }
-}
+
+  button.addEventListener('click', async function () {
+
+    console.log('PDF BUTTON CLICKED');
+
+    const form = button.closest('form');
+
+    if (!form) {
+      alert('لم يتم العثور على النموذج');
+      return;
+    }
+
+    button.disabled = true;
+    button.innerHTML =
+      '<i class="fas fa-spinner fa-spin"></i> جاري إنشاء PDF...';
+
+    try {
+
+      const formData = new FormData(form);
+
+      console.log('SENDING PDF REQUEST');
+
+      const response = await fetch('/cv-builder/professional/pdf', {
+        method: 'POST',
+        body: formData
+      });
+
+      console.log('PDF RESPONSE:', response.status);
+
+      if (!response.ok) {
+
+        const errorText = await response.text();
+
+        throw new Error(
+          'Server Error ' +
+          response.status +
+          ': ' +
+          errorText.substring(0, 200)
+        );
+      }
+
+      const blob = await response.blob();
+
+      console.log('PDF BLOB SIZE:', blob.size);
+
+      if (!blob || blob.size === 0) {
+        throw new Error('ملف PDF فارغ');
+      }
+
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+
+      link.href = url;
+      link.download = 'my-cv.pdf';
+
+      document.body.appendChild(link);
+
+      link.click();
+
+      document.body.removeChild(link);
+
+      setTimeout(() => {
+        window.URL.revokeObjectURL(url);
+      }, 1000);
+
+      console.log('PDF DOWNLOAD STARTED');
+
+    } catch (error) {
+
+      console.error('PDF DOWNLOAD ERROR:', error);
+
+      alert(
+        'تعذر تحميل ملف PDF.\n\n' +
+        error.message
+      );
+
+    } finally {
+
+      button.disabled = false;
+
+      button.innerHTML =
+        '<i class="fas fa-file-pdf"></i> تحميل PDF';
+
+    }
+
+  });
+
+});
 </script>
 
 <!-- وصف القالب -->
