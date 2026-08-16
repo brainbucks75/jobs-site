@@ -4229,8 +4229,6 @@ console.log('ATS STEP 6 - BROWSER CLOSED');
 
     res.set({
 
-console.log('ATS STEP 7 - PDF SENT');
-
       'Content-Type':'application/pdf',
 
       'Content-Disposition':'attachment; filename="ats-cv.pdf"',
@@ -4242,6 +4240,7 @@ console.log('ATS STEP 7 - PDF SENT');
 
     res.send(pdf);
 
+console.log('ATS STEP 7 - PDF SENT');
 
   } catch(error) {
 
