@@ -270,105 +270,7 @@ ${pageStyle()}
 ${header()}
 ${body}
 ${footer()}
-<script>
-async function downloadCVPDF(form, button) {
 
-  if (!form || !button) {
-    alert('تعذر تحميل ملف PDF. يرجى المحاولة مرة أخرى.');
-    return;
-  }
-
-  button.disabled = true;
-
-  const originalHTML = button.innerHTML;
-
-  button.innerHTML =
-    '<i class="fas fa-spinner fa-spin"></i> جاري إنشاء PDF...';
-
-  try {
-
-    const formData = new FormData(form);
-
-    const pdfUrl =
-      button.getAttribute('formaction') ||
-      form.getAttribute('action');
-
-    if (!pdfUrl) {
-      throw new Error('PDF URL not found');
-    }
-
-    const response = await fetch(pdfUrl, {
-      method: 'POST',
-      body: formData
-    });
-
-    if (!response.ok) {
-
-      const errorText = await response.text();
-
-      throw new Error(
-        'Server error ' +
-        response.status +
-        ': ' +
-        errorText.substring(0, 200)
-      );
-    }
-
-    const blob = await response.blob();
-
-    if (!blob || blob.size === 0) {
-      throw new Error('Empty PDF file');
-    }
-
-    /*
-     * إنشاء رابط مؤقت للملف
-     */
-    const url = window.URL.createObjectURL(blob);
-
-    /*
-     * محاولة التحميل بالطريقة المعتادة
-     */
-    const link = document.createElement('a');
-
-    link.href = url;
-    link.download = 'my-cv.pdf';
-    link.style.display = 'none';
-
-    document.body.appendChild(link);
-
-    link.click();
-
-    /*
-     * تنظيف الرابط بعد وقت بسيط
-     * حتى لا يتم إلغاؤه قبل أن يبدأ الهاتف التحميل
-     */
-    setTimeout(() => {
-
-      link.remove();
-
-      window.URL.revokeObjectURL(url);
-
-    }, 3000);
-
-  } catch (error) {
-
-    console.error('PDF DOWNLOAD ERROR:', error);
-
-    alert(
-      'تعذر تحميل ملف PDF.\n\n' +
-      'يرجى المحاولة مرة أخرى.'
-    );
-
-  } finally {
-
-    button.disabled = false;
-
-    button.innerHTML = originalHTML;
-
-  }
-
-}
-</script>
 </body></html>`;
 }
 
@@ -1193,9 +1095,9 @@ app.get('/cv-builder/professional', (req, res) => {
 
   <!-- زر تحميل PDF -->
 <button
-  type="button"
+  type="submit"
   formaction="/cv-builder/professional/pdf"
-  onclick="downloadCVPDF(this.form, this)"
+  formmethod="POST"
   class="btn-primary"
   style="
     border:none;
@@ -3093,11 +2995,11 @@ app.get('/cv-builder/ats', (req, res) => {
             معاينة السيرة الذاتية
           </button>
 
-          <button
-  type="button"
+        <button
+  type="submit"
+ formaction="/cv-builder/ats/pdf"
+  formmethod="POST"
   class="btn-primary"
-  formaction="/cv-builder/professional/pdf"
-  onclick="downloadCVPDF(this.form, this)"
   style="
     border:none;
     cursor:pointer;
@@ -4767,11 +4669,11 @@ app.get('/cv-builder/modern', (req, res) => {
           معاينة السيرة الذاتية
         </button>
 
-        <button
-  type="button"
+       <button
+  type="submit"
+  formaction="/cv-builder/modern/pdf""
+  formmethod="POST"
   class="btn-primary"
-  formaction="/cv-builder/professional/pdf"
-  onclick="downloadCVPDF(this.form, this)"
   style="
     border:none;
     cursor:pointer;
@@ -6741,10 +6643,10 @@ const body = `
     </button>
 
     <button
-  type="button"
+  type="submit"
+ formaction="/cv-builder/creative/pdf"
+  formmethod="POST"
   class="btn-primary"
-  formaction="/cv-builder/professional/pdf"
-  onclick="downloadCVPDF(this.form, this)"
   style="
     border:none;
     cursor:pointer;
