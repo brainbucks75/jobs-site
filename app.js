@@ -374,7 +374,54 @@ app.get('/', (req,res)=>{
           </span>
         </div>
       </a>
+<a href="/free-courses" class="content-card" style="text-decoration:none;color:inherit;transition:.3s">
 
+  <img
+    class="cc-thumb"
+    src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80"
+    alt="أهم الدورات المجانية لتطوير المهارات والتوظيف"
+    loading="lazy"
+  >
+
+  <div style="padding:18px">
+
+    <div style="
+      font-size:42px;
+      margin-bottom:10px;
+      text-align:center;
+    ">
+      🎓
+    </div>
+
+    <h3 style="
+      font-size:20px;
+      font-weight:900;
+      margin-bottom:10px;
+      text-align:center;
+    ">
+      أهم الدورات المجانية لتطوير المهارات والتوظيف
+    </h3>
+
+    <p style="
+      font-size:15px;
+      line-height:1.9;
+      color:#555;
+      text-align:center;
+      margin-bottom:15px;
+    ">
+      اكتشف دورات مجانية تساعدك على تطوير مهاراتك، تقوية سيرتك الذاتية،
+      والاستعداد بشكل أفضل لسوق العمل وزيادة فرصك في الحصول على وظيفة.
+    </p>
+
+    <div style="text-align:center">
+      <span class="sector-btn">
+        اكتشف الدورات المجانية
+      </span>
+    </div>
+
+  </div>
+
+</a>
     </div>
   </div>
 </section>
@@ -8341,6 +8388,149 @@ app.get('/privacy', (req, res) => {
 
   res.send(layout('سياسة الخصوصية', body));
 });
+
+/* =========================
+FREE COURSES
+========================= */
+
+app.get('/free-courses', (req, res) => {
+
+  const body = `
+
+  <div class="page-container">
+
+    <div class="post">
+
+      <h1 style="
+        font-size:32px;
+        font-weight:900;
+        text-align:center;
+        margin-bottom:20px;
+      ">
+        أهم الدورات المجانية لتطوير المهارات والتوظيف
+      </h1>
+
+      <p style="
+        font-size:17px;
+        line-height:2.2;
+        text-align:right;
+      ">
+        اكتشف مجموعة من الدورات المجانية التي تساعد الباحثين عن عمل
+        والطلاب والخريجين والمهنيين على تطوير مهاراتهم والاستعداد بشكل
+        أفضل لسوق العمل.
+      </p>
+
+      <div style="
+        margin-top:30px;
+        padding:20px;
+        border-radius:12px;
+        background:#f7f7f7;
+      ">
+
+        <h2 style="font-weight:900;">
+          أهمية الدورات المجانية في تطوير المهارات وفرص التوظيف
+        </h2>
+
+        <p style="line-height:2;">
+          سيتم هنا إضافة المقال الرئيسي المطول الذي يشرح أهمية الدورات
+          المجانية، وكيف يمكن اختيار الدورات المناسبة، ودورها في تطوير
+          المهارات وتحسين فرص الباحث عن عمل.
+        </p>
+
+      </div>
+
+
+      <div style="
+        margin-top:30px;
+        padding:20px;
+        border-radius:12px;
+        background:#f7f7f7;
+      ">
+
+        <h2 style="font-weight:900;">
+          تصنيف الدورات حسب التخصص
+        </h2>
+
+        <p style="line-height:2;">
+          سيتم هنا إضافة التصنيفات والتخصصات المختلفة والدورات المناسبة
+          لكل تخصص بشكل مفصل.
+        </p>
+
+      </div>
+
+
+      <div style="
+        margin-top:30px;
+        padding:20px;
+        border-radius:12px;
+        background:#f7f7f7;
+      ">
+
+        <h2 style="font-weight:900;">
+          أهم الدورات المجانية المقترحة
+        </h2>
+
+        <p style="line-height:2;">
+          سيتم هنا إضافة الدورات المجانية الفعلية مع شرح كل دورة
+          وروابطها الرسمية عند توفرها.
+        </p>
+
+      </div>
+
+
+      <div style="
+        margin-top:30px;
+        padding:20px;
+        border-radius:12px;
+        background:#f7f7f7;
+      ">
+
+        <h2 style="font-weight:900;">
+          كيفية اختيار الدورة المناسبة
+        </h2>
+
+        <p style="line-height:2;">
+          سيتم هنا إضافة مقال مفصل يساعد الباحث عن عمل على اختيار
+          الدورة المناسبة حسب تخصصه ومستواه وهدفه الوظيفي.
+        </p>
+
+      </div>
+
+
+      <div style="
+        margin-top:30px;
+        padding:20px;
+        border-radius:12px;
+        background:#f7f7f7;
+      ">
+
+        <h2 style="font-weight:900;">
+          نصائح للحصول على أكبر استفادة من الدورة
+        </h2>
+
+        <p style="line-height:2;">
+          سيتم هنا إضافة المقال المطول الذي يشرح كيفية الاستفادة
+          العملية من الدورات وتحويل المعرفة المكتسبة إلى مهارات
+          يمكن استخدامها في الدراسة والعمل والسيرة الذاتية.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  `;
+
+  res.send(
+    layout(
+      'أهم الدورات المجانية لتطوير المهارات والتوظيف',
+      body
+    )
+  );
+
+});
+
 /* =========================
 SITEMAP
 ========================= */
@@ -8356,6 +8546,7 @@ app.get('/sitemap.xml', (req, res) => {
     `${baseUrl}/articles`,
     `${baseUrl}/stories`,
     `${baseUrl}/privacy`,
+`${baseUrl}/free-courses`,
     `${baseUrl}/terms`
   ];
 
