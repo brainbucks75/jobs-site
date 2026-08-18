@@ -8392,9 +8392,6 @@ app.get('/privacy', (req, res) => {
 /* =========================
 FREE COURSES
 ========================= */
-/* =========================
-FREE COURSES
-========================= */
 
 app.get('/free-courses', (req, res) => {
 
@@ -8479,18 +8476,16 @@ const coursesPath = path.join(
 
         <div style="text-align:center">
 
-          <a
-            href="${course.link}"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="sector-btn"
-            style="
-              text-decoration:none;
-              display:inline-block;
-            "
-          >
-            الانتقال إلى الدورة
-          </a>
+       <a
+  href="/free-courses/${course.slug}"
+  class="sector-btn"
+  style="
+    text-decoration:none;
+    display:inline-block;
+  "
+>
+  عرض تفاصيل الدورة
+</a>
 
         </div>
 
@@ -8642,6 +8637,218 @@ const coursesPath = path.join(
 }
 
 });
+
+
+/* =========================
+FREE COURSE DETAILS
+========================= */
+
+app.get('/free-courses/:slug', (req, res) => {
+
+  try {
+
+    const coursesPath = path.join(
+      __dirname,
+      'courses.json'
+    );
+
+    const courses = JSON.parse(
+      fs.readFileSync(coursesPath, 'utf8')
+    );
+
+    const course = courses.find(
+      item => item.slug === req.params.slug
+    );
+
+    if (!course) {
+      return res.status(404).send(
+        layout(
+          'الدورة غير موجودة',
+          `
+          <div class="page-container">
+            <div class="post">
+
+              <h1 style="
+                text-align:center;
+                font-weight:900;
+              ">
+                الدورة غير موجودة
+              </h1>
+
+              <p style="
+                text-align:center;
+                line-height:2;
+              ">
+                عذرًا، لم نتمكن من العثور على الدورة المطلوبة.
+              </p>
+
+            </div>
+          </div>
+          `
+        )
+      );
+    }
+
+
+    const benefitsHTML = (course.benefits || [])
+      .map(
+        benefit => `<li>${benefit}</li>`
+      )
+      .join('');
+
+
+    const body = `
+
+      <div class="page-container">
+
+        <div class="post">
+
+          <h1 style="
+            font-size:32px;
+            font-weight:900;
+            text-align:center;
+            margin-bottom:20px;
+          ">
+            ${course.title}
+          </h1>
+
+
+          <p style="
+            font-size:17px;
+            line-height:2.2;
+            text-align:right;
+          ">
+            ${course.description || ''}
+          </p>
+
+
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="font-weight:900;">
+              معلومات عن الدورة
+            </h2>
+
+            <p style="line-height:2;">
+              <strong>التخصص:</strong>
+              ${course.category || 'غير محدد'}
+            </p>
+
+            <p style="line-height:2;">
+              <strong>المستوى:</strong>
+              ${course.level || 'مناسب للمبتدئين'}
+            </p>
+
+          </div>
+
+
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="font-weight:900;">
+              ماذا ستستفيد من الدورة؟
+            </h2>
+
+            <ul style="
+              line-height:2;
+            ">
+              ${benefitsHTML}
+            </ul>
+
+          </div>
+
+
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+            text-align:center;
+          ">
+
+            <h2 style="font-weight:900;">
+              الوصول إلى الدورة
+            </h2>
+
+            <p style="
+              line-height:2;
+              margin-bottom:20px;
+            ">
+              يمكنك الانتقال إلى المصدر الرسمي للدورة والبدء
+              في التعلم من خلال الرابط التالي.
+            </p>
+
+            <a
+              href="${course.link}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="sector-btn"
+              style="
+                text-decoration:none;
+                display:inline-block;
+              "
+            >
+              الانتقال إلى الدورة
+            </a>
+
+          </div>
+
+
+          <div style="
+            margin-top:30px;
+            text-align:center;
+          ">
+
+            <a
+              href="/free-courses"
+              style="
+                text-decoration:none;
+                font-weight:900;
+              "
+            >
+              ← العودة إلى جميع الدورات المجانية
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    res.send(
+      layout(
+        course.title,
+        body
+      )
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      'FREE COURSE DETAILS ERROR:',
+      error
+    );
+
+    res.status(500).send(
+      'حدث خطأ أثناء تحميل الدورة.'
+    );
+
+  }
+
+});
+
 /* =========================
 SITEMAP
 ========================= */
