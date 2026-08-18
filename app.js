@@ -8629,15 +8629,20 @@ app.get('/free-courses', (req, res) => {
     );
 
 
-  } catch (error) {
+ } catch (error) {
 
-    console.error('FREE COURSES ERROR:', error);
+  console.error('FREE COURSES ERROR:', error);
 
-    res.status(500).send(
-      'حدث خطأ أثناء تحميل صفحة الدورات المجانية.'
-    );
+  res.status(500).send(`
+    <div style="direction:rtl;text-align:right;padding:30px;font-family:Arial;">
+      <h2>حدث خطأ أثناء تحميل صفحة الدورات المجانية</h2>
+      <p style="color:red;line-height:2;">
+        ${error.message}
+      </p>
+    </div>
+  `);
 
-  }
+}
 
 });
 /* =========================
