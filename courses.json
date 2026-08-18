@@ -58,7 +58,8 @@
       "انتقل لاحقًا إلى PivotTables وتحليل البيانات",
       "احتفظ بالمشاريع التي تنفذها كأمثلة عملية"
     ],
-    "link": "https://support.microsoft.com/ar-SA/excel/"
+   "link": "https://learn.microsoft.com/en-us/training/modules/get-started-data-concepts/",
+"source": "Microsoft Learn"
   },
  {
   "id": 2,
@@ -138,8 +139,8 @@
     "التعرف على التجارة الإلكترونية",
     "إنشاء ملف أعمال يحتوي على مشاريع تسويقية عملية"
   ],
-  "link": "https://skillsbuild.org/ar/adult-learners",
-  "source": "IBM SkillsBuild"
+ "link": "https://grow.google/intl/mena/courses-and-tools/?category=business&type=online-courses",
+"source": "Google - مهارات من Google"
 },
 
 {
@@ -211,8 +212,8 @@
     "التعرف على تعلم الآلة بعد إتقان المفاهيم الأساسية",
     "تنفيذ مشاريع عملية باستخدام أدوات الذكاء الاصطناعي"
   ],
-  "link": "https://skillsbuild.org/ar",
-  "source": "IBM SkillsBuild"
+ "link": "https://skillsbuild.org/college-students/course-catalog/artificial-intelligence-fundamentals",
+"source": "IBM SkillsBuild"
 },
 {
   "id": 4,
@@ -295,8 +296,8 @@
     "دراسة إدارة المخاطر والاستجابة للحوادث",
     "استخدام مختبرات تعليمية قانونية وآمنة للتدريب العملي"
   ],
-  "link": "https://skillsbuild.org/ar",
-  "source": "IBM SkillsBuild"
+  "link": "https://skillsbuild.org/ar/college-students/course-catalog/cybersecurity-fundamentals",
+"source": "IBM SkillsBuild"
 },
 {
   "id": 5,
@@ -381,8 +382,8 @@
     "تنفيذ مشاريع عملية لتحليل مجموعات بيانات",
     "بناء ملف أعمال يحتوي على تقارير وتحليلات عملية"
   ],
-  "link": "https://skillsbuild.org/ar",
-  "source": "IBM SkillsBuild"
+  "link": "https://skillsbuild.org/adult-learners/digital-credentials",
+"source": "IBM SkillsBuild"
 },
 {
   "id": 6,
@@ -467,8 +468,8 @@
     "تعلم البرمجة إذا كنت مهتمًا بتطوير البرمجيات",
     "تنفيذ مشاريع عملية لتطوير الخبرة التقنية"
   ],
-  "link": "https://skillsbuild.org/ar",
-  "source": "IBM SkillsBuild"
+ "link": "https://www.ibm.com/training/course/information-technology-fundamentals-skill-build-CLP500103X",
+"source": "IBM Training"
 },
 {
   "id": 7,
@@ -559,8 +560,8 @@
     "إنشاء Portfolio احترافي",
     "التدرب على مشاريع تحاكي متطلبات الوظائف الفعلية"
   ],
-  "link": "https://developer.mozilla.org/en-US/docs/Learn_web_development",
-  "source": "MDN Web Docs"
+ "link": "https://skillsbuild.org/ar/adult-learners/explore-learning/web-developer",
+"source": "IBM SkillsBuild"
 },
 {
   "id": 8,
@@ -657,8 +658,8 @@
     "تنفيذ مشاريع عملية وتوثيق النتائج",
     "التعرف على الشهادات المهنية المناسبة بعد اكتساب الخبرة الأساسية"
   ],
-  "link": "https://skillsbuild.org/ar",
-  "source": "IBM SkillsBuild"
+"link": "https://skillsbuild.org/ar/adult-learners/explore-learning/project-manager",
+"source": "IBM SkillsBuild"
 },
 {
   "id": 9,
@@ -753,8 +754,8 @@
     "التدرب على التعامل مع العملاء عبر الهاتف والدردشة",
     "اكتساب خبرة عملية من خلال التدريب أو العمل"
   ],
-  "link": "https://skillsbuild.org/ar",
-  "source": "IBM SkillsBuild"
+ "link": "https://skillsbuild.org/ar/digital-credentials",
+"source": "IBM SkillsBuild"
 },
 {
   "id": 10,
@@ -851,8 +852,8 @@
     "تطوير مهارات التواصل المهني",
     "إنشاء مشاريع عملية لإثبات المهارات الرقمية"
   ],
-  "link": "https://skillsbuild.org/ar",
-  "source": "IBM SkillsBuild"
+ "link": "https://learn.microsoft.com/en-us/training/paths/explore-basic-computer-concepts/",
+"source": "Microsoft Learn"
 },
 {
   "id": 11,
@@ -946,9 +947,8 @@
     "إنشاء مشاريع عملية تجمع بين الذكاء الاصطناعي وتخصصك",
     "بناء ملف أعمال يعرض الاستخدام العملي للذكاء الاصطناعي"
   ],
-  "link": "https://skillsbuild.org/ar",
-  "source": "IBM SkillsBuild"
-},
+"link": "https://skillsbuild.org/college-students/course-catalog/getting-started-with-generative-ai",
+"source": "IBM SkillsBuild"},
 {
   "id": 12,
   "title": "دورة تحليل البيانات للمبتدئين",
@@ -1061,8 +1061,8 @@
     "التعرف على قواعد البيانات",
     "التدرب على قراءة التقارير ولوحات المعلومات"
   ],
-  "link": "https://skillsbuild.org/ar",
-  "source": "IBM SkillsBuild"
+  "link": "https://learn.microsoft.com/en-us/training/modules/get-started-data-analytics/",
+"source": "Microsoft Learn"
 },
 {
   "id": 13,
@@ -1171,8 +1171,8 @@
     "تنفيذ مشاريع عملية وبناء ملف أعمال",
     "المشاركة في مشاريع مفتوحة المصدر بعد اكتساب الخبرة المناسبة"
   ],
-  "link": "https://www.python.org/about/gettingstarted/",
-  "source": "Python.org"
+ "link": "https://learn.microsoft.com/ar-sa/shows/intro-to-python-development/",
+"source": "Microsoft Learn"
 },
 {
   "id": 14,
@@ -1275,8 +1275,8 @@
     "تنفيذ مشاريع حقيقية أو تدريبية",
     "تعلم أساسيات التسويق لفهم أهداف التصميم"
   ],
-  "link": "https://www.canva.com/designschool/",
-  "source": "Canva Design School"
+  "link": "https://skillsbuild.org/students/course-catalog/principles-of-design",
+"source": "IBM SkillsBuild + Adobe"
 },
 {
   "id": 15,
@@ -1388,8 +1388,8 @@
     "بناء ملف أعمال احترافي",
     "التخصص في مجال محتوى محدد"
   ],
-  "link": "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
-  "source": "Google Search Central"
+ "link": "https://academy.hubspot.com/courses/content-marketing",
+"source": "HubSpot Academy"
 },
 {
   "id": 16,
@@ -1493,8 +1493,8 @@
     "التدرب على كتابة البريد الإلكتروني المهني",
     "ممارسة اللغة بصورة مستمرة"
   ],
-  "link": "https://learnenglish.britishcouncil.org/",
-  "source": "British Council LearnEnglish"
+ "link": "https://learnenglish.britishcouncil.org/free-resources/business",
+"source": "British Council LearnEnglish"
 },
 {
   "id": 17,
@@ -1606,8 +1606,8 @@
     "التعرف على طبيعة الوظائف المستهدفة",
     "تحسين مهارات التواصل والثقة بالنفس"
   ],
-  "link": "https://www.indeed.com/career-advice/interviewing",
-  "source": "Indeed Career Guide"
+ "link": "https://alison.com/course/a-complete-job-interview-skills-guide",
+"source": "Alison"
 },
 {
   "id": 18,
@@ -1714,8 +1714,8 @@
     "بناء شبكة علاقات مهنية",
     "متابعة نتائج طلبات التوظيف وتحسين أسلوب التقديم"
   ],
-  "link": "https://create.microsoft.com/en-us/templates/resumes-and-cover-letters",
-  "source": "Microsoft Create"
+ "link": "https://www.coursera.org/learn/careerdevelopment",
+"source": "Coursera - University of Pennsylvania"
 },
 {
   "id": 19,
@@ -1833,8 +1833,8 @@
     "تطوير المهارات الرقمية",
     "بناء شبكة علاقات مهنية وريادية"
   ],
-  "link": "https://www.sba.gov/business-guide/plan-your-business",
-  "source": "U.S. Small Business Administration"
+ "link": "https://skillsbuild.org/ar/digital-credentials",
+"source": "IBM SkillsBuild"
 },
 {
   "id": 20,
@@ -1951,8 +1951,8 @@
     "متابعة الوظائف الجديدة",
     "تحديث الهوية المهنية مع تطور الخبرة"
   ],
-  "link": "https://www.linkedin.com/",
-  "source": "LinkedIn"
+ "link": "https://www.linkedin.com/learning/how-to-build-a-strong-professional-brand-on-linkedin-with-linkedin-career-expert-andrew-seaman",
+"source": "LinkedIn Learning"
 },
 {
   "id": 21,
@@ -2045,8 +2045,8 @@
     "دراسة أخلاقيات الذكاء الاصطناعي",
     "متابعة الأدوات والتقنيات الجديدة"
   ],
-  "link": "https://www.ibm.com/think/topics/artificial-intelligence",
-  "source": "IBM"
+  "link": "https://skillsbuild.org/college-students/course-catalog/artificial-intelligence-fundamentals",
+"source": "IBM SkillsBuild"
 },
 {
   "id": 22,
@@ -2160,8 +2160,8 @@
     "تعلم قواعد البيانات",
     "التدرب على تحليل بيانات حقيقية"
   ],
-  "link": "https://www.microsoft.com/en-us/power-platform/products/power-bi/learning",
-  "source": "Microsoft Power BI"
+ "link": "https://learn.microsoft.com/en-us/training/modules/get-started-data-analytics/",
+"source": "Microsoft Learn"
 },
 {
   "id": 23,
@@ -2263,8 +2263,8 @@
     "تعلم تحليل البيانات",
     "اختيار تخصص تقني مناسب"
   ],
-  "link": "https://www.python.org/about/gettingstarted/",
-  "source": "Python.org"
+ "link": "https://learn.microsoft.com/en-us/training/paths/get-started-c-sharp-part-1/",
+"source": "Microsoft Learn"
 },
 {
   "id": 24,
@@ -2372,8 +2372,8 @@
     "بناء ملف إنجازات",
     "التوسع في شهادات إدارة المشاريع عند الحاجة"
   ],
-  "link": "https://www.pmi.org/learning",
-  "source": "Project Management Institute"
+  "link": "https://skillsbuild.org/ar/adult-learners/digital-credentials",
+"source": "IBM SkillsBuild"
 },
 {
   "id": 25,
@@ -2478,8 +2478,8 @@
     "التدرب على التحدث أمام الجمهور",
     "تعلم مهارات خدمة العملاء"
   ],
-  "link": "https://www.coursera.org/articles/communication-skills",
-  "source": "Coursera"
+ "link": "https://skillsbuild.org/ar/digital-credentials",
+"source": "IBM SkillsBuild"
 },
 {
   "id": 26,
@@ -2580,8 +2580,8 @@
     "تعلم أساسيات الدعم الفني",
     "تطوير مهارات حل المشكلات"
   ],
-  "link": "https://www.salesforce.com/resources/articles/customer-service/",
-  "source": "Salesforce"
+ "link": "https://futurex.nelc.gov.sa/ar/course/1140115",
+"source": "المنصة الوطنية للتعليم الإلكتروني - FutureX"
 },
 {
   "id": 27,
@@ -2678,8 +2678,8 @@
     "اكتساب خبرة عملية",
     "دراسة المعايير المحاسبية المناسبة لتخصصك"
   ],
-  "link": "https://www.accountingcoach.com/",
-  "source": "AccountingCoach"
+ "link": "https://futurex.nelc.gov.sa/ar/course/1082382",
+"source": "FutureX"
 },
 {
   "id": 28,
@@ -2782,8 +2782,8 @@
     "بناء ملف أعمال",
     "تنفيذ مشاريع حقيقية أو تدريبية"
   ],
-  "link": "https://www.facebook.com/business/learn",
-  "source": "Meta for Business"
+"link": "https://academy.hubspot.com/courses/social-media",
+"source": "HubSpot Academy"
 },
 {
   "id": 29,
@@ -2889,8 +2889,8 @@
     "إنشاء مشروع متجر تجريبي",
     "تعلم حماية بيانات المتاجر"
   ],
-  "link": "https://www.shopify.com/learn",
-  "source": "Shopify"
+"link": "https://academy.hubspot.com/courses/ecommerce-marketing",
+"source": "HubSpot Academy"
 },
 {
   "id": 30,
@@ -2995,8 +2995,8 @@
     "بناء مشاريع تعليمية آمنة",
     "اكتساب خبرة عملية تدريجية"
   ],
-  "link": "https://www.cisa.gov/topics/cyber-threats-and-advisories",
-  "source": "CISA"
+  "link": "https://skillsbuild.org/ar/college-students/course-catalog/cybersecurity-fundamentals",
+"source": "IBM SkillsBuild"
 }
 
 ]
