@@ -8392,145 +8392,254 @@ app.get('/privacy', (req, res) => {
 /* =========================
 FREE COURSES
 ========================= */
+/* =========================
+FREE COURSES
+========================= */
 
 app.get('/free-courses', (req, res) => {
 
-  const body = `
+  try {
 
-  <div class="page-container">
+    const mainPath = path.join(
+      __dirname,
+      'data',
+      'free-courses',
+      'main.json'
+    );
 
-    <div class="post">
+    const coursesPath = path.join(
+      __dirname,
+      'data',
+      'free-courses',
+      'courses.json'
+    );
 
-      <h1 style="
-        font-size:32px;
-        font-weight:900;
-        text-align:center;
-        margin-bottom:20px;
-      ">
-        أهم الدورات المجانية لتطوير المهارات والتوظيف
-      </h1>
+    const main = JSON.parse(
+      fs.readFileSync(mainPath, 'utf8')
+    );
 
-      <p style="
-        font-size:17px;
-        line-height:2.2;
-        text-align:right;
-      ">
-        اكتشف مجموعة من الدورات المجانية التي تساعد الباحثين عن عمل
-        والطلاب والخريجين والمهنيين على تطوير مهاراتهم والاستعداد بشكل
-        أفضل لسوق العمل.
-      </p>
+    const courses = JSON.parse(
+      fs.readFileSync(coursesPath, 'utf8')
+    );
+
+
+    const coursesHTML = courses.map(course => `
 
       <div style="
-        margin-top:30px;
-        padding:20px;
+        margin-top:25px;
+        padding:22px;
         border-radius:12px;
         background:#f7f7f7;
+        border:1px solid #eee;
       ">
 
-        <h2 style="font-weight:900;">
-          أهمية الدورات المجانية في تطوير المهارات وفرص التوظيف
-        </h2>
+        <h3 style="
+          font-size:22px;
+          font-weight:900;
+          margin-bottom:10px;
+        ">
+          ${course.title}
+        </h3>
 
-        <p style="line-height:2;">
-          سيتم هنا إضافة المقال الرئيسي المطول الذي يشرح أهمية الدورات
-          المجانية، وكيف يمكن اختيار الدورات المناسبة، ودورها في تطوير
-          المهارات وتحسين فرص الباحث عن عمل.
+        <p style="
+          color:#666;
+          margin-bottom:10px;
+        ">
+          <strong>التخصص:</strong>
+          ${course.category}
         </p>
+
+        <p style="
+          color:#666;
+          margin-bottom:15px;
+        ">
+          <strong>المستوى:</strong>
+          ${course.level}
+        </p>
+
+        <p style="
+          line-height:2;
+          margin-bottom:15px;
+        ">
+          ${course.description}
+        </p>
+
+        <h4 style="
+          font-weight:900;
+          margin-bottom:10px;
+        ">
+          ماذا ستستفيد من الدورة؟
+        </h4>
+
+        <ul style="
+          line-height:2;
+          margin-bottom:18px;
+        ">
+          ${course.benefits.map(
+            benefit => `<li>${benefit}</li>`
+          ).join('')}
+        </ul>
+
+        <div style="text-align:center">
+
+          <a
+            href="${course.link}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="sector-btn"
+            style="
+              text-decoration:none;
+              display:inline-block;
+            "
+          >
+            الانتقال إلى الدورة
+          </a>
+
+        </div>
 
       </div>
 
+    `).join('');
 
-      <div style="
-        margin-top:30px;
-        padding:20px;
-        border-radius:12px;
-        background:#f7f7f7;
-      ">
 
-        <h2 style="font-weight:900;">
-          تصنيف الدورات حسب التخصص
-        </h2>
+    const body = `
 
-        <p style="line-height:2;">
-          سيتم هنا إضافة التصنيفات والتخصصات المختلفة والدورات المناسبة
-          لكل تخصص بشكل مفصل.
-        </p>
+      <div class="page-container">
+
+        <div class="post">
+
+          <h1 style="
+            font-size:32px;
+            font-weight:900;
+            text-align:center;
+            margin-bottom:20px;
+          ">
+            ${main.title}
+          </h1>
+
+
+          <p style="
+            font-size:17px;
+            line-height:2.2;
+            text-align:right;
+          ">
+            ${main.intro}
+          </p>
+
+
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="font-weight:900;">
+              ${main.importance.title}
+            </h2>
+
+            <p style="line-height:2;">
+              ${main.importance.content}
+            </p>
+
+          </div>
+
+
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="font-weight:900;">
+              ${main.categories.title}
+            </h2>
+
+            <p style="line-height:2;">
+              ${main.categories.content}
+            </p>
+
+          </div>
+
+
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="font-weight:900;">
+              أهم الدورات المجانية المقترحة
+            </h2>
+
+            ${coursesHTML}
+
+          </div>
+
+
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="font-weight:900;">
+              ${main.howToChoose.title}
+            </h2>
+
+            <p style="line-height:2;">
+              ${main.howToChoose.content}
+            </p>
+
+          </div>
+
+
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="font-weight:900;">
+              ${main.tips.title}
+            </h2>
+
+            <p style="line-height:2;">
+              ${main.tips.content}
+            </p>
+
+          </div>
+
+        </div>
 
       </div>
 
-
-      <div style="
-        margin-top:30px;
-        padding:20px;
-        border-radius:12px;
-        background:#f7f7f7;
-      ">
-
-        <h2 style="font-weight:900;">
-          أهم الدورات المجانية المقترحة
-        </h2>
-
-        <p style="line-height:2;">
-          سيتم هنا إضافة الدورات المجانية الفعلية مع شرح كل دورة
-          وروابطها الرسمية عند توفرها.
-        </p>
-
-      </div>
+    `;
 
 
-      <div style="
-        margin-top:30px;
-        padding:20px;
-        border-radius:12px;
-        background:#f7f7f7;
-      ">
-
-        <h2 style="font-weight:900;">
-          كيفية اختيار الدورة المناسبة
-        </h2>
-
-        <p style="line-height:2;">
-          سيتم هنا إضافة مقال مفصل يساعد الباحث عن عمل على اختيار
-          الدورة المناسبة حسب تخصصه ومستواه وهدفه الوظيفي.
-        </p>
-
-      </div>
+    res.send(
+      layout(
+        main.title,
+        body
+      )
+    );
 
 
-      <div style="
-        margin-top:30px;
-        padding:20px;
-        border-radius:12px;
-        background:#f7f7f7;
-      ">
+  } catch (error) {
 
-        <h2 style="font-weight:900;">
-          نصائح للحصول على أكبر استفادة من الدورة
-        </h2>
+    console.error('FREE COURSES ERROR:', error);
 
-        <p style="line-height:2;">
-          سيتم هنا إضافة المقال المطول الذي يشرح كيفية الاستفادة
-          العملية من الدورات وتحويل المعرفة المكتسبة إلى مهارات
-          يمكن استخدامها في الدراسة والعمل والسيرة الذاتية.
-        </p>
+    res.status(500).send(
+      'حدث خطأ أثناء تحميل صفحة الدورات المجانية.'
+    );
 
-      </div>
-
-    </div>
-
-  </div>
-
-  `;
-
-  res.send(
-    layout(
-      'أهم الدورات المجانية لتطوير المهارات والتوظيف',
-      body
-    )
-  );
+  }
 
 });
-
 /* =========================
 SITEMAP
 ========================= */
