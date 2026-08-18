@@ -422,6 +422,54 @@ app.get('/', (req,res)=>{
   </div>
 
 </a>
+<a href="/paid-courses" class="content-card" style="text-decoration:none;color:inherit;transition:.3s">
+
+  <img
+    class="cc-thumb"
+    src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=80"
+    alt="أهم الدورات المدفوعة لتطوير المهارات والدخول لسوق العمل"
+    loading="lazy"
+  >
+
+  <div style="padding:18px">
+
+    <div style="
+      font-size:42px;
+      margin-bottom:10px;
+      text-align:center;
+    ">
+      💼
+    </div>
+
+    <h3 style="
+      font-size:20px;
+      font-weight:900;
+      margin-bottom:10px;
+      text-align:center;
+    ">
+      أهم الدورات المدفوعة لتطوير المهارات والدخول لسوق العمل
+    </h3>
+
+    <p style="
+      font-size:15px;
+      line-height:1.9;
+      color:#555;
+      text-align:center;
+      margin-bottom:15px;
+    ">
+      مجموعة مختارة من الدورات المدفوعة التي تساعدك على تطوير
+      مهاراتك المهنية والتخصصية والاستعداد بشكل أفضل لسوق العمل.
+    </p>
+
+    <div style="text-align:center">
+      <span class="sector-btn">
+        اكتشف الدورات المدفوعة
+      </span>
+    </div>
+
+  </div>
+
+</a>
     </div>
   </div>
 </section>
@@ -8850,6 +8898,474 @@ app.get('/free-courses/:slug', (req, res) => {
 });
 
 /* =========================
+PAID COURSES
+========================= */
+
+app.get('/paid-courses', (req, res) => {
+
+  try {
+
+    const paidCoursesPath = path.join(
+      __dirname,
+      'data',
+      'paid-courses',
+      'main.json'
+    );
+
+    const data = JSON.parse(
+      fs.readFileSync(paidCoursesPath, 'utf8')
+    );
+
+    const courses = data.courses || [];
+
+    const coursesHTML = courses.map(course => `
+
+      <div style="
+        margin-top:25px;
+        padding:22px;
+        border-radius:12px;
+        background:#f7f7f7;
+        border:1px solid #eee;
+      ">
+
+        <h3 style="
+          font-size:22px;
+          font-weight:900;
+          margin-bottom:10px;
+        ">
+          ${course.title}
+        </h3>
+
+        ${course.category ? `
+        <p style="
+          color:#666;
+          margin-bottom:10px;
+        ">
+          <strong>التخصص:</strong>
+          ${course.category}
+        </p>
+        ` : ''}
+
+        ${course.level ? `
+        <p style="
+          color:#666;
+          margin-bottom:15px;
+        ">
+          <strong>المستوى:</strong>
+          ${course.level}
+        </p>
+        ` : ''}
+
+        ${course.description ? `
+        <p style="
+          line-height:2;
+          margin-bottom:15px;
+        ">
+          ${course.description}
+        </p>
+        ` : ''}
+
+        <div style="text-align:center">
+
+          <a
+            href="/paid-courses/${course.slug}"
+            class="sector-btn"
+            style="
+              text-decoration:none;
+              display:inline-block;
+            "
+          >
+            عرض تفاصيل الدورة
+          </a>
+
+        </div>
+
+      </div>
+
+    `).join('');
+
+
+    const body = `
+
+      <div class="page-container">
+
+        <div class="post">
+
+          <h1 style="
+            font-size:32px;
+            font-weight:900;
+            text-align:center;
+            margin-bottom:20px;
+          ">
+            ${data.title}
+          </h1>
+
+          <p style="
+            font-size:17px;
+            line-height:2.2;
+            text-align:right;
+          ">
+            ${data.intro || ''}
+          </p>
+
+
+          ${data.importance ? `
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="font-weight:900;">
+              ${data.importance.title}
+            </h2>
+
+            <p style="line-height:2;">
+              ${data.importance.content}
+            </p>
+
+          </div>
+          ` : ''}
+
+
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="font-weight:900;">
+              أهم الدورات المدفوعة المقترحة
+            </h2>
+
+            ${coursesHTML}
+
+          </div>
+
+
+          ${data.howToChoose ? `
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="font-weight:900;">
+              ${data.howToChoose.title}
+            </h2>
+
+            <p style="line-height:2;">
+              ${data.howToChoose.content}
+            </p>
+
+          </div>
+          ` : ''}
+
+
+          ${data.tips ? `
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="font-weight:900;">
+              ${data.tips.title}
+            </h2>
+
+            <p style="line-height:2;">
+              ${data.tips.content}
+            </p>
+
+          </div>
+          ` : ''}
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    res.send(
+      layout(
+        data.title,
+        body
+      )
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      'PAID COURSES ERROR:',
+      error
+    );
+
+    res.status(500).send(`
+      <div style="
+        direction:rtl;
+        text-align:right;
+        padding:30px;
+        font-family:Arial;
+      ">
+
+        <h2>
+          حدث خطأ أثناء تحميل صفحة الدورات المدفوعة
+        </h2>
+
+        <p style="
+          color:red;
+          line-height:2;
+        ">
+          ${error.message}
+        </p>
+
+      </div>
+    `);
+
+  }
+
+});
+
+
+/* =========================
+PAID COURSE DETAILS
+========================= */
+
+app.get('/paid-courses/:slug', (req, res) => {
+
+  try {
+
+    const paidCoursesPath = path.join(
+      __dirname,
+      'data',
+      'paid-courses',
+      'main.json'
+    );
+
+    const data = JSON.parse(
+      fs.readFileSync(paidCoursesPath, 'utf8')
+    );
+
+    const courses = data.courses || [];
+
+    const course = courses.find(
+      item => item.slug === req.params.slug
+    );
+
+
+    if (!course) {
+
+      return res.status(404).send(
+        layout(
+          'الدورة غير موجودة',
+          `
+          <div class="page-container">
+
+            <div class="post">
+
+              <h1 style="
+                text-align:center;
+                font-weight:900;
+              ">
+                الدورة غير موجودة
+              </h1>
+
+              <p style="
+                text-align:center;
+                line-height:2;
+              ">
+                عذرًا، لم نتمكن من العثور على الدورة المطلوبة.
+              </p>
+
+            </div>
+
+          </div>
+          `
+        )
+      );
+
+    }
+
+
+    const benefitsHTML = (course.benefits || [])
+      .map(
+        benefit => `<li>${benefit}</li>`
+      )
+      .join('');
+
+
+    const body = `
+
+      <div class="page-container">
+
+        <div class="post">
+
+          <h1 style="
+            font-size:32px;
+            font-weight:900;
+            text-align:center;
+            margin-bottom:20px;
+          ">
+            ${course.title}
+          </h1>
+
+
+          <p style="
+            font-size:17px;
+            line-height:2.2;
+            text-align:right;
+          ">
+            ${course.description || ''}
+          </p>
+
+
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="font-weight:900;">
+              معلومات عن الدورة
+            </h2>
+
+            <p style="line-height:2;">
+              <strong>التخصص:</strong>
+              ${course.category || 'غير محدد'}
+            </p>
+
+            <p style="line-height:2;">
+              <strong>المستوى:</strong>
+              ${course.level || 'مناسب للمبتدئين'}
+            </p>
+
+            ${course.provider ? `
+            <p style="line-height:2;">
+              <strong>المنصة:</strong>
+              ${course.provider}
+            </p>
+            ` : ''}
+
+            ${course.price ? `
+            <p style="line-height:2;">
+              <strong>السعر:</strong>
+              ${course.price}
+            </p>
+            ` : ''}
+
+          </div>
+
+
+          ${benefitsHTML ? `
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="font-weight:900;">
+              ماذا ستستفيد من الدورة؟
+            </h2>
+
+            <ul style="line-height:2;">
+              ${benefitsHTML}
+            </ul>
+
+          </div>
+          ` : ''}
+
+
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+            text-align:center;
+          ">
+
+            <h2 style="font-weight:900;">
+              التسجيل في الدورة
+            </h2>
+
+            <p style="
+              line-height:2;
+              margin-bottom:20px;
+            ">
+              يمكنك الانتقال إلى الموقع الرسمي للمنصة
+              والاطلاع على تفاصيل الدورة والتسجيل فيها.
+            </p>
+
+            <a
+              href="${course.link}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="sector-btn"
+              style="
+                text-decoration:none;
+                display:inline-block;
+              "
+            >
+              الانتقال إلى الدورة
+            </a>
+
+          </div>
+
+
+          <div style="
+            margin-top:30px;
+            text-align:center;
+          ">
+
+            <a
+              href="/paid-courses"
+              style="
+                text-decoration:none;
+                font-weight:900;
+              "
+            >
+              ← العودة إلى جميع الدورات المدفوعة
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    res.send(
+      layout(
+        course.title,
+        body
+      )
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      'PAID COURSE DETAILS ERROR:',
+      error
+    );
+
+    res.status(500).send(
+      'حدث خطأ أثناء تحميل الدورة.'
+    );
+
+  }
+
+});
+/* =========================
 SITEMAP
 ========================= */
 
@@ -8865,9 +9381,48 @@ app.get('/sitemap.xml', (req, res) => {
     `${baseUrl}/stories`,
     `${baseUrl}/privacy`,
 `${baseUrl}/free-courses`,
+`${baseUrl}/paid-courses`,
     `${baseUrl}/terms`
   ];
+// =========================
+// PAID COURSES
+// =========================
 
+try {
+
+  const paidCoursesPath = path.join(
+    __dirname,
+    'data',
+    'paid-courses',
+    'main.json'
+  );
+
+  const paidCoursesData = JSON.parse(
+    fs.readFileSync(paidCoursesPath, 'utf8')
+  );
+
+  const paidCourses = paidCoursesData.courses || [];
+
+  paidCourses.forEach(course => {
+
+    if (course.slug) {
+
+      urls.push(
+        `${baseUrl}/paid-courses/${course.slug}`
+      );
+
+    }
+
+  });
+
+} catch (error) {
+
+  console.log(
+    'PAID COURSES SITEMAP ERROR:',
+    error.message
+  );
+
+}
   // =========================
   // JOB DETAILS
   // =========================
