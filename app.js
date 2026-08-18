@@ -8400,19 +8400,16 @@ app.get('/free-courses', (req, res) => {
 
   try {
 
-    const mainPath = path.join(
-      __dirname,
-      'data',
-      'free-courses',
-      'main.json'
-    );
+   const mainPath = path.join(
+  __dirname,
+  'main.json'
+);
 
-    const coursesPath = path.join(
-      __dirname,
-      'data',
-      'free-courses',
-      'courses.json'
-    );
+const coursesPath = path.join(
+  __dirname,
+  'courses.json'
+);
+
 
     const main = JSON.parse(
       fs.readFileSync(mainPath, 'utf8')
