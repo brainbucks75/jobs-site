@@ -473,6 +473,51 @@ app.get('/', (req,res)=>{
   </div>
 
 </a>
+
+<a href="/global-companies" class="content-card" style="text-decoration:none;color:inherit;transition:.3s;">
+
+  <img
+    class="cc-thumb"
+    src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80"
+    alt="أهم الشركات العالمية والمجمعات الطبية للتوظيف"
+    loading="lazy"
+  >
+
+  <div style="padding:18px;text-align:center;">
+
+    <div style="
+      font-size:42px;
+      margin-bottom:10px;
+    ">
+      🌍
+    </div>
+
+    <h3 style="
+      font-size:20px;
+      font-weight:900;
+      margin-bottom:10px;
+    ">
+      أهم الشركات العالمية والمجمعات الطبية للتوظيف
+    </h3>
+
+    <p style="
+      font-size:15px;
+      line-height:1.9;
+      color:#555;
+      margin-bottom:15px;
+    ">
+      تعرّف على أهم الشركات العالمية والمجمعات الطبية،
+      واكتشف فرص العمل والتخصصات المطلوبة وروابط التقديم الرسمية.
+    </p>
+
+    <span class="sector-btn">
+      استكشف الشركات والمجمعات الطبية
+    </span>
+
+  </div>
+
+</a>
+
     </div>
   </div>
 </section>
