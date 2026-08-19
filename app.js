@@ -252,7 +252,7 @@ return `<!doctype html><html lang="ar" dir="rtl"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="google-site-verification" content="12WvV3-XgAjFGCg9j7I4r_pi-n17R-XADE3MIOLw2JE" />
-<meta name="description" content="موقع وظائف الوطن العربي - أحدث الوظائف والمقالات والقصص">
+<meta name="description" content="موقع وظائف الوطن العربي - أحدث الوظائف والدورات التوظيفية وتقوية السيرة الذاتية">
 <meta name="keywords" content="وظائف, عمل, توظيف, وظائف عربية">
 <title>${title}</title>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
@@ -364,7 +364,7 @@ app.get('/', (req,res)=>{
         <div class="cc-feature">
           <h4>إنشاء سيرة ذاتية احترافية</h4>
           <div class="date">
-            اختر قالب السيرة الذاتية المناسب لك واملأ بياناتك وحمّلها بصيغة PDF.
+            اختر قالب السيرة الذاتية المناسب لك واملأ بياناتك وحمّلها بصيغة  PDF يجب استخدام الكمبيوتر .
           </div>
         </div>
 
