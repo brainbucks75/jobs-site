@@ -45,6 +45,9 @@ function getPrivacy() {
 function getCVTemplates() {
   return safeRead('cv-templates.json');
 }
+function getGlobalCompanies() {
+  return safeRead('./data/global-companies.json', []);
+}
 /* =========================
    GLOBAL STYLE (NEW DESIGN)
 ========================= */
@@ -9365,6 +9368,286 @@ app.get('/paid-courses/:slug', (req, res) => {
   }
 
 });
+
+
+/* =========================
+   GLOBAL COMPANIES
+========================= */
+
+app.get('/global-companies', (req, res) => {
+
+  const companies = getGlobalCompanies();
+
+  const body = `
+    <div class="page-container">
+
+      <div class="post">
+
+        <h1 style="
+          font-size:32px;
+          font-weight:900;
+          text-align:center;
+          margin-bottom:15px;
+        ">
+          أهم الشركات العالمية والمجمعات الطبية للتوظيف
+        </h1>
+
+        <p style="
+          font-size:17px;
+          line-height:2;
+          text-align:center;
+          margin-bottom:30px;
+        ">
+          اكتشف مجموعة من الشركات العالمية والجهات التي يمكنك التعرف
+          على فرصها الوظيفية والتقديم إليها من خلال مواقعها الرسمية.
+        </p>
+
+        <h2 style="
+          font-size:25px;
+          font-weight:900;
+          margin-bottom:20px;
+        ">
+          🏢 الشركات العالمية
+        </h2>
+
+        <div class="three-col">
+
+          ${companies.map(company => `
+            
+            <a
+              href="/global-companies/${company.id}"
+              class="content-card"
+              style="
+                text-decoration:none;
+                color:inherit;
+                transition:.3s;
+                overflow:hidden;
+              "
+            >
+
+              <img
+                src="${company.image}"
+                alt="${company.name}"
+                loading="lazy"
+                style="
+                  width:100%;
+                  height:220px;
+                  object-fit:contain;
+                  background:#f7f7f7;
+                  padding:20px;
+                "
+              >
+
+              <div style="padding:18px;text-align:center">
+
+                <h3 style="
+                  font-size:22px;
+                  font-weight:900;
+                  margin:0 0 8px;
+                ">
+                  ${company.name}
+                </h3>
+
+                <p style="
+                  font-size:14px;
+                  color:#777;
+                  margin:0;
+                ">
+                  ${company.type}
+                </p>
+
+              </div>
+
+            </a>
+
+          `).join('')}
+
+        </div>
+
+      </div>
+
+    </div>
+  `;
+
+  res.send(
+    layout(
+      'أهم الشركات العالمية والمجمعات الطبية للتوظيف',
+      body
+    )
+  );
+
+});
+
+app.get('/global-companies/:id', (req, res) => {
+
+  const companies = getGlobalCompanies();
+
+  const company = companies.find(
+    c => String(c.id) === String(req.params.id)
+  );
+
+  if (!company) {
+    return res.send(
+      layout(
+        'غير موجود',
+        `
+        <div class="page-container">
+          <div class="post">
+            <h2>المنشأة غير موجودة</h2>
+            <p>
+              عذرًا، لم يتم العثور على بيانات هذه المنشأة.
+            </p>
+          </div>
+        </div>
+        `
+      )
+    );
+  }
+
+  const body = `
+
+    <div class="page-container">
+
+      <div class="post">
+
+        <div style="text-align:center;margin-bottom:30px;">
+
+          <img
+            src="${company.image}"
+            alt="${company.name}"
+            style="
+              width:100%;
+              max-width:500px;
+              height:280px;
+              object-fit:contain;
+              background:#f7f7f7;
+              padding:25px;
+              border-radius:15px;
+            "
+          >
+
+          <h1 style="
+            font-size:32px;
+            font-weight:900;
+            margin-top:20px;
+          ">
+            ${company.name}
+          </h1>
+
+          <p style="font-size:17px;color:#777;">
+            ${company.type}
+          </p>
+
+        </div>
+
+
+        <h2>نبذة عن الشركة</h2>
+
+        <p style="line-height:2;font-size:16px;">
+          ${company.description}
+        </p>
+
+
+        <h2>🌍 البلد والمواقع</h2>
+
+        <p style="line-height:2;font-size:16px;">
+          ${company.country}
+        </p>
+
+
+        <h2>💼 أنواع الوظائف المعلن عنها</h2>
+
+        <ul style="line-height:2;">
+          ${company.jobTypes.map(item => `
+            <li>${item}</li>
+          `).join('')}
+        </ul>
+
+
+        <h2>🎓 أهم التخصصات المطلوبة</h2>
+
+        <ul style="line-height:2;">
+          ${company.specializations.map(item => `
+            <li>${item}</li>
+          `).join('')}
+        </ul>
+
+
+        <h2>🛠️ أهم المهارات المطلوبة</h2>
+
+        <ul style="line-height:2;">
+          ${company.skills.map(item => `
+            <li>${item}</li>
+          `).join('')}
+        </ul>
+
+
+        <h2>📋 المؤهلات المطلوبة</h2>
+
+        <ul style="line-height:2;">
+          ${company.qualifications.map(item => `
+            <li>${item}</li>
+          `).join('')}
+        </ul>
+
+
+        <h2>💡 نصائح قبل التقديم</h2>
+
+        <ul style="line-height:2;">
+          ${company.tips.map(item => `
+            <li>${item}</li>
+          `).join('')}
+        </ul>
+
+
+        <div style="
+          margin-top:30px;
+          padding:25px;
+          background:#f7f7f7;
+          border-radius:15px;
+          text-align:center;
+        ">
+
+          <h2>🔗 روابط رسمية</h2>
+
+          <p style="margin:15px 0;">
+            <a
+              href="${company.officialWebsite}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary"
+            >
+              الموقع الرسمي للمنشأة
+            </a>
+          </p>
+
+          <p>
+            <a
+              href="${company.careersLink}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary"
+            >
+              صفحة الوظائف والتقديم
+            </a>
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+  res.send(
+    layout(
+      company.name,
+      body
+    )
+  );
+
+});
 /* =========================
 SITEMAP
 ========================= */
@@ -9382,7 +9665,8 @@ app.get('/sitemap.xml', (req, res) => {
     `${baseUrl}/privacy`,
 `${baseUrl}/free-courses`,
 `${baseUrl}/paid-courses`,
-    `${baseUrl}/terms`
+    `${baseUrl}/terms`,
+ `${baseUrl}/global-companies`
   ];
 // =========================
 // PAID COURSES
@@ -9504,7 +9788,13 @@ try {
 
   });
 
+const globalCompanies = getGlobalCompanies();
 
+globalCompanies.forEach(company => {
+  urls.push(
+    `${baseUrl}/global-companies/${company.id}`
+  );
+});
   // =========================
   // CREATE XML
   // =========================
