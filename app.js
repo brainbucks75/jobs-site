@@ -529,7 +529,7 @@ app.get('/cv-builder', (req, res) => {
 
     <div class="post" style="text-align:center;margin-bottom:30px">
       <h2 style="font-size:24px;font-weight:800">
-        اختر قالب السيرة الذاتية المناسب لك
+       وقم بتحميله باستخدام الكمبيوتر,اختر قالب السيرة الذاتية المناسب لك
       </h2>
 
       <p style="margin-top:10px;color:var(--muted);font-size:15px">
