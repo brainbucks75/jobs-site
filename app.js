@@ -9467,7 +9467,6 @@ app.get('/paid-courses', (req, res) => {
 
 });
 
-
 /* =========================
 PAID COURSE DETAILS
 ========================= */
@@ -9493,6 +9492,10 @@ app.get('/paid-courses/:slug', (req, res) => {
       item => item.slug === req.params.slug
     );
 
+
+    /* =========================
+    COURSE NOT FOUND
+    ========================= */
 
     if (!course) {
 
@@ -9555,6 +9558,10 @@ app.get('/paid-courses/:slug', (req, res) => {
     `;
 
 
+    /* =========================
+    LIST SECTION
+    ========================= */
+
     const renderListSection = (title, items) => {
 
       if (!Array.isArray(items) || items.length === 0) {
@@ -9578,6 +9585,10 @@ app.get('/paid-courses/:slug', (req, res) => {
       `;
     };
 
+
+    /* =========================
+    TEXT SECTION
+    ========================= */
 
     const renderTextSection = (title, content) => {
 
@@ -9625,6 +9636,16 @@ app.get('/paid-courses/:slug', (req, res) => {
 
 
     /* =========================
+    PRACTICE
+    ========================= */
+
+    const practiceHTML = renderListSection(
+      'التطبيق العملي والتدريب',
+      course.practice
+    );
+
+
+    /* =========================
     PROJECTS
     ========================= */
 
@@ -9645,12 +9666,32 @@ app.get('/paid-courses/:slug', (req, res) => {
 
 
     /* =========================
+    TARGET AUDIENCE
+    ========================= */
+
+    const targetAudienceHTML = renderListSection(
+      'الفئة المستهدفة',
+      course.targetAudience
+    );
+
+
+    /* =========================
     REQUIREMENTS
     ========================= */
 
     const requirementsHTML = renderListSection(
       'متطلبات الالتحاق بالدورة',
       course.requirements
+    );
+
+
+    /* =========================
+    PREREQUISITES
+    ========================= */
+
+    const prerequisitesHTML = renderTextSection(
+      'المتطلبات السابقة',
+      course.prerequisites
     );
 
 
@@ -9695,6 +9736,16 @@ app.get('/paid-courses/:slug', (req, res) => {
 
 
     /* =========================
+    TIPS
+    ========================= */
+
+    const tipsHTML = renderListSection(
+      'نصائح للاستفادة من الدورة',
+      course.tips
+    );
+
+
+    /* =========================
     NEXT STEPS
     ========================= */
 
@@ -9702,6 +9753,60 @@ app.get('/paid-courses/:slug', (req, res) => {
       'ماذا تتعلم بعد هذه الدورة؟',
       course.nextSteps
     );
+
+
+    /* =========================
+    ADDITIONAL INFORMATION
+    ========================= */
+
+    const additionalInfoHTML = (
+      course.duration ||
+      course.certificate ||
+      course.language ||
+      course.source
+    ) ? `
+
+      <div style="${sectionStyle}">
+
+        <h2 style="${sectionTitleStyle}">
+          معلومات إضافية عن الدورة
+        </h2>
+
+
+        ${course.duration ? `
+        <p style="line-height:2.2;">
+          <strong>مدة الدورة:</strong>
+          ${course.duration}
+        </p>
+        ` : ''}
+
+
+        ${course.certificate ? `
+        <p style="line-height:2.2;">
+          <strong>الشهادة:</strong>
+          ${course.certificate}
+        </p>
+        ` : ''}
+
+
+        ${course.language ? `
+        <p style="line-height:2.2;">
+          <strong>لغة الدورة:</strong>
+          ${course.language}
+        </p>
+        ` : ''}
+
+
+        ${course.source ? `
+        <p style="line-height:2.2;">
+          <strong>المصدر:</strong>
+          ${course.source}
+        </p>
+        ` : ''}
+
+      </div>
+
+    ` : '';
 
 
     /* =========================
@@ -9742,9 +9847,7 @@ app.get('/paid-courses/:slug', (req, res) => {
 
           <!-- COURSE INFORMATION -->
 
-          <div style="
-            ${sectionStyle}
-          ">
+          <div style="${sectionStyle}">
 
             <h2 style="${sectionTitleStyle}">
               معلومات عن الدورة
@@ -9795,9 +9898,19 @@ app.get('/paid-courses/:slug', (req, res) => {
           ${whatYouLearnHTML}
 
 
+          <!-- PRACTICE -->
+
+          ${practiceHTML}
+
+
           <!-- PROJECTS -->
 
           ${projectsHTML}
+
+
+          <!-- TARGET AUDIENCE -->
+
+          ${targetAudienceHTML}
 
 
           <!-- WHO IS IT FOR -->
@@ -9808,6 +9921,11 @@ app.get('/paid-courses/:slug', (req, res) => {
           <!-- REQUIREMENTS -->
 
           ${requirementsHTML}
+
+
+          <!-- PREREQUISITES -->
+
+          ${prerequisitesHTML}
 
 
           <!-- TOOLS -->
@@ -9830,9 +9948,19 @@ app.get('/paid-courses/:slug', (req, res) => {
           ${cvTipsHTML}
 
 
+          <!-- TIPS -->
+
+          ${tipsHTML}
+
+
           <!-- NEXT STEPS -->
 
           ${nextStepsHTML}
+
+
+          <!-- ADDITIONAL INFORMATION -->
+
+          ${additionalInfoHTML}
 
 
           <!-- REGISTRATION -->
@@ -9931,6 +10059,7 @@ app.get('/paid-courses/:slug', (req, res) => {
   }
 
 });
+
 /* =========================
 MEDICAL COURSES
 ========================= */
