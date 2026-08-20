@@ -259,7 +259,7 @@ return `<!doctype html><html lang="ar" dir="rtl"><head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="google-site-verification" content="12WvV3-XgAjFGCg9j7I4r_pi-n17R-XADE3MIOLw2JE" />
 <meta name="description" content="موقع وظائف الوطن العربي - أحدث الوظائف والدورات التوظيفية وتقوية السيرة الذاتية">
-<meta name="keywords" content="وظائف, عمل, توظيف, وظائف عربية">
+<meta name="keywords" content="وظائف, عمل, توظيف,دورات,وظائف عربية">
 <title>${title}</title>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
      crossorigin="anonymous"></script>
@@ -581,7 +581,7 @@ const restArticles = articles.slice(1,3);
       <div class="feat-grid">
         <div class="feat"><div class="feat-ic"><i class="fas fa-globe"></i></div><h4>في جميع الدول العربية</h4><p>وظائف من كل أنحاء الوطن العربي</p></div>
         <div class="feat"><div class="feat-ic"><i class="fas fa-users"></i></div><h4>فرص للجميع</h4><p>فرص متنوعة في مختلف المجالات</p></div>
-        <div class="feat"><div class="feat-ic"><i class="fas fa-clock"></i></div><h4>محدث يومياً</h4><p>نضيف وظائف جديدة دائما</p></div>
+        <div class="feat"><div class="feat-ic"><i class="fas fa-clock"></i></div><h4>محدث دائماً</h4><p>نضيف وظائف جديدة دائما</p></div>
         <div class="feat"><div class="feat-ic"><i class="fas fa-shield-halved"></i></div><h4>موثوق وآمن</h4><p>نحرص على مصداقية جميع الوظائف</p></div>
       </div>
     </div>
