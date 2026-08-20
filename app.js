@@ -48,6 +48,14 @@ function getCVTemplates() {
 function getGlobalCompanies() {
   return safeRead('./data/global-companies.json', []);
 }
+function getMedicalCourses() {
+  return safeRead('./data/medical-courses/main.json', {
+    title: 'أهم الدورات الطبية لمزاولة المهنة',
+    intro: '',
+    courses: []
+  });
+}
+
 /* =========================
    GLOBAL STYLE (NEW DESIGN)
 ========================= */
@@ -518,6 +526,50 @@ app.get('/', (req,res)=>{
 
 </a>
 
+<a href="/medical-courses" class="content-card" style="text-decoration:none;color:inherit;transition:.3s;">
+
+  <img
+    class="cc-thumb"
+    src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=80"
+    alt="أهم الدورات الطبية لمزاولة المهنة"
+    loading="lazy"
+  >
+
+  <div style="padding:18px;text-align:center;">
+
+    <div style="
+      font-size:42px;
+      margin-bottom:10px;
+    ">
+      🩺
+    </div>
+
+    <h3 style="
+      font-size:20px;
+      font-weight:900;
+      margin-bottom:10px;
+    ">
+      أهم الدورات الطبية لمزاولة المهنة
+    </h3>
+
+    <p style="
+      font-size:15px;
+      line-height:1.9;
+      color:#555;
+      margin-bottom:15px;
+    ">
+      تعرف على أهم الدورات الطبية والمهنية التي تساعد العاملين
+      في القطاع الصحي على تطوير مهاراتهم والاستفادة منها ضمن
+      متطلبات التطوير المهني وتجديد المزاولة حسب أنظمة كل دولة.
+    </p>
+
+    <span class="sector-btn">
+      استكشف الدورات الطبية
+    </span>
+
+  </div>
+
+</a>
     </div>
   </div>
 </section>
@@ -9416,6 +9468,566 @@ app.get('/paid-courses/:slug', (req, res) => {
 
 
 /* =========================
+MEDICAL COURSES
+========================= */
+
+app.get('/medical-courses', (req, res) => {
+
+  try {
+
+    const data = getMedicalCourses();
+
+    const courses = data.courses || [];
+
+    const coursesHTML = courses.map(course => `
+
+      <a
+        href="/medical-courses/${course.slug}"
+        style="
+          text-decoration:none;
+          color:inherit;
+        "
+      >
+
+        <div
+          class="content-card"
+          style="
+            overflow:hidden;
+            transition:.3s;
+            height:100%;
+          "
+        >
+
+          <img
+            src="${course.image}"
+            alt="${course.titleAr}"
+            loading="lazy"
+            style="
+              width:100%;
+              height:220px;
+              object-fit:cover;
+            "
+          >
+
+          <div style="
+            padding:18px;
+            text-align:center;
+          ">
+
+            <h2 style="
+              font-size:20px;
+              font-weight:900;
+              margin-bottom:6px;
+            ">
+              ${course.titleAr}
+            </h2>
+
+            <p style="
+              font-size:14px;
+              color:#64748b;
+              margin:0;
+            ">
+              ${course.titleEn || ''}
+            </p>
+
+            <div style="
+              margin-top:15px;
+            ">
+
+              <span
+                class="sector-btn"
+                style="
+                  display:inline-block;
+                "
+              >
+                عرض تفاصيل الدورة
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </a>
+
+    `).join('');
+
+
+    const body = `
+
+      <div class="page-container">
+
+        <div class="post">
+
+          <h1 style="
+            font-size:32px;
+            font-weight:900;
+            text-align:center;
+            margin-bottom:18px;
+          ">
+            ${data.title}
+          </h1>
+
+          <p style="
+            font-size:17px;
+            line-height:2.2;
+            text-align:center;
+            color:#475569;
+            margin-bottom:35px;
+          ">
+            ${data.intro || ''}
+          </p>
+
+          <div
+            style="
+              display:grid;
+              grid-template-columns:repeat(3,1fr);
+              gap:22px;
+            "
+          >
+
+            ${coursesHTML}
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    res.send(
+      layout(
+        data.title,
+        body
+      )
+    );
+
+  } catch (error) {
+
+    console.error(
+      'MEDICAL COURSES ERROR:',
+      error
+    );
+
+    res.status(500).send(`
+      <div style="
+        direction:rtl;
+        text-align:right;
+        padding:30px;
+        font-family:Arial;
+      ">
+
+        <h2>
+          حدث خطأ أثناء تحميل الدورات الطبية
+        </h2>
+
+        <p style="
+          color:red;
+          line-height:2;
+        ">
+          ${error.message}
+        </p>
+
+      </div>
+    `);
+
+  }
+
+});
+
+
+/* =========================
+MEDICAL COURSE DETAILS
+========================= */
+
+app.get('/medical-courses/:slug', (req, res) => {
+
+  try {
+
+    const data = getMedicalCourses();
+
+    const courses = data.courses || [];
+
+    const course = courses.find(
+      item => item.slug === req.params.slug
+    );
+
+    if (!course) {
+
+      return res.status(404).send(
+        layout(
+          'الدورة الطبية غير موجودة',
+          `
+          <div class="page-container">
+
+            <div class="post">
+
+              <h1 style="
+                text-align:center;
+                font-weight:900;
+              ">
+                الدورة الطبية غير موجودة
+              </h1>
+
+              <p style="
+                text-align:center;
+                line-height:2;
+              ">
+                عذرًا، لم نتمكن من العثور على الدورة المطلوبة.
+              </p>
+
+            </div>
+
+          </div>
+          `
+        )
+      );
+
+    }
+
+    const targetGroupsHTML =
+      (course.targetGroups || [])
+        .map(item => `<li>${item}</li>`)
+        .join('');
+
+    const benefitsHTML =
+      (course.benefits || [])
+        .map(item => `<li>${item}</li>`)
+        .join('');
+
+    const topicsHTML =
+      (course.topics || [])
+        .map(item => `<li>${item}</li>`)
+        .join('');
+
+    const countriesHTML =
+      (course.countries || [])
+        .map(country => `
+
+          <div style="
+            margin-top:20px;
+            padding:20px;
+            background:#fff;
+            border:1px solid #e5e7eb;
+            border-radius:14px;
+          ">
+
+            <h3 style="
+              font-size:20px;
+              font-weight:900;
+              margin-bottom:12px;
+            ">
+              🌍 ${country.country}
+            </h3>
+
+            <ul style="
+              line-height:2;
+              margin:0;
+              padding-right:22px;
+            ">
+
+              ${(country.places || [])
+                .map(place => `<li>${place}</li>`)
+                .join('')}
+
+            </ul>
+
+          </div>
+
+        `)
+        .join('');
+
+
+    const body = `
+
+      <div class="page-container">
+
+        <div class="post">
+
+          <div style="
+            text-align:center;
+            margin-bottom:30px;
+          ">
+
+            <img
+              src="${course.image}"
+              alt="${course.titleAr}"
+              style="
+                width:100%;
+                max-width:700px;
+                height:360px;
+                object-fit:cover;
+                border-radius:18px;
+                margin:0 auto;
+              "
+            >
+
+            <h1 style="
+              font-size:32px;
+              font-weight:900;
+              margin-top:22px;
+            ">
+              ${course.titleAr}
+            </h1>
+
+            <p style="
+              font-size:18px;
+              color:#64748b;
+              margin-top:5px;
+            ">
+              ${course.titleEn || ''}
+            </p>
+
+          </div>
+
+
+          <div style="
+            margin-top:25px;
+            padding:22px;
+            border-radius:15px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="
+              font-weight:900;
+              margin-bottom:15px;
+            ">
+              👨‍⚕️ الفئات الطبية المستهدفة
+            </h2>
+
+            <ul style="
+              line-height:2;
+            ">
+              ${targetGroupsHTML}
+            </ul>
+
+          </div>
+
+
+          <div style="
+            margin-top:25px;
+            padding:22px;
+            border-radius:15px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="
+              font-weight:900;
+              margin-bottom:15px;
+            ">
+              📋 نبذة عن الدورة
+            </h2>
+
+            <p style="
+              line-height:2.1;
+              font-size:16px;
+            ">
+              ${course.description || ''}
+            </p>
+
+          </div>
+
+
+          <div style="
+            margin-top:25px;
+            padding:22px;
+            border-radius:15px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="
+              font-weight:900;
+              margin-bottom:15px;
+            ">
+              🎯 أهمية الدورة في التطوير المهني وتجديد المزاولة
+            </h2>
+
+            <p style="
+              line-height:2.1;
+              font-size:16px;
+            ">
+              ${course.renewalPurpose || ''}
+            </p>
+
+          </div>
+
+
+          <div style="
+            margin-top:25px;
+            padding:22px;
+            border-radius:15px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="
+              font-weight:900;
+              margin-bottom:15px;
+            ">
+              ⭐ أهم الإضافات والفوائد
+            </h2>
+
+            <ul style="
+              line-height:2;
+            ">
+              ${benefitsHTML}
+            </ul>
+
+          </div>
+
+
+          <div style="
+            margin-top:25px;
+            padding:22px;
+            border-radius:15px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="
+              font-weight:900;
+              margin-bottom:15px;
+            ">
+              📚 أهم الأمور التي تناقشها الدورة
+            </h2>
+
+            <ul style="
+              line-height:2;
+            ">
+              ${topicsHTML}
+            </ul>
+
+          </div>
+
+
+          <div style="
+            margin-top:25px;
+            padding:22px;
+            border-radius:15px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="
+              font-weight:900;
+              margin-bottom:15px;
+            ">
+              ⏱️ مدة الدورة والساعات المهنية
+            </h2>
+
+            <p style="
+              line-height:2;
+              font-size:16px;
+            ">
+              <strong>مدة الدورة:</strong>
+              ${course.duration || 'تختلف حسب الجهة والبرنامج التدريبي.'}
+            </p>
+
+            <p style="
+              line-height:2;
+              font-size:16px;
+              margin-top:10px;
+            ">
+              <strong>الساعات المعتمدة:</strong>
+              ${course.accreditationNote || 'تختلف حسب الدولة والمهنة والجهة المعتمدة.'}
+            </p>
+
+          </div>
+
+
+          <div style="
+            margin-top:25px;
+            padding:22px;
+            border-radius:15px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="
+              font-weight:900;
+              margin-bottom:15px;
+            ">
+              🌍 الدول والجهات التي يمكن الحصول على الدورة منها
+            </h2>
+
+            ${countriesHTML}
+
+          </div>
+
+
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            background:#fff7ed;
+            border:1px solid #fed7aa;
+            border-radius:14px;
+          ">
+
+            <h3 style="
+              font-weight:900;
+              margin-bottom:8px;
+            ">
+              ⚠️ ملاحظة مهمة حول اعتماد الدورة
+            </h3>
+
+            <p style="
+              line-height:2;
+              margin:0;
+            ">
+              تختلف شروط اعتماد الدورات والساعات المهنية المطلوبة
+              لتجديد المزاولة من دولة إلى أخرى ومن مهنة صحية إلى أخرى.
+              لذلك يجب على المتدرب التأكد من المجلس أو الهيئة أو الجهة
+              الصحية المختصة في بلده قبل التسجيل.
+            </p>
+
+          </div>
+
+
+          <div style="
+            margin-top:30px;
+            text-align:center;
+          ">
+
+            <a
+              href="/medical-courses"
+              style="
+                text-decoration:none;
+                font-weight:900;
+              "
+            >
+              ← العودة إلى جميع الدورات الطبية
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `;
+
+
+    res.send(
+      layout(
+        `${course.titleAr} - الدورات الطبية`,
+        body
+      )
+    );
+
+  } catch (error) {
+
+    console.error(
+      'MEDICAL COURSE DETAILS ERROR:',
+      error
+    );
+
+    res.status(500).send(
+      'حدث خطأ أثناء تحميل الدورة الطبية.'
+    );
+
+  }
+
+});
+/* =========================
    GLOBAL COMPANIES
 ========================= */
 
@@ -9711,6 +10323,7 @@ app.get('/sitemap.xml', (req, res) => {
 `${baseUrl}/free-courses`,
 `${baseUrl}/paid-courses`,
     `${baseUrl}/terms`,
+`${baseUrl}/medical-courses`,
  `${baseUrl}/global-companies`
   ];
 // =========================
@@ -9748,6 +10361,37 @@ try {
 
   console.log(
     'PAID COURSES SITEMAP ERROR:',
+    error.message
+  );
+
+}
+
+// =========================
+// MEDICAL COURSES
+// =========================
+
+try {
+
+  const medicalCoursesData = getMedicalCourses();
+
+  const medicalCourses = medicalCoursesData.courses || [];
+
+  medicalCourses.forEach(course => {
+
+    if (course.slug) {
+
+      urls.push(
+        `${baseUrl}/medical-courses/${course.slug}`
+      );
+
+    }
+
+  });
+
+} catch (error) {
+
+  console.log(
+    'MEDICAL COURSES SITEMAP ERROR:',
     error.message
   );
 
