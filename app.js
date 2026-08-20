@@ -9061,7 +9061,7 @@ app.get('/paid-courses', (req, res) => {
 
           <a
             href="/paid-courses/${course.slug}"
-            class="sector-btn"
+            class="course-btn"
             style="
               text-decoration:none;
               display:inline-block;
@@ -9399,7 +9399,7 @@ app.get('/paid-courses/:slug', (req, res) => {
               href="${course.link}"
               target="_blank"
               rel="noopener noreferrer"
-              class="sector-btn"
+             class="course-btn"
               style="
                 text-decoration:none;
                 display:inline-block;
