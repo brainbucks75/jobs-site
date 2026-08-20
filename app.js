@@ -8778,7 +8778,6 @@ const coursesPath = path.join(
 
 });
 
-
 /* =========================
 FREE COURSE DETAILS
 ========================= */
@@ -8830,9 +8829,34 @@ app.get('/free-courses/:slug', (req, res) => {
     }
 
 
+    /* =========================
+    SAFE DATA
+    ========================= */
+
     const benefitsHTML = (course.benefits || [])
       .map(
         benefit => `<li>${benefit}</li>`
+      )
+      .join('');
+
+
+    const whatYouLearnHTML = (course.whatYouLearn || [])
+      .map(
+        item => `<li>${item}</li>`
+      )
+      .join('');
+
+
+    const practiceHTML = (course.practice || [])
+      .map(
+        item => `<li>${item}</li>`
+      )
+      .join('');
+
+
+    const tipsHTML = (course.tips || [])
+      .map(
+        item => `<li>${item}</li>`
       )
       .join('');
 
@@ -8842,6 +8866,8 @@ app.get('/free-courses/:slug', (req, res) => {
       <div class="page-container">
 
         <div class="post">
+
+          <!-- COURSE TITLE -->
 
           <h1 style="
             font-size:32px;
@@ -8853,6 +8879,8 @@ app.get('/free-courses/:slug', (req, res) => {
           </h1>
 
 
+          <!-- DESCRIPTION -->
+
           <p style="
             font-size:17px;
             line-height:2.2;
@@ -8862,6 +8890,8 @@ app.get('/free-courses/:slug', (req, res) => {
           </p>
 
 
+          <!-- COURSE INFORMATION -->
+
           <div style="
             margin-top:30px;
             padding:20px;
@@ -8869,7 +8899,10 @@ app.get('/free-courses/:slug', (req, res) => {
             background:#f7f7f7;
           ">
 
-            <h2 style="font-weight:900;">
+            <h2 style="
+              font-weight:900;
+              margin-bottom:15px;
+            ">
               معلومات عن الدورة
             </h2>
 
@@ -8883,8 +8916,26 @@ app.get('/free-courses/:slug', (req, res) => {
               ${course.level || 'مناسب للمبتدئين'}
             </p>
 
+            ${
+              course.source
+              ? `
+              <p style="line-height:2;">
+                <strong>المصدر:</strong>
+                ${course.source}
+              </p>
+              `
+              : ''
+            }
+
           </div>
 
+
+          <!-- WHAT YOU LEARN -->
+
+          ${
+            course.whatYouLearn &&
+            course.whatYouLearn.length
+              ? `
 
           <div style="
             margin-top:30px;
@@ -8893,7 +8944,44 @@ app.get('/free-courses/:slug', (req, res) => {
             background:#f7f7f7;
           ">
 
-            <h2 style="font-weight:900;">
+            <h2 style="
+              font-weight:900;
+              margin-bottom:15px;
+            ">
+              ماذا ستتعلم في الدورة؟
+            </h2>
+
+            <ul style="
+              line-height:2;
+            ">
+              ${whatYouLearnHTML}
+            </ul>
+
+          </div>
+
+          `
+              : ''
+          }
+
+
+          <!-- BENEFITS -->
+
+          ${
+            course.benefits &&
+            course.benefits.length
+              ? `
+
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="
+              font-weight:900;
+              margin-bottom:15px;
+            ">
               ماذا ستستفيد من الدورة؟
             </h2>
 
@@ -8905,6 +8993,155 @@ app.get('/free-courses/:slug', (req, res) => {
 
           </div>
 
+          `
+              : ''
+          }
+
+
+          <!-- CAREER BENEFITS -->
+
+          ${
+            course.careerBenefits
+              ? `
+
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="
+              font-weight:900;
+              margin-bottom:15px;
+            ">
+              الفائدة المهنية من تعلم هذه المهارة
+            </h2>
+
+            <p style="
+              line-height:2.2;
+            ">
+              ${course.careerBenefits}
+            </p>
+
+          </div>
+
+          `
+              : ''
+          }
+
+
+          <!-- PRACTICE -->
+
+          ${
+            course.practice &&
+            course.practice.length
+              ? `
+
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="
+              font-weight:900;
+              margin-bottom:15px;
+            ">
+              تطبيقات عملية للتدريب
+            </h2>
+
+            <p style="
+              line-height:2.2;
+              margin-bottom:15px;
+            ">
+              للحصول على أكبر فائدة من الدورة، من الأفضل تطبيق المهارات
+              التي تتعلمها من خلال تمارين ومشاريع صغيرة تحاكي الاستخدام
+              الحقيقي للمهارة في الدراسة أو العمل.
+            </p>
+
+            <ul style="
+              line-height:2;
+            ">
+              ${practiceHTML}
+            </ul>
+
+          </div>
+
+          `
+              : ''
+          }
+
+
+          <!-- CV TIPS -->
+
+          ${
+            course.cvTips
+              ? `
+
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="
+              font-weight:900;
+              margin-bottom:15px;
+            ">
+              كيف تستفيد من المهارة في سيرتك الذاتية؟
+            </h2>
+
+            <p style="
+              line-height:2.2;
+            ">
+              ${course.cvTips}
+            </p>
+
+          </div>
+
+          `
+              : ''
+          }
+
+
+          <!-- TIPS -->
+
+          ${
+            course.tips &&
+            course.tips.length
+              ? `
+
+          <div style="
+            margin-top:30px;
+            padding:20px;
+            border-radius:12px;
+            background:#f7f7f7;
+          ">
+
+            <h2 style="
+              font-weight:900;
+              margin-bottom:15px;
+            ">
+              نصائح للاستفادة من الدورة
+            </h2>
+
+            <ul style="
+              line-height:2;
+            ">
+              ${tipsHTML}
+            </ul>
+
+          </div>
+
+          `
+              : ''
+          }
+
+
+          <!-- COURSE SOURCE -->
 
           <div style="
             margin-top:30px;
@@ -8914,7 +9151,10 @@ app.get('/free-courses/:slug', (req, res) => {
             text-align:center;
           ">
 
-            <h2 style="font-weight:900;">
+            <h2 style="
+              font-weight:900;
+              margin-bottom:15px;
+            ">
               الوصول إلى الدورة
             </h2>
 
@@ -8924,23 +9164,27 @@ app.get('/free-courses/:slug', (req, res) => {
             ">
               يمكنك الانتقال إلى المصدر الرسمي للدورة والبدء
               في التعلم من خلال الرابط التالي.
+              ننصح دائمًا بالاطلاع على تفاصيل الدورة ومتطلباتها
+              من المصدر الرسمي قبل البدء.
             </p>
 
             <a
-  href="${course.link}"
-  target="_blank"
-  rel="noopener noreferrer"
-  class="course-btn"
-  style="
-    text-decoration:none;
-    display:inline-block;
-  "
->
-  الانتقال إلى الدورة
-</a>
+              href="${course.link}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="course-btn"
+              style="
+                text-decoration:none;
+                display:inline-block;
+              "
+            >
+              الانتقال إلى الدورة
+            </a>
 
           </div>
 
+
+          <!-- BACK -->
 
           <div style="
             margin-top:30px;
@@ -8988,7 +9232,6 @@ app.get('/free-courses/:slug', (req, res) => {
   }
 
 });
-
 /* =========================
 PAID COURSES
 ========================= */
@@ -9399,7 +9642,7 @@ app.get('/paid-courses/:slug', (req, res) => {
               href="${course.link}"
               target="_blank"
               rel="noopener noreferrer"
-             class="course-btn"
+              class="course-btn"
               style="
                 text-decoration:none;
                 display:inline-block;
