@@ -8599,9 +8599,9 @@ const coursesPath = path.join(
 
         <div style="text-align:center">
 
-       <a
+  <a
   href="/free-courses/${course.slug}"
-  class="sector-btn"
+  class="course-btn"
   style="
     text-decoration:none;
     display:inline-block;
@@ -8910,17 +8910,17 @@ app.get('/free-courses/:slug', (req, res) => {
             </p>
 
             <a
-              href="${course.link}"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="sector-btn"
-              style="
-                text-decoration:none;
-                display:inline-block;
-              "
-            >
-              الانتقال إلى الدورة
-            </a>
+  href="${course.link}"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="course-btn"
+  style="
+    text-decoration:none;
+    display:inline-block;
+  "
+>
+  الانتقال إلى الدورة
+</a>
 
           </div>
 
