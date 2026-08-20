@@ -616,7 +616,7 @@ const restArticles = articles.slice(1,3);
       <div class="feat-grid">
         <div class="feat"><div class="feat-ic"><i class="fas fa-globe"></i></div><h4>في جميع الدول العربية</h4><p>وظائف من كل أنحاء الوطن العربي</p></div>
         <div class="feat"><div class="feat-ic"><i class="fas fa-users"></i></div><h4>فرص للجميع</h4><p>فرص متنوعة في مختلف المجالات</p></div>
-        <div class="feat"><div class="feat-ic"><i class="fas fa-clock"></i></div><h4>محدث دائماً</h4><p>نضيف وظائف جديدة دائما</p></div>
+        <div class="feat"><div class="feat-ic"><i class="fas fa-clock"></i></div><h4>دورات لتقوية المهارات </h4><p>نصائح لفتح آفاق توظيف جديدة  </p></div>
         <div class="feat"><div class="feat-ic"><i class="fas fa-shield-halved"></i></div><h4>موثوق وآمن</h4><p>نحرص على مصداقية جميع الوظائف</p></div>
       </div>
     </div>
@@ -8413,7 +8413,62 @@ app.get('/contact',(req,res)=>{
   <div class="page-container">
     <div class="post" style="text-align:center;">
       <h2>اتصل بنا</h2>
-      <p>نحن سعداء بتواصلكم معنا عبر وسائل التواصل التالية لتقديم المقترحات او للإعلانات أو لطلب الحصول على الوظائف عبر الايميل الشخصي:</p>
+
+<p>
+نرحب بتواصلكم مع منصة <strong>وظائف الوطن العربي</strong>، ويسعدنا استقبال
+استفساراتكم ومقترحاتكم وملاحظاتكم، بالإضافة إلى طلبات التعاون والإعلانات
+والاستفسارات المتعلقة بالوظائف والمحتوى المنشور على الموقع.
+</p>
+
+<h3>طرق التواصل</h3>
+
+<p>
+يمكنكم التواصل معنا عبر البريد الإلكتروني الرسمي للموقع، كما يمكنكم متابعة
+صفحاتنا الرسمية على مواقع التواصل الاجتماعي.
+</p>
+
+<p>
+<strong>البريد الإلكتروني:</strong>
+<a href="mailto:brainbucks75@gmail.com">brainbucks75@gmail.com</a>
+</p>
+
+<p>
+<strong>فيسبوك:</strong>
+<a href="https://www.facebook.com/profile.php?id=61574702476970" target="_blank" rel="noopener noreferrer">
+صفحة وظائف الوطن العربي على Facebook
+</a>
+</p>
+
+<p>
+<strong>إنستغرام:</strong>
+<a href="https://www.instagram.com/job_sit/" target="_blank" rel="noopener noreferrer">
+صفحة وظائف الوطن العربي على Instagram
+</a>
+</p>
+
+<p>
+<strong>X:</strong>
+<a href="https://x.com/BrainBucks7" target="_blank" rel="noopener noreferrer">
+صفحة وظائف الوطن العربي على X
+</a>
+</p>
+
+<h3>يمكنكم التواصل معنا بخصوص</h3>
+
+<ul>
+  <li>الاستفسارات والملاحظات المتعلقة بالموقع.</li>
+  <li>اقتراحات تطوير وتحسين محتوى الموقع.</li>
+  <li>الاستفسارات المتعلقة بالوظائف المنشورة.</li>
+  <li>طلبات التعاون والشراكات.</li>
+  <li>طلبات الإعلان والترويج على الموقع.</li>
+  <li>الإبلاغ عن معلومات غير دقيقة أو رابط تقديم لا يعمل.</li>
+</ul>
+
+<p>
+نحرص على مراجعة الرسائل الواردة والرد عليها حسب طبيعة الاستفسار، وننصح بعدم
+إرسال أي معلومات حساسة أو مستندات شخصية عبر قنوات غير رسمية.
+</p>
+
       <div class="socials" style="justify-content:center;margin-top:24px;">
         <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
         <a href="https://facebook.com"><i class="fab fa-facebook-f"></i></a>
