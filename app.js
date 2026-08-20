@@ -34,10 +34,6 @@ function getArticles() {
   return JSON.parse(fs.readFileSync('articles.json'));
 }
 
-function getStories() {
-  if (!fs.existsSync('stories.json')) return [];
-  return JSON.parse(fs.readFileSync('stories.json'));
-}
 function getPrivacy() {
   if (!fs.existsSync('privacy.json')) return null;
   return JSON.parse(fs.readFileSync('privacy.json'));
@@ -210,8 +206,7 @@ return `
     <nav class="nav-links">
       <a href="/contact">اتصل بنا</a>
       <a href="/about">من نحن</a>
-      <a href="/stories">قصص</a>
-      <a href="/articles">مقالات</a>
+            <a href="/articles">نصائح وإرشادات التوظيف</a>
       <a href="/">الرئيسية</a>
     </nav>
     <div class="logo">
@@ -231,8 +226,8 @@ return `
       <div>
         <h4>روابط سريعة</h4>
         <a href="/">الوظائف</a>
-        <a href="/articles">المقالات</a>
-        <a href="/stories">القصص</a>
+        <a href="/articles">نصائح وإرشادات التوظيف</a>
+   
              </div>
       <div>
         <h4>معلومات</h4>
@@ -294,32 +289,23 @@ app.get('/', (req,res)=>{
   const count = s => allJobs.filter(j=>j.sector===s).length;
 
   const articles = getArticles();
-  const stories  = getStories();
   const featuredArticle = articles[0] || {title:'كيف تكتب سيرة ذاتية احترافية تجذب أصحاب العمل', date:'12 مايو 2026'};
-  const featuredStory   = stories[0]   || {title:'رحلة نجاح: من الصفر إلى القمة', date:'11 مايو 2026'};
-  const restArticles = articles.slice(1,3);
-  const restStories  = stories.slice(1,3);
+const restArticles = articles.slice(1,3);
 
   const articleItems = restArticles.length ? restArticles.map(a=>`
     <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">${a.title}</div><div class="d">${a.date||''}</div></div></div>
   `).join('') : `
-    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">أهم المهارات المطلوبة في سوق العمل 2026</div><div class="d">10 مايو 2026</div></div></div>
-    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">أخطاء شائعة في مقابلات العمل وكيف تجنبها</div><div class="d">8 مايو 2026</div></div></div>
-  `;
+   
+   `;
 
-  const storyItems = restStories.length ? restStories.map(s=>`
-    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">${s.title}</div><div class="d">${s.date||''}</div></div></div>
-  `).join('') : `
-    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">قصة شاب بدأ من لا شيء وأصبح رائد أعمال ناجح</div><div class="d">9 مايو 2026</div></div></div>
-    <div class="cc-item"><i class="far fa-calendar"></i><div><div class="t">كيف غيّرت التعلم المستمر مجرى حياتي المهنية</div><div class="d">7 مايو 2026</div></div></div>
-  `;
 
   const body = `
 <section class="hero">
   <div class="container hero-grid">
     <div>
       <h1>ابحث عن وظيفتك القادمة<br><span class="accent">في الوطن العربي</span></h1>
-      <p>مئات الفرص الوظيفية في مختلف المجالات في انتظارك</p>
+      <p>فرص متنوعة للباحثين عن عمل
+وظائف يتم تنظيمها حسب القطاع والتخصص لتسهيل الوصول إلى الفرصة المناسبة.</p>
     </div>
     <div class="hero-image">
       <img src="https://images.unsplash.com/photo-1531973576160-7125cd663d86?auto=format&fit=crop&w=1280&q=80" alt="وظائف">
@@ -577,36 +563,25 @@ app.get('/', (req,res)=>{
   <div class="container">
     <div class="three-col">
 
-      <div class="content-card">
-        <div class="cc-head"><a href="/articles">عرض الكل</a><h3>أحدث المقالات</h3></div>
-        <img class="cc-thumb" src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80" alt="">
-        <div class="cc-feature">
-          <h4>${featuredArticle.title}</h4>
-          <div class="date">${featuredArticle.date || '12 مايو 2026'}</div>
-        </div>
-        <div class="cc-list">${articleItems}</div>
-      </div>
+     <div class="content-card">
+  <div class="cc-head"><a href="/articles">عرض الكل</a><h3>نصائح وإرشادات التوظيف</h3></div>
+  <img class="cc-thumb" src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80" alt="">
+  <div class="cc-feature">
+    <h4>${featuredArticle.title}</h4>
+    <div class="date">${featuredArticle.date || '12 مايو 2026'}</div>
+  </div>
+  <div class="cc-list">${articleItems}</div>
+</div>
 
-      <div class="content-card">
-        <div class="cc-head"><a href="/stories">عرض الكل</a><h3>قصص ملهمة</h3></div>
-        <img class="cc-thumb" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80" alt="">
-        <div class="cc-feature">
-          <h4>${featuredStory.title}</h4>
-          <div class="date">${featuredStory.date || '11 مايو 2026'}</div>
-        </div>
-        <div class="cc-list">${storyItems}</div>
-      </div>
-
-       </div>
+</div>
 </section>
-
 <section class="section" style="padding-top:0">
   <div class="container">
     <div class="features">
       <div class="feat-grid">
         <div class="feat"><div class="feat-ic"><i class="fas fa-globe"></i></div><h4>في جميع الدول العربية</h4><p>وظائف من كل أنحاء الوطن العربي</p></div>
-        <div class="feat"><div class="feat-ic"><i class="fas fa-users"></i></div><h4>فرص للجميع</h4><p>آلاف الفرص في مختلف المجالات</p></div>
-        <div class="feat"><div class="feat-ic"><i class="fas fa-clock"></i></div><h4>محدث يومياً</h4><p>نضيف وظائف جديدة كل يوم</p></div>
+        <div class="feat"><div class="feat-ic"><i class="fas fa-users"></i></div><h4>فرص للجميع</h4><p>فرص متنوعة في مختلف المجالات</p></div>
+        <div class="feat"><div class="feat-ic"><i class="fas fa-clock"></i></div><h4>محدث يومياً</h4><p>نضيف وظائف جديدة دائما</p></div>
         <div class="feat"><div class="feat-ic"><i class="fas fa-shield-halved"></i></div><h4>موثوق وآمن</h4><p>نحرص على مصداقية جميع الوظائف</p></div>
       </div>
     </div>
@@ -8241,7 +8216,7 @@ app.get('/articles', (req,res)=>{
 
   let body = `
   <div class="page-container">
-    <h1 class="section-title">المقالات</h1>
+    <h1 class="section-title">نصائح وإرشادات التوظيف</h1>
 
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
   `;
@@ -8267,7 +8242,7 @@ app.get('/articles', (req,res)=>{
   </div>
   `;
 
-  res.send(layout('المقالات', body));
+  res.send(layout('نصائح وإرشادات التوظيف', body));
 });
 app.get('/articles/:id', (req,res)=>{
   const articles = getArticles();
@@ -10318,8 +10293,7 @@ app.get('/sitemap.xml', (req, res) => {
     `${baseUrl}/about`,
     `${baseUrl}/contact`,
     `${baseUrl}/articles`,
-    `${baseUrl}/stories`,
-    `${baseUrl}/privacy`,
+       `${baseUrl}/privacy`,
 `${baseUrl}/free-courses`,
 `${baseUrl}/paid-courses`,
     `${baseUrl}/terms`,
@@ -10462,20 +10436,6 @@ try {
 
   });
 
-
-  // =========================
-  // STORIES
-  // =========================
-
-  const stories = getStories();
-
-  stories.forEach(story => {
-
-    urls.push(
-      `${baseUrl}/stories/${story.id}`
-    );
-
-  });
 
 const globalCompanies = getGlobalCompanies();
 
