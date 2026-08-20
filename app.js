@@ -9528,18 +9528,194 @@ app.get('/paid-courses/:slug', (req, res) => {
     }
 
 
-    const benefitsHTML = (course.benefits || [])
-      .map(
-        benefit => `<li>${benefit}</li>`
-      )
-      .join('');
+    /* =========================
+    HELPERS
+    ========================= */
 
+    const sectionStyle = `
+      margin-top:30px;
+      padding:22px;
+      border-radius:12px;
+      background:#f7f7f7;
+      border:1px solid #eee;
+    `;
+
+
+    const sectionTitleStyle = `
+      font-weight:900;
+      margin-bottom:15px;
+      font-size:24px;
+    `;
+
+
+    const listStyle = `
+      line-height:2.2;
+      margin:0;
+      padding-right:25px;
+    `;
+
+
+    const renderListSection = (title, items) => {
+
+      if (!Array.isArray(items) || items.length === 0) {
+        return '';
+      }
+
+      return `
+        <div style="${sectionStyle}">
+
+          <h2 style="${sectionTitleStyle}">
+            ${title}
+          </h2>
+
+          <ul style="${listStyle}">
+            ${items
+              .map(item => `<li>${item}</li>`)
+              .join('')}
+          </ul>
+
+        </div>
+      `;
+    };
+
+
+    const renderTextSection = (title, content) => {
+
+      if (!content || !String(content).trim()) {
+        return '';
+      }
+
+      return `
+        <div style="${sectionStyle}">
+
+          <h2 style="${sectionTitleStyle}">
+            ${title}
+          </h2>
+
+          <p style="
+            line-height:2.2;
+            margin:0;
+          ">
+            ${content}
+          </p>
+
+        </div>
+      `;
+    };
+
+
+    /* =========================
+    BENEFITS
+    ========================= */
+
+    const benefitsHTML = renderListSection(
+      'ماذا ستستفيد من الدورة؟',
+      course.benefits
+    );
+
+
+    /* =========================
+    WHAT YOU LEARN
+    ========================= */
+
+    const whatYouLearnHTML = renderListSection(
+      'ماذا ستتعلم في الدورة؟',
+      course.whatYouLearn
+    );
+
+
+    /* =========================
+    PROJECTS
+    ========================= */
+
+    const projectsHTML = renderListSection(
+      'المشاريع والتطبيق العملي',
+      course.projects
+    );
+
+
+    /* =========================
+    WHO IS IT FOR
+    ========================= */
+
+    const whoIsItForHTML = renderListSection(
+      'لمن تناسب هذه الدورة؟',
+      course.whoIsItFor
+    );
+
+
+    /* =========================
+    REQUIREMENTS
+    ========================= */
+
+    const requirementsHTML = renderListSection(
+      'متطلبات الالتحاق بالدورة',
+      course.requirements
+    );
+
+
+    /* =========================
+    TOOLS
+    ========================= */
+
+    const toolsHTML = renderListSection(
+      'الأدوات والتقنيات المستخدمة',
+      course.tools
+    );
+
+
+    /* =========================
+    CAREER BENEFITS
+    ========================= */
+
+    const careerBenefitsHTML = renderTextSection(
+      'كيف تساعدك الدورة في مسارك المهني؟',
+      course.careerBenefits
+    );
+
+
+    /* =========================
+    CAREER PATHS
+    ========================= */
+
+    const careerPathsHTML = renderListSection(
+      'المسارات الوظيفية المرتبطة بالدورة',
+      course.careerPaths
+    );
+
+
+    /* =========================
+    CV TIPS
+    ========================= */
+
+    const cvTipsHTML = renderTextSection(
+      'كيف تضيف الدورة إلى سيرتك الذاتية؟',
+      course.cvTips
+    );
+
+
+    /* =========================
+    NEXT STEPS
+    ========================= */
+
+    const nextStepsHTML = renderListSection(
+      'ماذا تتعلم بعد هذه الدورة؟',
+      course.nextSteps
+    );
+
+
+    /* =========================
+    COURSE INFORMATION
+    ========================= */
 
     const body = `
 
       <div class="page-container">
 
         <div class="post">
+
+
+          <!-- COURSE TITLE -->
 
           <h1 style="
             font-size:32px;
@@ -9551,35 +9727,45 @@ app.get('/paid-courses/:slug', (req, res) => {
           </h1>
 
 
+          <!-- DESCRIPTION -->
+
+          ${course.description ? `
           <p style="
             font-size:17px;
             line-height:2.2;
             text-align:right;
           ">
-            ${course.description || ''}
+            ${course.description}
           </p>
+          ` : ''}
 
+
+          <!-- COURSE INFORMATION -->
 
           <div style="
-            margin-top:30px;
-            padding:20px;
-            border-radius:12px;
-            background:#f7f7f7;
+            ${sectionStyle}
           ">
 
-            <h2 style="font-weight:900;">
+            <h2 style="${sectionTitleStyle}">
               معلومات عن الدورة
             </h2>
 
+
+            ${course.category ? `
             <p style="line-height:2;">
               <strong>التخصص:</strong>
-              ${course.category || 'غير محدد'}
+              ${course.category}
             </p>
+            ` : ''}
 
+
+            ${course.level ? `
             <p style="line-height:2;">
               <strong>المستوى:</strong>
-              ${course.level || 'مناسب للمبتدئين'}
+              ${course.level}
             </p>
+            ` : ''}
+
 
             ${course.provider ? `
             <p style="line-height:2;">
@@ -9587,6 +9773,7 @@ app.get('/paid-courses/:slug', (req, res) => {
               ${course.provider}
             </p>
             ` : ''}
+
 
             ${course.price ? `
             <p style="line-height:2;">
@@ -9598,46 +9785,86 @@ app.get('/paid-courses/:slug', (req, res) => {
           </div>
 
 
-          ${benefitsHTML ? `
+          <!-- BENEFITS -->
+
+          ${benefitsHTML}
+
+
+          <!-- WHAT YOU LEARN -->
+
+          ${whatYouLearnHTML}
+
+
+          <!-- PROJECTS -->
+
+          ${projectsHTML}
+
+
+          <!-- WHO IS IT FOR -->
+
+          ${whoIsItForHTML}
+
+
+          <!-- REQUIREMENTS -->
+
+          ${requirementsHTML}
+
+
+          <!-- TOOLS -->
+
+          ${toolsHTML}
+
+
+          <!-- CAREER BENEFITS -->
+
+          ${careerBenefitsHTML}
+
+
+          <!-- CAREER PATHS -->
+
+          ${careerPathsHTML}
+
+
+          <!-- CV TIPS -->
+
+          ${cvTipsHTML}
+
+
+          <!-- NEXT STEPS -->
+
+          ${nextStepsHTML}
+
+
+          <!-- REGISTRATION -->
+
           <div style="
-            margin-top:30px;
-            padding:20px;
+            margin-top:35px;
+            padding:25px;
             border-radius:12px;
             background:#f7f7f7;
-          ">
-
-            <h2 style="font-weight:900;">
-              ماذا ستستفيد من الدورة؟
-            </h2>
-
-            <ul style="line-height:2;">
-              ${benefitsHTML}
-            </ul>
-
-          </div>
-          ` : ''}
-
-
-          <div style="
-            margin-top:30px;
-            padding:20px;
-            border-radius:12px;
-            background:#f7f7f7;
+            border:1px solid #eee;
             text-align:center;
           ">
 
-            <h2 style="font-weight:900;">
+            <h2 style="
+              font-weight:900;
+              margin-bottom:15px;
+            ">
               التسجيل في الدورة
             </h2>
+
 
             <p style="
               line-height:2;
               margin-bottom:20px;
             ">
               يمكنك الانتقال إلى الموقع الرسمي للمنصة
-              والاطلاع على تفاصيل الدورة والتسجيل فيها.
+              والاطلاع على تفاصيل الدورة والمحتوى والسعر
+              وشروط التسجيل قبل الاشتراك.
             </p>
 
+
+            ${course.link ? `
             <a
               href="${course.link}"
               target="_blank"
@@ -9650,9 +9877,12 @@ app.get('/paid-courses/:slug', (req, res) => {
             >
               الانتقال إلى الدورة
             </a>
+            ` : ''}
 
           </div>
 
+
+          <!-- BACK -->
 
           <div style="
             margin-top:30px;
@@ -9670,6 +9900,7 @@ app.get('/paid-courses/:slug', (req, res) => {
             </a>
 
           </div>
+
 
         </div>
 
@@ -9700,8 +9931,6 @@ app.get('/paid-courses/:slug', (req, res) => {
   }
 
 });
-
-
 /* =========================
 MEDICAL COURSES
 ========================= */
