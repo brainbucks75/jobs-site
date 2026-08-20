@@ -121,6 +121,23 @@ img{max-width:100%;display:block}
 .sector-card .count{color:var(--muted);font-size:13px;margin-bottom:18px}
 .sector-btn{display:inline-block;padding:9px 20px;border-radius:10px;color:#fff;font-size:13px;font-weight:600;transition:.25s}
 .sector-btn:hover{opacity:.9}
+/* COURSE BUTTONS */
+.course-btn{
+  display:inline-block;
+  padding:11px 24px;
+  border-radius:10px;
+  background:var(--brand-2);
+  color:#fff !important;
+  font-size:14px;
+  font-weight:700;
+  text-decoration:none !important;
+  transition:.25s;
+}
+
+.course-btn:hover{
+  background:#1d4ed8;
+  color:#fff !important;
+}
 
 .s-health .sector-icon,.s-health .sector-btn{background:var(--health)}
 .s-eng    .sector-icon,.s-eng    .sector-btn{background:var(--eng)}
