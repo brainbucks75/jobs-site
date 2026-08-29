@@ -11534,7 +11534,10 @@ Sitemap: https://jobs-site-0hcz.onrender.com/sitemap.xml
 
 });
 
-
+app.get('/ads.txt', (req, res) => {
+  res.type('text/plain');
+  res.sendFile(require('path').join(__dirname, 'ads.txt'));
+});
 /* ========================= */
 
 app.listen(PORT, () => {
