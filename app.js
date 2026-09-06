@@ -8725,7 +8725,7 @@ app.get('/jobs/:sector/job/:id',(req,res)=>{
   <div class="page-container">
     <div class="post">
       <h2>${job.title}</h2>
-    <p>${job.description || ''}</p>
+  <p style="white-space:pre-line">${job.description || ''}</p>
 
 ${job.location ? `<p><strong>الموقع:</strong> ${job.location}</p>` : ''}
 
@@ -8734,14 +8734,14 @@ ${job.type ? `<p><strong>نوع الوظيفة:</strong> ${job.type}</p>` : ''}
 ${job.requirements ? `
   <div style="margin-top:12px">
     <strong>المتطلبات:</strong>
-    <p style="margin-top:6px">${job.requirements}</p>
+    <p style="margin-top:6px;white-space:pre-line">${job.requirements}</p>
   </div>
 ` : ''}
 
 ${job.responsibilities ? `
   <div style="margin-top:12px">
     <strong>المهام:</strong>
-    <p style="margin-top:6px">${job.responsibilities}</p>
+    <p style="margin-top:6px;white-space:pre-line">${job.responsibilities}</p>
   </div>
 ` : ''}
  ${job.content ? `
