@@ -306,6 +306,8 @@ gtag('js', new Date());
 
 gtag('config', 'G-DSDN57CY0H');
 </script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3462119395976615"
+     crossorigin="anonymous"></script>
 ${pageStyle()}
 </head><body>
 ${header()}
