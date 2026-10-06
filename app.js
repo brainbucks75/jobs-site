@@ -8472,7 +8472,7 @@ app.get('/contact',(req,res)=>{
       <div class="socials" style="justify-content:center;margin-top:24px;">
         <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
         <a href="https://facebook.com"><i class="fab fa-facebook-f"></i></a>
-        <a href="mailto:test@gmail.com"><i class="fas fa-envelope"></i></a>
+        <a href="mailto:brainbucks75@gmail.com"><i class="fas fa-envelope"></i></a>
         <a href="https://x.com"><i class="fab fa-x-twitter"></i></a>
       </div>
     </div>
