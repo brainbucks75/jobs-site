@@ -10999,16 +10999,15 @@ app.get('/global-companies', (req, res) => {
 
           ${companies.map(company => `
             
-            <a
-              href="/global-companies/${company.id}"
-              class="content-card"
-              style="
-                text-decoration:none;
-                color:inherit;
-                transition:.3s;
-                overflow:hidden;
-              "
-            >
+           
+<div
+  class="content-card"
+  style="
+    color:inherit;
+    transition:.3s;
+    overflow:hidden;
+  "
+>
 
               <img
                 src="${company.image}"
@@ -11043,9 +11042,9 @@ app.get('/global-companies', (req, res) => {
 
               </div>
 
-            </a>
+</div>   
 
-          `).join('')}
+       `).join('')}
 
         </div>
 
@@ -11185,41 +11184,7 @@ app.get('/global-companies/:id', (req, res) => {
         </ul>
 
 
-        <div style="
-          margin-top:30px;
-          padding:25px;
-          background:#f7f7f7;
-          border-radius:15px;
-          text-align:center;
-        ">
-
-          <h2>🔗 روابط رسمية</h2>
-
-          <p style="margin:15px 0;">
-            <a
-              href="${company.officialWebsite}"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn-primary"
-            >
-              الموقع الرسمي للمنشأة
-            </a>
-          </p>
-
-          <p>
-            <a
-              href="${company.careersLink}"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn-primary"
-            >
-              صفحة الوظائف والتقديم
-            </a>
-          </p>
-
-        </div>
-
-      </div>
+             </div>
 
     </div>
 
