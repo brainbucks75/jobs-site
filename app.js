@@ -270,16 +270,48 @@ return `
       <div>
         <h4>وظائف الوطن العربي</h4>
         <p>منصة عربية تهدف إلى ربط الباحثين عن عمل بأفضل الفرص الوظيفية في الوطن العربي.</p>
-        <div class="socials">
-         <a href="https://www.instagram.com/job_sit/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-  <i class="fab fa-instagram"></i>
-</a>
-          <a href="mailto:brainbucks75@gmail.com"><i class="fas fa-envelope"></i></a>
-         <a href="https://www.facebook.com/profile.php?id=61574702476970" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-  <i class="fab fa-facebook-f"></i>
-</a>
-          <a href="https://x.com/BrainBucks7"><i class="fab fa-x-twitter"></i></a>
-        </div>
+  
+<div class="socials">
+
+  <a
+    href="https://www.instagram.com/job_sit/"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="تابعنا على إنستغرام"
+    title="إنستغرام"
+  >
+    <i class="fab fa-instagram"></i>
+  </a>
+
+  <a
+    href="mailto:brainbucks75@gmail.com"
+    aria-label="راسلنا عبر البريد الإلكتروني"
+    title="البريد الإلكتروني"
+  >
+    <i class="fas fa-envelope"></i>
+  </a>
+
+  <a
+    href="https://www.facebook.com/profile.php?id=61574702476970"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="تابعنا على فيسبوك"
+    title="فيسبوك"
+  >
+    <i class="fab fa-facebook-f"></i>
+  </a>
+
+  <a
+    href="https://x.com/BrainBucks7"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="تابعنا على X"
+    title="X"
+  >
+    <i class="fab fa-x-twitter"></i>
+  </a>
+
+</div>
       </div>
     </div>
     <div class="copyright">جميع الحقوق محفوظة © 2026 وظائف الوطن العربي</div>
