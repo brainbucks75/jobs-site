@@ -10997,54 +10997,70 @@ app.get('/global-companies', (req, res) => {
 
         <div class="three-col">
 
-          ${companies.map(company => `
-            
-           
-<div
-  class="content-card"
-  style="
-    color:inherit;
-    transition:.3s;
-    overflow:hidden;
-  "
->
+        
+${companies.map(company => `
+  <a
+    href="/global-companies/${company.id}"
+    class="content-card"
+    style="
+      display:block;
+      color:inherit;
+      text-decoration:none;
+      transition:transform .3s, box-shadow .3s;
+      overflow:hidden;
+      border-radius:14px;
+    "
+    aria-label="عرض معلومات ${company.name}"
+  >
 
-              <img
-                src="${company.image}"
-                alt="${company.name}"
-                loading="lazy"
-                style="
-                  width:100%;
-                  height:220px;
-                  object-fit:contain;
-                  background:#f7f7f7;
-                  padding:20px;
-                "
-              >
+    <img
+      src="${company.image}"
+      alt="${company.name}"
+      loading="lazy"
+      style="
+        width:100%;
+        height:220px;
+        object-fit:contain;
+        background:#f7f7f7;
+        padding:20px;
+        box-sizing:border-box;
+      "
+    >
 
-              <div style="padding:18px;text-align:center">
+    <div style="padding:18px;text-align:center">
 
-                <h3 style="
-                  font-size:22px;
-                  font-weight:900;
-                  margin:0 0 8px;
-                ">
-                  ${company.name}
-                </h3>
+      <h3 style="
+        font-size:22px;
+        font-weight:900;
+        margin:0 0 8px;
+      ">
+        ${company.name}
+      </h3>
 
-                <p style="
-                  font-size:14px;
-                  color:#777;
-                  margin:0;
-                ">
-                  ${company.type}
-                </p>
+      <p style="
+        font-size:14px;
+        color:#777;
+        margin:0 0 15px;
+      ">
+        ${company.type}
+      </p>
 
-              </div>
+      <span style="
+        display:inline-block;
+        background:#0d6efd;
+        color:#fff;
+        padding:10px 20px;
+        border-radius:8px;
+        font-size:15px;
+        font-weight:700;
+      ">
+        عرض التفاصيل
+      </span>
 
-</div>   
+    </div>
 
-       `).join('')}
+  </a>
+`).join('')}
 
         </div>
 
