@@ -9564,49 +9564,7 @@ app.get('/free-courses/:slug', (req, res) => {
           }
 
 
-          <!-- COURSE SOURCE -->
-
-          <div style="
-            margin-top:30px;
-            padding:20px;
-            border-radius:12px;
-            background:#f7f7f7;
-            text-align:center;
-          ">
-
-            <h2 style="
-              font-weight:900;
-              margin-bottom:15px;
-            ">
-              الوصول إلى الدورة
-            </h2>
-
-            <p style="
-              line-height:2;
-              margin-bottom:20px;
-            ">
-              يمكنك الانتقال إلى المصدر الرسمي للدورة والبدء
-              في التعلم من خلال الرابط التالي.
-              ننصح دائمًا بالاطلاع على تفاصيل الدورة ومتطلباتها
-              من المصدر الرسمي قبل البدء.
-            </p>
-
-            <a
-              href="${course.link}"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="course-btn"
-              style="
-                text-decoration:none;
-                display:inline-block;
-              "
-            >
-              الانتقال إلى الدورة
-            </a>
-
-          </div>
-
-
+         
           <!-- BACK -->
 
           <div style="
@@ -10386,53 +10344,7 @@ app.get('/paid-courses/:slug', (req, res) => {
           ${additionalInfoHTML}
 
 
-          <!-- REGISTRATION -->
-
-          <div style="
-            margin-top:35px;
-            padding:25px;
-            border-radius:12px;
-            background:#f7f7f7;
-            border:1px solid #eee;
-            text-align:center;
-          ">
-
-            <h2 style="
-              font-weight:900;
-              margin-bottom:15px;
-            ">
-              التسجيل في الدورة
-            </h2>
-
-
-            <p style="
-              line-height:2;
-              margin-bottom:20px;
-            ">
-              يمكنك الانتقال إلى الموقع الرسمي للمنصة
-              والاطلاع على تفاصيل الدورة والمحتوى والسعر
-              وشروط التسجيل قبل الاشتراك.
-            </p>
-
-
-            ${course.link ? `
-            <a
-              href="${course.link}"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="course-btn"
-              style="
-                text-decoration:none;
-                display:inline-block;
-              "
-            >
-              الانتقال إلى الدورة
-            </a>
-            ` : ''}
-
-          </div>
-
-
+         
           <!-- BACK -->
 
           <div style="
